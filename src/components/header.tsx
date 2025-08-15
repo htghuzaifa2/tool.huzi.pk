@@ -7,9 +7,8 @@ import { ThemeSwitcher } from "@/components/theme-switcher"
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/text-tools", label: "Text Tools" },
-  { href: "/unit-converter", label: "Unit Converter" },
-  { href: "/calculator", label: "Calculator" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ]
 
 export function Header() {
@@ -20,7 +19,7 @@ export function Header() {
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Box className="h-6 w-6 text-primary" />
             <span className="hidden font-bold sm:inline-block">
-              Toolbox Hub
+              tool.huzi.pk
             </span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
@@ -50,7 +49,7 @@ export function Header() {
           <SheetContent side="left" className="pr-0">
             <Link href="/" className="flex items-center space-x-2">
                 <Box className="h-6 w-6 text-primary" />
-                <span className="font-bold">Toolbox Hub</span>
+                <span className="font-bold">tool.huzi.pk</span>
             </Link>
             <div className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
                 <div className="flex flex-col space-y-3">
@@ -65,8 +64,11 @@ export function Header() {
         </Sheet>
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none">
-            {/* Search can go here */}
+           <div className="w-full flex-1 md:w-auto md:flex-none">
+             <Link href="/" className="flex items-center space-x-2 md:hidden">
+              <Box className="h-6 w-6 text-primary" />
+              <span className="font-bold">tool.huzi.pk</span>
+            </Link>
           </div>
           <nav className="flex items-center">
             <ThemeSwitcher />

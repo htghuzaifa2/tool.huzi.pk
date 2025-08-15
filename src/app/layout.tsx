@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from '@/components/header';
 
 export const metadata: Metadata = {
-  title: 'Toolbox Hub',
+  title: 'tool.huzi.pk',
   description: 'A collection of client-side tools and utilities.',
 };
 
