@@ -25,10 +25,8 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased min-h-screen bg-background font-sans">
         <ThemeProvider
-          attribute="class"
+          storageKey="toolbox-hub-theme"
           defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
         >
           <div className="relative flex min-h-screen w-full flex-col">
             <Header />

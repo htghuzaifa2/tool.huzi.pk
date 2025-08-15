@@ -1,3 +1,4 @@
+
 "use client"
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
@@ -8,9 +9,6 @@ type ThemeProviderProps = {
   children: ReactNode
   defaultTheme?: Theme
   storageKey?: string
-  attribute?: string
-  enableSystem?: boolean
-  disableTransitionOnChange?: boolean
 }
 
 type ThemeProviderState = {
