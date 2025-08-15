@@ -128,8 +128,20 @@ export function SearchDialog() {
           <span className="sr-only">Search</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[640px] p-0">
-        <DialogHeader className="p-4 border-b">
+      <DialogContent className="sm:max-w-[640px] p-0 sm:p-6 sm:rounded-lg top-0 sm:top-1/2 translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border">
+        <DialogHeader className="p-4 border-b sm:hidden">
+           <DialogTitle className="sr-only">Search</DialogTitle>
+           <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input
+              placeholder="Search for tools or guides..."
+              className="pl-10"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+        </DialogHeader>
+        <DialogHeader className="p-4 border-b hidden sm:block">
            <DialogTitle className="sr-only">Search</DialogTitle>
            <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -150,7 +162,7 @@ export function SearchDialog() {
             </TabsList>
           </div>
 
-          <ScrollArea className="h-[400px]">
+          <ScrollArea className="h-[70vh] sm:h-[400px]">
             <div className="p-4">
                 <TabsContent value="tools" forceMount={true} hidden={activeTab !== 'tools'}>
                   {renderResults(filteredTools, toolsPage, setToolsPage)}
