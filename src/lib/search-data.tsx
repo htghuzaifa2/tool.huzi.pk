@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2 } from "lucide-react";
 
 export const tools = [
   {
@@ -61,6 +61,12 @@ export const tools = [
     href: "/meta-tag-generator",
     title: "Meta Tag Generator",
     description: "Generate perfect SEO meta titles, descriptions, and keywords for your website.",
+  },
+  {
+    icon: <Share2 className="h-8 w-8" />,
+    href: "/open-graph-generator",
+    title: "Open Graph Tag Generator",
+    description: "Generate perfect Open Graph meta tags for better link previews on social media.",
   },
   {
     icon: <Table className="h-8 w-8" />,

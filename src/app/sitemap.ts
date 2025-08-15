@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/vimeo-thumbnail-downloader',
     '/dailymotion-thumbnail-downloader',
     '/meta-tag-generator',
+    '/open-graph-generator',
     '/markdown-editor',
     '/css-box-shadow-generator',
     '/css-gradient-generator',
