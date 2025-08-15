@@ -193,20 +193,22 @@ const Tiptap = () => {
           <Code className="h-4 w-4" />
         </Toggle>
         <Separator orientation="vertical" className="h-8" />
-        <Toggle
+        <Button
+          variant="ghost"
           size="sm"
-          onPressedChange={() => editor.chain().focus().undo().run()}
+          onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
         >
           <Undo className="h-4 w-4" />
-        </Toggle>
-        <Toggle
+        </Button>
+        <Button
+          variant="ghost"
           size="sm"
-          onPressedChange={() => editor.chain().focus().redo().run()}
+          onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
         >
           <Redo className="h-4 w-4" />
-        </Toggle>
+        </Button>
       </div>
       <EditorContent editor={editor} />
       {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
