@@ -1,42 +1,35 @@
+
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Calculator, CaseSensitive, Ruler, QrCode, KeyRound } from "lucide-react"
+import { ArrowRight, Calculator, CaseSensitive, Ruler, QrCode, KeyRound, ArrowLeft } from "lucide-react"
+import { tools } from "@/lib/search-data"
 
-const tools = [
-  {
-    icon: <CaseSensitive className="h-8 w-8" />,
-    href: "/text-tools",
-    title: "Text Tools",
-    description: "Manipulate text with tools for case conversion, counting, and more.",
-  },
-  {
-    icon: <Ruler className="h-8 w-8" />,
-    href: "/unit-converter",
-    title: "Unit Converter",
-    description: "Convert between various units for length, mass, and temperature.",
-  },
-  {
-    icon: <Calculator className="h-8 w-8" />,
-    href: "/calculator",
-    title: "Calculator",
-    description: "A simple and easy-to-use calculator for your daily needs.",
-  },
-  {
-    icon: <QrCode className="h-8 w-8" />,
-    href: "/qr-code-generator",
-    title: "QR Code Generator",
-    description: "Create custom QR codes for URLs, text, and more.",
-  },
-  {
-    icon: <KeyRound className="h-8 w-8" />,
-    href: "/password-generator",
-    title: "Password Generator",
-    description: "Generate strong, secure, and random passwords.",
-  },
-];
+const ITEMS_PER_PAGE = 3;
 
 export default function Home() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(tools.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentTools = tools.slice(startIndex, endIndex);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <main>
       <section className="py-20 md:py-32">
@@ -61,7 +54,7 @@ export default function Home() {
             Explore Our Tools
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {tools.map((tool) => (
+            {currentTools.map((tool) => (
               <Link href={tool.href} key={tool.href} className="group">
                 <Card className="h-full hover:border-primary transition-colors duration-300 transform hover:-translate-y-1">
                   <CardHeader>
@@ -75,6 +68,16 @@ export default function Home() {
               </Link>
             ))}
           </div>
+           {totalPages > 1 && (
+            <div className="mt-12 flex justify-center gap-4">
+              <Button onClick={handlePrevPage} disabled={currentPage === 1} variant="outline">
+                <ArrowLeft className="mr-2 h-5 w-5" /> Previous
+              </Button>
+              <Button onClick={handleNextPage} disabled={currentPage === totalPages} variant="outline">
+                Next <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+          )}
         </div>
       </section>
     </main>
