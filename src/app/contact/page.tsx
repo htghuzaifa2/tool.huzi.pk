@@ -9,6 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const { toast } = useToast();
 
@@ -24,7 +26,15 @@ export default function ContactPage() {
     }
 
     const whatsappNumber = "923251480148";
-    const formattedMessage = `Name: ${name}\n\nMessage: ${message}`;
+    let formattedMessage = `Name: ${name}\n`;
+    if (email) {
+      formattedMessage += `Email: ${email}\n`;
+    }
+    if (subject) {
+      formattedMessage += `Subject: ${subject}\n`;
+    }
+    formattedMessage += `\nMessage: ${message}`;
+    
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
       formattedMessage
     )}`;
@@ -46,6 +56,17 @@ export default function ContactPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+          />
+          <Input 
+            type="email"
+            placeholder="Your Email (Optional)" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input 
+            placeholder="Subject (Optional)" 
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
           />
           <Textarea 
             placeholder="Your Message" 
