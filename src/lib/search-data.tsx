@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare } from "lucide-react";
 
 export const tools = [
   {
@@ -85,6 +85,12 @@ export const tools = [
     href: "/rich-text-editor",
     title: "Rich Text Editor",
     description: "An advanced editor for formatted text with headings, lists, and more.",
+  },
+   {
+    icon: <TerminalSquare className="h-8 w-8" />,
+    href: "/markdown-editor",
+    title: "Markdown Editor",
+    description: "A live Markdown editor that shows instant preview of formatted text.",
   },
   {
     icon: <Type className="h-8 w-8" />,
@@ -303,6 +309,18 @@ export const guides = [
         "Use the toolbar at the top to apply formatting.",
         "You can create headings, make text bold or italic, create lists, and more.",
         "Your content is saved automatically in the editor."
+    ]
+  },
+   {
+    icon: <TerminalSquare className="h-8 w-8 text-primary" />,
+    href: "/guide#markdown-editor",
+    title: "Markdown Editor Guide",
+    description: "A quick guide to the live markdown editor.",
+    steps: [
+        "Go to the Markdown Editor page.",
+        "Type your Markdown syntax in the left-hand panel.",
+        "As you type, a live preview of the formatted text will appear in the right-hand panel.",
+        "The editor supports standard Markdown and GitHub-Flavored Markdown (GFM)."
     ]
   },
   {

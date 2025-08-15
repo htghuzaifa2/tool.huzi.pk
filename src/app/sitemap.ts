@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/color-picker',
     '/youtube-thumbnail-downloader',
     '/meta-tag-generator',
+    '/markdown-editor',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
