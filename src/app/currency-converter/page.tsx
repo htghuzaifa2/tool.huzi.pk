@@ -8,19 +8,22 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { ArrowRightLeft, Banknote } from "lucide-react";
 
+// NOTE: The rates below are static and for demonstration purposes only.
+// For a production application, you would fetch these rates from a live API 
+// (e.g., European Central Bank, Open Exchange Rates) to get the latest data.
 const currencyData = {
     "USD": { "name": "United States Dollar", "rate": 1 },
-    "EUR": { "name": "Euro", "rate": 0.92 },
-    "JPY": { "name": "Japanese Yen", "rate": 157.0 },
-    "GBP": { "name": "British Pound", "rate": 0.78 },
-    "AUD": { "name": "Australian Dollar", "rate": 1.5 },
+    "EUR": { "name": "Euro", "rate": 0.93 },
+    "JPY": { "name": "Japanese Yen", "rate": 159.80 },
+    "GBP": { "name": "British Pound", "rate": 0.79 },
+    "AUD": { "name": "Australian Dollar", "rate": 1.50 },
     "CAD": { "name": "Canadian Dollar", "rate": 1.37 },
-    "CHF": { "name": "Swiss Franc", "rate": 0.9 },
-    "CNY": { "name": "Chinese Yuan", "rate": 7.25 },
-    "INR": { "name": "Indian Rupee", "rate": 83.5 },
-    "BRL": { "name": "Brazilian Real", "rate": 5.25 },
-    "RUB": { "name": "Russian Ruble", "rate": 90.0 },
-    "PKR": { "name": "Pakistani Rupee", "rate": 278.0 },
+    "CHF": { "name": "Swiss Franc", "rate": 0.90 },
+    "CNY": { "name": "Chinese Yuan", "rate": 7.26 },
+    "INR": { "name": "Indian Rupee", "rate": 83.45 },
+    "BRL": { "name": "Brazilian Real", "rate": 5.45 },
+    "RUB": { "name": "Russian Ruble", "rate": 87.80 },
+    "PKR": { "name": "Pakistani Rupee", "rate": 278.50 },
 };
 
 type CurrencyCode = keyof typeof currencyData;
