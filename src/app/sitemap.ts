@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/css-gradient-generator',
     '/csv-viewer',
     '/table-to-csv-converter',
+    '/text-encryption',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock } from "lucide-react";
 
 export const tools = [
   {
@@ -43,6 +43,12 @@ export const tools = [
     href: "/password-strength-checker",
     title: "Password Strength Checker",
     description: "Test the strength of your password and get suggestions to make it more secure.",
+  },
+  {
+    icon: <Lock className="h-8 w-8" />,
+    href: "/text-encryption",
+    title: "Text Encryption Tool",
+    description: "Encrypt and decrypt text using a simple Caesar cipher.",
   },
   {
     icon: <Tags className="h-8 w-8" />,
