@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
@@ -84,6 +86,9 @@ export function SearchDialog() {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[640px] p-0">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Search</DialogTitle>
+        </DialogHeader>
         <div className="p-4 border-b">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
