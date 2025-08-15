@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags } from "lucide-react";
 
 export const tools = [
   {
@@ -43,6 +43,12 @@ export const tools = [
     href: "/password-strength-checker",
     title: "Password Strength Checker",
     description: "Test the strength of your password and get suggestions to make it more secure.",
+  },
+  {
+    icon: <Tags className="h-8 w-8" />,
+    href: "/meta-tag-generator",
+    title: "Meta Tag Generator",
+    description: "Generate perfect SEO meta titles, descriptions, and keywords for your website.",
   },
   {
     icon: <HeartPulse className="h-8 w-8" />,
@@ -206,6 +212,18 @@ export const guides = [
         "As you type, a strength meter will show how secure your password is.",
         "Review the checklist below the meter to see which criteria your password meets (e.g., length, uppercase letters).",
         "Improve your password until it reaches the 'Very Strong' level."
+    ]
+  },
+   {
+    icon: <Tags className="h-8 w-8 text-primary" />,
+    href: "/guide#meta-tag-generator",
+    title: "Meta Tag Generator Guide",
+    description: "How to generate SEO meta tags.",
+    steps: [
+        "Navigate to the Meta Tag Generator page.",
+        "Fill in the Title, Description, and Keywords for your webpage.",
+        "The HTML meta tags will be generated automatically in the code block.",
+        "Click the copy icon to copy the generated tags to your clipboard."
     ]
   },
   {
