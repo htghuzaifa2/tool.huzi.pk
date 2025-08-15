@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Calculator, CaseSensitive, Ruler } from "lucide-react"
+import { ArrowRight, Calculator, CaseSensitive, Ruler, QrCode, KeyRound } from "lucide-react"
 
 const tools = [
   {
@@ -21,6 +21,18 @@ const tools = [
     href: "/calculator",
     title: "Calculator",
     description: "A simple and easy-to-use calculator for your daily needs.",
+  },
+  {
+    icon: <QrCode className="h-8 w-8" />,
+    href: "/qr-code-generator",
+    title: "QR Code Generator",
+    description: "Create custom QR codes for URLs, text, and more.",
+  },
+  {
+    icon: <KeyRound className="h-8 w-8" />,
+    href: "/password-generator",
+    title: "Password Generator",
+    description: "Generate strong, secure, and random passwords.",
   },
 ];
 
