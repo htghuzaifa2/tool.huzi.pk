@@ -79,13 +79,18 @@ export default function Home() {
               </Link>
             ))}
           </div>
-           {currentPage < totalPages && (
-            <div className="mt-12 flex justify-center">
-              <Button onClick={handleNextPage} variant="default" size="lg">
-                Load More <ArrowRight className="ml-2 h-5 w-5" />
+          <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
+            {currentPage > 1 && (
+                <Button onClick={handlePrevPage} variant="outline">
+                    <ArrowUp className="mr-2 h-4 w-4" /> Previous Page
+                </Button>
+            )}
+            {currentPage < totalPages && (
+              <Button onClick={handleNextPage} variant="default">
+                  Next Page <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
     </main>

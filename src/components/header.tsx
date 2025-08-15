@@ -70,9 +70,9 @@ export function Header() {
           </SheetContent>
         </Sheet>
         
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+        <div className="flex flex-1 items-center justify-end space-x-2">
            <div className="w-full flex-1 md:w-auto md:flex-none">
-             <Link href="/" className="flex items-center space-x-2 md:hidden">
+             <Link href="/" className="flex items-center space-x-2 md:hidden absolute left-1/2 -translate-x-1/2">
               <Box className="h-6 w-6 text-primary" />
               <span className="font-bold">tool.huzi.pk</span>
             </Link>
