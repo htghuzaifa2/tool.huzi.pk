@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { User, Mail, MessageSquare, PenSquare } from "lucide-react";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -26,14 +28,15 @@ export default function ContactPage() {
     }
 
     const whatsappNumber = "923251480148";
-    let formattedMessage = `Name: ${name}\n`;
+    let formattedMessage = `*Contact Form Submission*\n\n`;
+    formattedMessage += `*Name:*\n${name}\n\n`;
     if (email) {
-      formattedMessage += `Email: ${email}\n`;
+      formattedMessage += `*Email:*\n${email}\n\n`;
     }
     if (subject) {
-      formattedMessage += `Subject: ${subject}\n`;
+      formattedMessage += `*Subject:*\n${subject}\n\n`;
     }
-    formattedMessage += `\nMessage: ${message}`;
+    formattedMessage += `*Message:*\n${message}`;
     
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
       formattedMessage
@@ -46,39 +49,58 @@ export default function ContactPage() {
   return (
     <div className="container mx-auto py-10">
       <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold font-headline">Contact Us</h1>
-          <p className="text-muted-foreground mt-2">Have a question or feedback? We'd love to hear from you.</p>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input 
-            placeholder="Your Name" 
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <Input 
-            type="email"
-            placeholder="Your Email (Optional)" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input 
-            placeholder="Subject (Optional)" 
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          />
-          <Textarea 
-            placeholder="Your Message" 
-            className="min-h-[150px]"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-          />
-          <div className="text-center">
-            <Button type="submit">Send Message</Button>
-          </div>
-        </form>
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle className="text-4xl font-bold font-headline">Contact Us</CardTitle>
+            <CardDescription>Have a question or feedback? We'd love to hear from you.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input 
+                  placeholder="Your Name" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="pl-10"
+                />
+              </div>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input 
+                  type="email"
+                  placeholder="Your Email (Optional)" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <div className="relative">
+                <PenSquare className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input 
+                  placeholder="Subject (Optional)" 
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <div className="relative">
+                 <MessageSquare className="absolute left-3 top-4 h-5 w-5 text-muted-foreground" />
+                <Textarea 
+                  placeholder="Your Message" 
+                  className="min-h-[150px] pl-10 pt-3"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="text-center">
+                <Button type="submit" size="lg">Send Message</Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
