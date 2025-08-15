@@ -18,36 +18,36 @@ export default function HtmlTableGeneratorPage() {
     const { toast } = useToast();
 
     const generatedHtml = useMemo(() => {
-        let tableHtml = '<table>\\n';
+        let tableHtml = '<table>\n';
 
         if (hasHeader) {
-            tableHtml += '  <thead>\\n';
-            tableHtml += '    <tr>\\n';
+            tableHtml += '  <thead>\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      <th>Header ${j}</th>\\n`;
+                tableHtml += `      <th>Header ${j}</th>\n`;
             }
-            tableHtml += '    </tr>\\n';
-            tableHtml += '  </thead>\\n';
+            tableHtml += '    </tr>\n';
+            tableHtml += '  </thead>\n';
         }
 
-        tableHtml += '  <tbody>\\n';
+        tableHtml += '  <tbody>\n';
         for (let i = 1; i <= rows; i++) {
-            tableHtml += '    <tr>\\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      <td>Row ${i}, Cell ${j}</td>\\n`;
+                tableHtml += `      <td>Row ${i}, Cell ${j}</td>\n`;
             }
-            tableHtml += '    </tr>\\n';
+            tableHtml += '    </tr>\n';
         }
-        tableHtml += '  </tbody>\\n';
+        tableHtml += '  </tbody>\n';
 
         if (hasFooter) {
-            tableHtml += '  <tfoot>\\n';
-            tableHtml += '    <tr>\\n';
+            tableHtml += '  <tfoot>\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      <td>Footer ${j}</td>\\n`;
+                tableHtml += `      <td>Footer ${j}</td>\n`;
             }
-            tableHtml += '    </tr>\\n';
-            tableHtml += '  </tfoot>\\n';
+            tableHtml += '    </tr>\n';
+            tableHtml += '  </tfoot>\n';
         }
 
         tableHtml += '</table>';
@@ -55,7 +55,6 @@ export default function HtmlTableGeneratorPage() {
     }, [rows, cols, hasHeader, hasFooter]);
 
     const copyToClipboard = () => {
-        // Replace the escaped newlines with actual newlines for the clipboard
         const plainHtml = generatedHtml.replace(/\\n/g, '\n');
         navigator.clipboard.writeText(plainHtml);
         toast({
@@ -99,11 +98,11 @@ export default function HtmlTableGeneratorPage() {
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Checkbox id="header" checked={hasHeader} onCheckedChange={(checked) => setHasHeader(Boolean(checked))} />
-                                <Label htmlFor="header">Include Table Header (`<thead>`)</Label>
+                                <Label htmlFor="header">Include Table Header (`&lt;thead&gt;`)</Label>
                             </div>
                              <div className="flex items-center space-x-2">
                                 <Checkbox id="footer" checked={hasFooter} onCheckedChange={(checked) => setHasFooter(Boolean(checked))} />
-                                <Label htmlFor="footer">Include Table Footer (`<tfoot>`)</Label>
+                                <Label htmlFor="footer">Include Table Footer (`&lt;tfoot&gt;`)</Label>
                             </div>
                         </div>
 
