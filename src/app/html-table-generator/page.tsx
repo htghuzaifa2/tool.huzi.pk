@@ -55,8 +55,7 @@ export default function HtmlTableGeneratorPage() {
     }, [rows, cols, hasHeader, hasFooter]);
 
     const copyToClipboard = () => {
-        const plainHtml = generatedHtml.replace(/\\n/g, '\n');
-        navigator.clipboard.writeText(plainHtml);
+        navigator.clipboard.writeText(generatedHtml);
         toast({
             title: "Copied!",
             description: "HTML table code copied to clipboard.",
@@ -120,7 +119,7 @@ export default function HtmlTableGeneratorPage() {
                                 <CardContent>
                                     <pre className="p-4 rounded-md bg-background/70 text-sm overflow-x-auto h-64">
                                         <code>
-                                            {generatedHtml.replace(/\\n/g, '\n')}
+                                            {generatedHtml}
                                         </code>
                                     </pre>
                                 </CardContent>
