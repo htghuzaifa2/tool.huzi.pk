@@ -22,6 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/time-zone-converter',
     '/color-picker',
     '/youtube-thumbnail-downloader',
+    '/vimeo-thumbnail-downloader',
+    '/dailymotion-thumbnail-downloader',
     '/meta-tag-generator',
     '/markdown-editor',
     '/css-box-shadow-generator',

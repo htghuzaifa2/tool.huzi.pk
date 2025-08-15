@@ -122,6 +122,18 @@ export const tools = [
     title: "YouTube Thumbnail Downloader",
     description: "Download high-quality thumbnails from any YouTube video instantly.",
   },
+   {
+    icon: <Video className="h-8 w-8" />,
+    href: "/vimeo-thumbnail-downloader",
+    title: "Vimeo Thumbnail Downloader",
+    description: "Download the thumbnail from any public Vimeo video.",
+  },
+  {
+    icon: <Video className="h-8 w-8" />,
+    href: "/dailymotion-thumbnail-downloader",
+    title: "Dailymotion Thumbnail Downloader",
+    description: "Download the thumbnail from any Dailymotion video.",
+  },
   {
     icon: <Info className="h-8 w-8" />,
     href: "/about",
