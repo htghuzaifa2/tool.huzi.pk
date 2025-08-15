@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database } from "lucide-react";
 
 export const tools = [
   {
@@ -163,6 +163,12 @@ export const tools = [
     href: "/dailymotion-thumbnail-downloader",
     title: "Dailymotion Thumbnail Downloader",
     description: "Download the thumbnail from any Dailymotion video.",
+  },
+  {
+    icon: <Database className="h-8 w-8" />,
+    href: "/local-storage-editor",
+    title: "Local Storage Editor",
+    description: "View, edit, and delete data stored in your browser's local storage.",
   },
   {
     icon: <Info className="h-8 w-8" />,

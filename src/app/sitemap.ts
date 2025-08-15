@@ -32,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/csv-viewer',
     '/table-to-csv-converter',
     '/text-encryption',
+    '/local-storage-editor',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
