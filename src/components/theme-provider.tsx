@@ -8,6 +8,9 @@ type ThemeProviderProps = {
   children: ReactNode
   defaultTheme?: Theme
   storageKey?: string
+  attribute?: string
+  enableSystem?: boolean
+  disableTransitionOnChange?: boolean
 }
 
 type ThemeProviderState = {
@@ -16,7 +19,7 @@ type ThemeProviderState = {
 }
 
 const initialState: ThemeProviderState = {
-  theme: "light",
+  theme: "dark",
   setTheme: () => null,
 }
 
@@ -24,16 +27,16 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
 export function ThemeProvider({
   children,
-  defaultTheme = "light",
+  defaultTheme = "dark",
   storageKey = "toolbox-hub-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme)
-
-  useEffect(() => {
-    const storedTheme = (localStorage.getItem(storageKey) as Theme) || defaultTheme
-    setTheme(storedTheme)
-  }, [storageKey, defaultTheme])
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") {
+      return defaultTheme;
+    }
+    return (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  });
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -54,7 +57,9 @@ export function ThemeProvider({
   const value = {
     theme,
     setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme)
+      if (typeof window !== "undefined") {
+        localStorage.setItem(storageKey, theme)
+      }
       setTheme(theme)
     },
   }
