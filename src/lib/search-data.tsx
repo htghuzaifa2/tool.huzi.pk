@@ -207,6 +207,12 @@ export const tools = [
     description: "Compare the current time across different parts of the world.",
   },
   {
+    icon: <Globe className="h-8 w-8" />,
+    href: "/ip-address-finder",
+    title: "IP Address Finder",
+    description: "Display your public IP address using a free API.",
+  },
+  {
     icon: <Palette className="h-8 w-8" />,
     href: "/color-picker",
     title: "Color Picker",
