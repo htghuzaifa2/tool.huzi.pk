@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/notepad',
     '/rich-text-editor',
     '/word-counter',
+    '/time-zone-converter',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

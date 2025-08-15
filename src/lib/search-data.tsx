@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe } from "lucide-react";
 
 export const tools = [
   {
@@ -73,6 +73,12 @@ export const tools = [
     href: "/word-counter",
     title: "Word Counter",
     description: "Count words, characters, sentences, and paragraphs in your text.",
+  },
+  {
+    icon: <Globe className="h-8 w-8" />,
+    href: "/time-zone-converter",
+    title: "Time Zone Converter",
+    description: "Compare the current time across different parts of the world.",
   },
   {
     icon: <Info className="h-8 w-8" />,
@@ -231,7 +237,7 @@ export const guides = [
         "Your content is saved automatically in the editor."
     ]
   },
-    {
+  {
     icon: <Type className="h-8 w-8 text-primary" />,
     href: "/guide#word-counter",
     title: "Word Counter Guide",
@@ -242,7 +248,21 @@ export const guides = [
         "The counters for words, characters, sentences, and paragraphs will update in real-time.",
     ]
   },
-    {
+  {
+    icon: <Globe className="h-8 w-8 text-primary" />,
+    href: "/guide#time-zone-converter",
+    title: "Time Zone Converter Guide",
+    description: "How to compare time across the world.",
+    steps: [
+        "Go to the Time Zone Converter page.",
+        "Your local time zone is added by default.",
+        "Click 'Add Time Zone' to add another location.",
+        "Use the dropdown menu to select the desired time zone for each entry.",
+        "The times will update automatically every second.",
+        "Click the trash icon to remove a time zone."
+    ]
+  },
+  {
     icon: <MessageSquare className="h-8 w-8 text-primary" />,
     href: "/guide#contact-form",
     title: "Contact Form Guide",
