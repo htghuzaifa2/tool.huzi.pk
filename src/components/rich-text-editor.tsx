@@ -3,6 +3,7 @@
 
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import Placeholder from '@tiptap/extension-placeholder'
 import {
   Bold,
   Italic,
@@ -17,11 +18,21 @@ import {
   Quote,
   Undo,
   Redo,
+  Save,
+  Download,
+  Trash2,
 } from 'lucide-react'
 import { Toggle } from '@/components/ui/toggle'
 import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
+import { useEffect } from 'react'
+import { useToast } from "@/hooks/use-toast"
+
+const LOCAL_STORAGE_KEY = 'huzi-pk-tiptap-content';
 
 const Tiptap = () => {
+  const { toast } = useToast();
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -29,22 +40,71 @@ const Tiptap = () => {
           levels: [1, 2, 3],
         },
       }),
+      Placeholder.configure({
+        placeholder: 'Start writing your masterpiece...',
+      }),
     ],
-    content: `
-      <h2>Welcome to the Rich Text Editor!</h2>
-      <p>This is a fully functional rich text editor built with Tiptap. You can format your text with the toolbar above or use the floating menu that appears when you select text.</p>
-      <ul>
-        <li>Create bullet lists</li>
-        <li>Or numbered lists</li>
-      </ul>
-      <p>Go ahead, give it a try!</p>
-    `,
+    content: '',
     editorProps: {
       attributes: {
         class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none min-h-[150px]',
       },
     },
-  })
+  });
+
+  useEffect(() => {
+    if (editor) {
+      try {
+        const savedContent = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (savedContent) {
+          editor.commands.setContent(JSON.parse(savedContent));
+        }
+      } catch (error) {
+        console.error("Could not load content from local storage", error);
+      }
+    }
+  }, [editor]);
+
+  const handleSave = () => {
+    if (editor) {
+      try {
+        const contentJson = editor.getJSON();
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contentJson));
+        toast({ title: 'Content Saved!', description: 'Your content has been saved locally.' });
+      } catch (error) {
+        console.error("Could not save to local storage", error);
+        toast({ title: 'Error', description: 'Could not save content.', variant: 'destructive' });
+      }
+    }
+  };
+
+  const handleDownload = () => {
+    if (editor) {
+      const contentHtml = editor.getHTML();
+      const blob = new Blob([contentHtml], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      link.download = `richtext-note-${timestamp}.html`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  const handleClear = () => {
+    if (editor) {
+      editor.commands.clearContent();
+      try {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        toast({ title: 'Content Cleared!', description: 'The editor has been cleared.' });
+      } catch (error) {
+        console.error("Could not clear local storage", error);
+      }
+    }
+  };
 
   if (!editor) {
     return null
@@ -174,6 +234,20 @@ const Tiptap = () => {
             </Toggle>
         </div>
       </BubbleMenu>}
+      <div className="flex justify-end gap-2 p-2 border-t">
+        <Button variant="outline" size="sm" onClick={handleClear}>
+            <Trash2 className="mr-2" />
+            Clear
+        </Button>
+        <Button variant="outline" size="sm" onClick={handleDownload}>
+            <Download className="mr-2" />
+            Download
+        </Button>
+        <Button size="sm" onClick={handleSave}>
+            <Save className="mr-2" />
+            Save
+        </Button>
+      </div>
     </div>
   )
 }

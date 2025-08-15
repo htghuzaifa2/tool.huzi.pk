@@ -16,7 +16,7 @@ export default function RichTextEditorPage() {
                     <Pilcrow className="w-8 h-8" />
                 </div>
                 <CardTitle className="text-4xl font-bold font-headline">Rich Text Editor</CardTitle>
-                <CardDescription>An advanced editor for all your formatting needs.</CardDescription>
+                <CardDescription>An advanced editor for all your formatting needs. Content is saved locally.</CardDescription>
             </CardHeader>
             <CardContent>
                 <RichTextEditor />
