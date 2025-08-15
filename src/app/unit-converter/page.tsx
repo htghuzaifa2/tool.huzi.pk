@@ -91,7 +91,7 @@ export default function UnitConverterPage() {
               </Select>
             </div>
             
-            <div className="flex items-center space-x-2">
+            <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-2">
               <div className="w-full space-y-2">
                  <label className="text-sm font-medium">From</label>
                  <Input type="number" value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="text-lg" />

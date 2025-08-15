@@ -57,7 +57,7 @@ export default function TextToolsPage() {
                   onChange={(e) => setText(e.target.value)}
                   className="min-h-[250px] text-base"
                 />
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button onClick={() => setText(text.toUpperCase())}>Uppercase</Button>
                   <Button onClick={() => setText(text.toLowerCase())}>Lowercase</Button>
                   <Button onClick={() => setText(toTitleCase(text))}>Title Case</Button>
