@@ -5,6 +5,7 @@ import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound } from "lucide-react
 
 const guides = [
   {
+    id: "text-tools",
     icon: <CaseSensitive className="h-8 w-8 text-primary" />,
     title: "Text Tools",
     description: "Learn how to use the Case Converter and Text Counter.",
@@ -16,6 +17,7 @@ const guides = [
     ]
   },
   {
+    id: "unit-converter",
     icon: <Ruler className="h-8 w-8 text-primary" />,
     title: "Unit Converter",
     description: "A quick guide to converting units.",
@@ -28,6 +30,7 @@ const guides = [
     ]
   },
   {
+    id: "calculator",
     icon: <Calculator className="h-8 w-8 text-primary" />,
     title: "Calculator",
     description: "How to perform calculations.",
@@ -39,6 +42,7 @@ const guides = [
     ]
   },
   {
+    id: "qr-code-generator",
     icon: <QrCode className="h-8 w-8 text-primary" />,
     title: "QR Code Generator",
     description: "Create and download QR codes.",
@@ -50,6 +54,7 @@ const guides = [
     ]
   },
   {
+    id: "password-generator",
     icon: <KeyRound className="h-8 w-8 text-primary" />,
     title: "Password Generator",
     description: "Generate strong, secure passwords.",
@@ -78,7 +83,7 @@ export default function GuidePage() {
 
         <div className="space-y-8">
           {guides.map((guide, index) => (
-             <Card key={index}>
+             <Card key={index} id={guide.id}>
               <CardHeader>
                   <div className="flex items-center gap-4">
                       {guide.icon}
