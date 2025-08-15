@@ -29,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/css-box-shadow-generator',
     '/css-gradient-generator',
     '/csv-viewer',
+    '/table-to-csv-converter',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

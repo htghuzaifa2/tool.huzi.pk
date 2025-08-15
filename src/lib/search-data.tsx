@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table } from "lucide-react";
 
 export const tools = [
   {
@@ -67,6 +67,12 @@ export const tools = [
     href: "/csv-viewer",
     title: "CSV Viewer",
     description: "Upload a CSV file and view it in a clean, sortable, and searchable table.",
+  },
+  {
+    icon: <Table className="h-8 w-8" />,
+    href: "/table-to-csv-converter",
+    title: "Table to CSV Converter",
+    description: "Convert any HTML table into a downloadable CSV file.",
   },
   {
     icon: <HeartPulse className="h-8 w-8" />,
