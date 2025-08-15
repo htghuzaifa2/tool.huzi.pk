@@ -1,12 +1,12 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type } from "lucide-react";
 
 export const tools = [
   {
     icon: <CaseSensitive className="h-8 w-8" />,
     href: "/text-tools",
     title: "Text Tools",
-    description: "Manipulate text with tools for case conversion, counting, and more.",
+    description: "Manipulate text with tools for case conversion and more.",
   },
   {
     icon: <Ruler className="h-8 w-8" />,
@@ -61,6 +61,12 @@ export const tools = [
     href: "/rich-text-editor",
     title: "Rich Text Editor",
     description: "An advanced editor for formatted text with headings, lists, and more.",
+  },
+  {
+    icon: <Type className="h-8 w-8" />,
+    href: "/word-counter",
+    title: "Word Counter",
+    description: "Count words, characters, sentences, and paragraphs in your text.",
   },
   {
     icon: <Info className="h-8 w-8" />,
@@ -200,8 +206,20 @@ export const guides = [
     description: "How to use the advanced editor.",
     steps: [
         "Navigate to the Rich Text Editor page.",
-        "This tool is currently under construction.",
-        "Check back later for features like text formatting, headings, lists, and more.",
+        "Use the toolbar at the top to apply formatting.",
+        "You can create headings, make text bold or italic, create lists, and more.",
+        "Your content is saved automatically in the editor."
+    ]
+  },
+    {
+    icon: <Type className="h-8 w-8 text-primary" />,
+    href: "/guide#word-counter",
+    title: "Word Counter Guide",
+    description: "How to count words, characters, and more.",
+    steps: [
+        "Go to the Word Counter page.",
+        "Type or paste your text into the text area.",
+        "The counters for words, characters, sentences, and paragraphs will update in real-time.",
     ]
   },
     {
