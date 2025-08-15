@@ -7,12 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Download, Text } from 'lucide-react';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-    title: 'QR Code Generator',
-    description: 'Create custom QR codes for URLs, text, and more.',
-};
 
 export default function QRCodeGeneratorPage() {
     const [text, setText] = useState('');

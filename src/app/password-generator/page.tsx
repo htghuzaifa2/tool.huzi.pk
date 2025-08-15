@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -54,7 +54,9 @@ export default function PasswordGeneratorPage() {
         setPassword(newPassword);
     }, [length, includeUppercase, includeLowercase, includeNumbers, includeSymbols, toast]);
     
-    useState(generatePassword)
+    useEffect(() => {
+        generatePassword();
+    }, [generatePassword]);
 
     const copyToClipboard = () => {
         if (password) {
