@@ -18,7 +18,6 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        {/* Left Section */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
             <Box className="h-6 w-6 text-primary" />
@@ -28,7 +27,6 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Middle Section - Desktop Nav */}
         <nav className="hidden flex-1 items-center justify-center space-x-6 text-sm font-medium md:flex">
           {navLinks.map((link) => 
              <Link
@@ -41,12 +39,10 @@ export function Header() {
           )}
         </nav>
 
-        {/* Right Section */}
-        <div className="flex items-center justify-end md:flex-1 space-x-2">
+        <div className="flex flex-1 items-center justify-end space-x-2">
           <SearchDialog />
           <ThemeSwitcher />
           
-          {/* Mobile Menu Trigger */}
           <Sheet>
             <SheetTrigger asChild>
               <Button
