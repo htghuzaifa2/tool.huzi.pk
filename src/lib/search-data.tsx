@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, Volume2 } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube } from "lucide-react";
 
 export const tools = [
   {
@@ -97,12 +97,6 @@ export const tools = [
     href: "/youtube-thumbnail-downloader",
     title: "YouTube Thumbnail Downloader",
     description: "Download high-quality thumbnails from any YouTube video instantly.",
-  },
-  {
-    icon: <Volume2 className="h-8 w-8" />,
-    href: "/text-to-speech",
-    title: "Text to Speech",
-    description: "Convert text into natural-sounding voice audio.",
   },
   {
     icon: <Info className="h-8 w-8" />,
@@ -322,19 +316,6 @@ export const guides = [
         "Click 'Get Thumbnails'.",
         "A gallery of available thumbnail sizes will appear.",
         "Click the 'Download' button below the thumbnail you want to save."
-    ]
-  },
-   {
-    icon: <Volume2 className="h-8 w-8 text-primary" />,
-    href: "/guide#text-to-speech",
-    title: "Text to Speech Guide",
-    description: "How to convert text to audio.",
-    steps: [
-        "Go to the Text to Speech page.",
-        "Enter the text you want to convert into the textarea.",
-        "Select a voice from the dropdown menu.",
-        "Click the 'Generate Audio' button.",
-        "An audio player will appear, allowing you to play and download the generated speech."
     ]
   },
   {
