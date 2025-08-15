@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2 } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio } from "lucide-react";
 
 export const tools = [
   {
@@ -115,6 +115,12 @@ export const tools = [
     href: "/age-calculator",
     title: "Age Calculator",
     description: "Find out your exact age in years, months, and days.",
+  },
+   {
+    icon: <AspectRatio className="h-8 w-8" />,
+    href: "/aspect-ratio-calculator",
+    title: "Aspect Ratio Calculator",
+    description: "Calculate correct dimensions while maintaining an image’s aspect ratio.",
   },
   {
     icon: <Timer className="h-8 w-8" />,
@@ -348,6 +354,19 @@ export const guides = [
       "Select your date of birth from the calendar.",
       "Click the 'Calculate Age' button.",
       "Your age will be shown in years, months, and days."
+    ]
+  },
+    {
+    icon: <AspectRatio className="h-8 w-8 text-primary" />,
+    href: "/guide#aspect-ratio-calculator",
+    title: "Aspect Ratio Calculator Guide",
+    description: "Learn how to calculate dimensions.",
+    steps: [
+      "Go to the Aspect Ratio Calculator page.",
+      "Enter the original width and height of your item (e.g., 1920 and 1080).",
+      "In the 'New Dimensions' section, type either your desired new width or new height.",
+      "The other dimension will be calculated automatically to maintain the aspect ratio.",
+      "Click 'Reset' to clear the fields and start over."
     ]
   },
   {
