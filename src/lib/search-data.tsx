@@ -68,12 +68,6 @@ export const tools = [
     title: "Word Counter",
     description: "Count words, characters, sentences, and paragraphs in your text.",
   },
-   {
-    icon: <Banknote className="h-8 w-8" />,
-    href: "/loan-calculator",
-    title: "Loan Calculator",
-    description: "Estimate your monthly loan payments and total cost.",
-  },
   {
     icon: <Info className="h-8 w-8" />,
     href: "/about",
@@ -226,18 +220,6 @@ export const guides = [
         "Go to the Word Counter page.",
         "Type or paste your text into the text area.",
         "The counters for words, characters, sentences, and paragraphs will update in real-time.",
-    ]
-  },
-  {
-    icon: <Banknote className="h-8 w-8 text-primary" />,
-    href: "/guide#loan-calculator",
-    title: "Loan Calculator Guide",
-    description: "How to estimate loan payments.",
-    steps: [
-        "Go to the Loan Calculator page.",
-        "Use the sliders to adjust the Loan Amount, Interest Rate, and Loan Term.",
-        "The monthly payment and total costs update automatically.",
-        "View the chart to see the breakdown between principal and interest.",
     ]
   },
     {

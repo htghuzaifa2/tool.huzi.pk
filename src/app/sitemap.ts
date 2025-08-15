@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/notepad',
     '/rich-text-editor',
     '/word-counter',
-    '/loan-calculator',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

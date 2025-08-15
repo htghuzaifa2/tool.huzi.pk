@@ -72,6 +72,14 @@ export default function CalculatorPage() {
     }
   }
 
+  const handleToggleSignClick = () => {
+    setDisplay(String(parseFloat(display) * -1))
+  }
+
+  const handlePercentageClick = () => {
+    setDisplay(String(parseFloat(display) / 100))
+  }
+
   return (
     <div className="container mx-auto py-10">
       <div className="max-w-sm mx-auto">
@@ -89,8 +97,8 @@ export default function CalculatorPage() {
             </div>
             <div className="grid grid-cols-4 gap-2">
               <Button variant="secondary" className={buttonClasses} onClick={handleClearClick}>AC</Button>
-              <Button variant="secondary" className={buttonClasses} disabled>+/-</Button>
-              <Button variant="secondary" className={buttonClasses} disabled>%</Button>
+              <Button variant="secondary" className={buttonClasses} onClick={handleToggleSignClick}>+/-</Button>
+              <Button variant="secondary" className={buttonClasses} onClick={handlePercentageClick}>%</Button>
               <Button variant="destructive" className={buttonClasses} onClick={() => handleOperatorClick("/")}>÷</Button>
 
               <Button variant="outline" className={buttonClasses} onClick={() => handleDigitClick("7")}>7</Button>
