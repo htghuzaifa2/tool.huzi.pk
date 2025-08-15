@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck } from "lucide-react";
 
 export const tools = [
   {
@@ -37,6 +37,12 @@ export const tools = [
     href: "/password-generator",
     title: "Password Generator",
     description: "Generate strong, secure, and random passwords.",
+  },
+  {
+    icon: <ShieldCheck className="h-8 w-8" />,
+    href: "/password-strength-checker",
+    title: "Password Strength Checker",
+    description: "Test the strength of your password and get suggestions to make it more secure.",
   },
   {
     icon: <HeartPulse className="h-8 w-8" />,
@@ -187,6 +193,19 @@ export const guides = [
       "Check the boxes to include uppercase letters, lowercase letters, numbers, or symbols.",
       "A new password is generated automatically. Click the refresh button to get a new one.",
       "Click the copy icon to copy the password to your clipboard."
+    ]
+  },
+  {
+    icon: <ShieldCheck className="h-8 w-8 text-primary" />,
+    href: "/guide#password-strength-checker",
+    title: "Password Strength Checker Guide",
+    description: "Learn how to test your password's security.",
+    steps: [
+        "Navigate to the Password Strength Checker page.",
+        "Type your password into the input field.",
+        "As you type, a strength meter will show how secure your password is.",
+        "Review the checklist below the meter to see which criteria your password meets (e.g., length, uppercase letters).",
+        "Improve your password until it reaches the 'Very Strong' level."
     ]
   },
   {

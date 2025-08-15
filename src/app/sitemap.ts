@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/calculator',
     '/qr-code-generator',
     '/password-generator',
+    '/password-strength-checker',
     '/bmi-calculator',
     '/age-calculator',
     '/image-converter',
