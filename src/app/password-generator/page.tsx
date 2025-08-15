@@ -10,12 +10,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Copy, RefreshCw } from 'lucide-react';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-    title: 'Password Generator',
-    description: 'Generate strong, secure, and random passwords.',
-};
 
 export default function PasswordGeneratorPage() {
     const [password, setPassword] = useState('');
