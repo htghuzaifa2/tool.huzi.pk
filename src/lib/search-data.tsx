@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette } from "lucide-react";
 
 export const tools = [
   {
@@ -85,6 +85,12 @@ export const tools = [
     href: "/time-zone-converter",
     title: "Time Zone Converter",
     description: "Compare the current time across different parts of the world.",
+  },
+  {
+    icon: <Palette className="h-8 w-8" />,
+    href: "/color-picker",
+    title: "Color Picker",
+    description: "Pick a color and get its HEX, RGB, and HSL codes for your projects.",
   },
   {
     icon: <Info className="h-8 w-8" />,
@@ -279,6 +285,18 @@ export const guides = [
         "Use the dropdown menu to select the desired time zone for each entry.",
         "The times will update automatically every second.",
         "Click the trash icon to remove a time zone."
+    ]
+  },
+  {
+    icon: <Palette className="h-8 w-8 text-primary" />,
+    href: "/guide#color-picker",
+    title: "Color Picker Guide",
+    description: "How to pick a color and copy its codes.",
+    steps: [
+        "Go to the Color Picker page.",
+        "Use the color swatch to visually select a color, or manually input a HEX code.",
+        "The page will instantly display the HEX, RGB, and HSL values for the selected color.",
+        "Click the copy icon next to any code to copy it to your clipboard.",
     ]
   },
   {
