@@ -22,7 +22,7 @@ export function Header() {
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
             <Box className="h-6 w-6 text-primary" />
-            <span className="hidden font-bold sm:inline-block">
+            <span className="font-bold inline-block">
               tool.huzi.pk
             </span>
           </Link>
