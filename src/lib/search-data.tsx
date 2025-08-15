@@ -309,6 +309,20 @@ export const guides = [
     ]
   },
   {
+    icon: <Binary className="h-8 w-8 text-primary" />,
+    href: "/guide#base-converter",
+    title: "Base Converter Guide",
+    description: "How to convert numbers between different bases.",
+    steps: [
+      "Go to the Base Converter page.",
+      "Enter the number you wish to convert in the 'From' input.",
+      "Select the base of your input number (e.g., Binary for '1010').",
+      "Select the target base you want to convert to.",
+      "The result will be displayed automatically.",
+      "Use the swap button to quickly reverse the conversion."
+    ]
+  },
+  {
     icon: <QrCode className="h-8 w-8 text-primary" />,
     href: "/guide#qr-code-generator",
     title: "QR Code Generator Guide",
