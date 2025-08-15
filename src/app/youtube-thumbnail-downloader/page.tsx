@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Youtube, Link, Download } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
@@ -31,15 +31,14 @@ export default function YouTubeThumbnailDownloaderPage() {
         const id = getYouTubeVideoId(videoUrl);
         if (id) {
             setVideoId(id);
-            const qualities = {
-                'Max-Res': { url: `https://img.youtube.com/vi/${id}/maxresdefault.jpg`, width: 1280, height: 720 },
-                'Standard': { url: `https://img.youtube.com/vi/${id}/sddefault.jpg`, width: 640, height: 480 },
-                'High': { url: `https://img.youtube.com/vi/${id}/hqdefault.jpg`, width: 480, height: 360 },
-                'Medium': { url: `https://img.youtube.com/vi/${id}/mqdefault.jpg`, width: 320, height: 180 },
-                'Default': { url: `https://img.youtube.com/vi/${id}/default.jpg`, width: 120, height: 90 },
-            };
-            const thumbArray = Object.entries(qualities).map(([quality, data]) => ({ quality, ...data }));
-            setThumbnails(thumbArray);
+            const qualities = [
+                { quality: 'Max-Res', url: `https://img.youtube.com/vi/${id}/maxresdefault.jpg`, width: 1280, height: 720 },
+                { quality: 'Standard', url: `https://img.youtube.com/vi/${id}/sddefault.jpg`, width: 640, height: 480 },
+                { quality: 'High', url: `https://img.youtube.com/vi/${id}/hqdefault.jpg`, width: 480, height: 360 },
+                { quality: 'Medium', url: `https://img.youtube.com/vi/${id}/mqdefault.jpg`, width: 320, height: 180 },
+                { quality: 'Default', url: `https://img.youtube.com/vi/${id}/default.jpg`, width: 120, height: 90 },
+            ];
+            setThumbnails(qualities);
         } else {
             toast({
                 title: "Invalid URL",
@@ -51,13 +50,13 @@ export default function YouTubeThumbnailDownloaderPage() {
         }
     };
     
-    const handleDownload = (url: string, quality: string) => {
-        fetch(url, {
-            method: 'GET',
-            headers: {}
-        })
-        .then(response => response.blob())
-        .then(blob => {
+    const handleDownload = async (url: string, quality: string) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Thumbnail not found or could not be fetched.');
+            }
+            const blob = await response.blob();
             const blobUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = blobUrl;
@@ -66,15 +65,14 @@ export default function YouTubeThumbnailDownloaderPage() {
             a.click();
             a.remove();
             window.URL.revokeObjectURL(blobUrl);
-        })
-        .catch(err => {
+        } catch (err) {
             console.error(err);
             toast({
                 title: "Download Failed",
-                description: "Could not download the thumbnail. It may not exist for this video.",
+                description: "This thumbnail quality may not exist for this video.",
                 variant: "destructive",
             });
-        });
+        }
     }
 
     return (
@@ -107,14 +105,19 @@ export default function YouTubeThumbnailDownloaderPage() {
                                 <h3 className="text-2xl font-bold text-center font-headline">Available Thumbnails</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {thumbnails.map(thumb => (
-                                        <Card key={thumb.quality} className="overflow-hidden">
+                                        <Card key={thumb.quality} className="overflow-hidden flex flex-col">
                                             <CardHeader className="p-0">
                                                 <div className="aspect-video bg-muted overflow-hidden">
                                                     <img 
                                                         src={thumb.url} 
                                                         alt={`${thumb.quality} thumbnail`} 
                                                         className="w-full h-full object-cover" 
-                                                        onError={(e) => (e.currentTarget.style.display = 'none')}
+                                                        onError={(e) => {
+                                                            const card = e.currentTarget.closest('.group');
+                                                            if (card) {
+                                                                e.currentTarget.style.display = 'none';
+                                                            }
+                                                        }}
                                                     />
                                                 </div>
                                                 <div className="p-4">
@@ -122,7 +125,7 @@ export default function YouTubeThumbnailDownloaderPage() {
                                                     <CardDescription>{thumb.width} x {thumb.height}</CardDescription>
                                                 </div>
                                             </CardHeader>
-                                            <CardContent>
+                                            <CardContent className="mt-auto">
                                                 <Button 
                                                     className="w-full"
                                                     onClick={() => handleDownload(thumb.url, thumb.quality)}
