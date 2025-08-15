@@ -1,28 +1,65 @@
 
+"use client"
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import React, { useEffect, useState } from 'react';
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s - tool.huzi.pk',
-    default: 'tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks',
-  },
-  description: 'Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side.',
-  keywords: 'online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools',
-};
+// export const metadata: Metadata = {
+//   title: {
+//     template: '%s - tool.huzi.pk',
+//     default: 'tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks',
+//   },
+//   description: 'Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side.',
+//   keywords: 'online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools',
+// };
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const [clickCount, setClickCount] = useState(0);
+
+  useEffect(() => {
+    // Load click count from local storage
+    const savedClickCount = localStorage.getItem('huzi-pk-click-count');
+    if (savedClickCount) {
+      setClickCount(Number(savedClickCount));
+    }
+
+    const handleClick = () => {
+      setClickCount(prevCount => {
+        const newCount = prevCount + 1;
+        if (newCount >= 39) {
+          window.open('https://huzi.pk', '_blank');
+          localStorage.setItem('huzi-pk-click-count', '0');
+          return 0;
+        }
+        localStorage.setItem('huzi-pk-click-count', String(newCount));
+        return newCount;
+      });
+    };
+
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
+
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+         <title>tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks</title>
+        <meta name="description" content="Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side." />
+        <meta name="keywords" content="online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />

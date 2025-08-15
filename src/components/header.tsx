@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
   { href: "/guide", label: "Guide" },
+  { href: "https://huzi.pk", label: "Shop", external: true },
 ]
 
 export function Header() {
@@ -29,6 +30,17 @@ export function Header() {
 
         <nav className="hidden items-center justify-center space-x-6 text-sm font-medium md:flex">
           {navLinks.map((link) => 
+            link.external ? (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+              >
+                {link.label}
+              </a>
+            ) : (
              <Link
                 key={link.href}
                 href={link.href}
@@ -36,6 +48,7 @@ export function Header() {
               >
                 {link.label}
               </Link>
+            )
           )}
         </nav>
 
@@ -62,6 +75,17 @@ export function Header() {
               <div className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
                   <div className="flex flex-col space-y-3">
                       {navLinks.map(link => 
+                        link.external ? (
+                          <a
+                            key={link.href}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-foreground"
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
                           <Link
                             key={link.href}
                             href={link.href}
@@ -69,6 +93,7 @@ export function Header() {
                           >
                             {link.label}
                           </Link>
+                        )
                       )}
                   </div>
               </div>
