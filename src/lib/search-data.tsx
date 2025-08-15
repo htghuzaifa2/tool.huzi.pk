@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling, CodeXml, Keyboard, Calendar } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling, CodeXml, Keyboard, Calendar, Smile } from "lucide-react";
 
 export const tools = [
   {
@@ -193,6 +193,12 @@ export const tools = [
     href: "/lorem-ipsum-generator",
     title: "Lorem Ipsum Generator",
     description: "Generate random placeholder text with an exact number of words.",
+  },
+  {
+    icon: <Smile className="h-8 w-8" />,
+    href: "/random-emoji-generator",
+    title: "Random Emoji Generator",
+    description: "Generate a random emoji or emoji set instantly.",
   },
   {
     icon: <Globe className="h-8 w-8" />,
