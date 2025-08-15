@@ -2,6 +2,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { RichTextEditor } from "@/components/rich-text-editor";
 import { Pilcrow } from "lucide-react";
 
 export default function RichTextEditorPage() {
@@ -15,12 +16,10 @@ export default function RichTextEditorPage() {
                     <Pilcrow className="w-8 h-8" />
                 </div>
                 <CardTitle className="text-4xl font-bold font-headline">Rich Text Editor</CardTitle>
-                <CardDescription>An advanced editor for all your formatting needs. Currently under construction.</CardDescription>
+                <CardDescription>An advanced editor for all your formatting needs.</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="border rounded-lg p-8 text-center bg-muted/50 min-h-[300px] flex items-center justify-center">
-                    <p className="text-muted-foreground">Coming soon... Rich text editing features will be available here.</p>
-                </div>
+                <RichTextEditor />
             </CardContent>
         </Card>
       </div>
