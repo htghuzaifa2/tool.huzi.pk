@@ -32,7 +32,7 @@ export default function TextToolsPage() {
     <div className="container mx-auto py-10">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold font-headline">Text Manipulation Tools</h1>
+          <h1 className="text-4xl md:text-5xl font-bold font-headline">Text Manipulation Tools</h1>
           <p className="text-muted-foreground mt-2">
             A versatile set of tools to convert, count, and analyze your text.
           </p>
