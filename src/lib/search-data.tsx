@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling, CodeXml } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling, CodeXml, Keyboard } from "lucide-react";
 
 export const tools = [
   {
@@ -139,6 +139,12 @@ export const tools = [
     href: "/stopwatch-timer",
     title: "Stopwatch & Timer",
     description: "A responsive stopwatch and countdown timer that works offline."
+  },
+  {
+    icon: <Keyboard className="h-8 w-8" />,
+    href: "/keyboard-event-tester",
+    title: "Keyboard Event Tester",
+    description: "Detect and display key codes and key names when you press any key.",
   },
   {
     icon: <Image className="h-8 w-8" />,

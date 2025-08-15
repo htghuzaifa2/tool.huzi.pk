@@ -1,4 +1,3 @@
-
 import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -17,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/aspect-ratio-calculator',
     '/px-to-rem-converter',
     '/stopwatch-timer',
+    '/keyboard-event-tester',
     '/image-converter',
     '/image-to-pdf-converter',
     '/notepad',
