@@ -9,9 +9,10 @@ import { Footer } from '@/components/footer';
 export const metadata: Metadata = {
   title: {
     template: '%s - tool.huzi.pk',
-    default: 'Free Online Tools - tool.huzi.pk | Your Digital Toolbox',
+    default: 'tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks',
   },
-  description: 'Discover a comprehensive suite of free online tools at tool.huzi.pk. From password generators and QR code creators to image converters and developer utilities, all our tools are client-side, ensuring your data stays private. Fast, secure, and easy to use.',
+  description: 'Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side.',
+  keywords: 'online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools',
 };
 
 export default function RootLayout({
