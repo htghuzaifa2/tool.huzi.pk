@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow } from "lucide-react";
 
 export const tools = [
   {
@@ -55,6 +55,12 @@ export const tools = [
     href: "/notepad",
     title: "Notepad",
     description: "A simple notepad to write, edit, save locally, and download your notes.",
+  },
+  {
+    icon: <Pilcrow className="h-8 w-8" />,
+    href: "/rich-text-editor",
+    title: "Rich Text Editor",
+    description: "An advanced editor for formatted text with headings, lists, and more.",
   },
   {
     icon: <Info className="h-8 w-8" />,
@@ -185,6 +191,17 @@ export const guides = [
       "To edit, click the pencil icon, make changes in the editor, and click 'Update Note'.",
       "Click 'Download' to save a specific note as a text file.",
       "Click 'Delete' to permanently remove a note."
+    ]
+  },
+  {
+    icon: <Pilcrow className="h-8 w-8 text-primary" />,
+    href: "/guide#rich-text-editor",
+    title: "Rich Text Editor Guide",
+    description: "How to use the advanced editor.",
+    steps: [
+        "Navigate to the Rich Text Editor page.",
+        "This tool is currently under construction.",
+        "Check back later for features like text formatting, headings, lists, and more.",
     ]
   },
     {
