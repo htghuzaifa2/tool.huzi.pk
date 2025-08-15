@@ -7,10 +7,12 @@ export function ClickTracker() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // This effect runs only on the client, after the initial render.
     setIsClient(true);
   }, []);
 
   useEffect(() => {
+    // This effect runs only on the client AND only after `isClient` becomes true.
     if (!isClient) {
       return;
     }
@@ -29,10 +31,11 @@ export function ClickTracker() {
 
     document.addEventListener('click', handleClick);
 
+    // Cleanup the event listener when the component unmounts.
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  }, [isClient]);
+  }, [isClient]); // The key change is here: this effect depends on `isClient`.
 
-  return null; // This component does not render anything
+  return null; // This component does not render anything.
 }
