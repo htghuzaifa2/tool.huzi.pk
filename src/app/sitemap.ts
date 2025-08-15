@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/meta-tag-generator',
     '/markdown-editor',
     '/css-box-shadow-generator',
+    '/css-gradient-generator',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

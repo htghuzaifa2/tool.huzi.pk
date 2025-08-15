@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette } from "lucide-react";
 
 export const tools = [
   {
@@ -55,6 +55,12 @@ export const tools = [
     href: "/css-box-shadow-generator",
     title: "CSS Box Shadow Generator",
     description: "Visually design CSS box shadows and copy the generated code instantly.",
+  },
+  {
+    icon: <Pipette className="h-8 w-8" />,
+    href: "/css-gradient-generator",
+    title: "CSS Gradient Generator",
+    description: "Create custom linear and radial gradients with a color picker and copy the CSS.",
   },
   {
     icon: <HeartPulse className="h-8 w-8" />,
