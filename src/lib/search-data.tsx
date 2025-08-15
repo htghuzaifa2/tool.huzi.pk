@@ -183,6 +183,12 @@ export const tools = [
     description: "Count words, characters, sentences, and paragraphs in your text.",
   },
   {
+    icon: <Pilcrow className="h-8 w-8" />,
+    href: "/lorem-ipsum-generator",
+    title: "Lorem Ipsum Generator",
+    description: "Generate random placeholder text with an exact number of words.",
+  },
+  {
     icon: <Globe className="h-8 w-8" />,
     href: "/time-zone-converter",
     title: "Time Zone Converter",

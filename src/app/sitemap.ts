@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/notepad',
     '/rich-text-editor',
     '/word-counter',
+    '/lorem-ipsum-generator',
     '/time-zone-converter',
     '/color-picker',
     '/youtube-thumbnail-downloader',
