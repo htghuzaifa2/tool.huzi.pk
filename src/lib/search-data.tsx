@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling } from "lucide-react";
 
 export const tools = [
   {
@@ -121,6 +121,12 @@ export const tools = [
     href: "/aspect-ratio-calculator",
     title: "Aspect Ratio Calculator",
     description: "Calculate correct dimensions while maintaining an image’s aspect ratio.",
+  },
+  {
+    icon: <Scaling className="h-8 w-8" />,
+    href: "/px-to-rem-converter",
+    title: "Pixel to Rem Converter",
+    description: "Convert pixel values to rem and vice versa for responsive web design.",
   },
   {
     icon: <Timer className="h-8 w-8" />,

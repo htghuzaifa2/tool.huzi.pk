@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/bmi-calculator',
     '/age-calculator',
     '/aspect-ratio-calculator',
+    '/px-to-rem-converter',
     '/stopwatch-timer',
     '/image-converter',
     '/image-to-pdf-converter',
