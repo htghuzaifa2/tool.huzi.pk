@@ -1,5 +1,3 @@
-# Firebase Studio
+tool.huzi.pk another open source project by huzi.pk aka HTG HUZAIFA.
 
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+if you use our project please gave us credit its totally optional to give credit but we will be greatfull if you gave otherwise choice is yours enjoy. !
