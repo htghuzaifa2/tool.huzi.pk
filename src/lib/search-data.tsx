@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video } from "lucide-react";
 
 export const tools = [
   {
@@ -117,10 +117,10 @@ export const tools = [
     description: "Pick a color and get its HEX, RGB, and HSL codes for your projects.",
   },
   {
-    icon: <Youtube className="h-8 w-8" />,
-    href: "/youtube-thumbnail-downloader",
-    title: "YouTube Thumbnail Downloader",
-    description: "Download high-quality thumbnails from any YouTube video instantly.",
+    icon: <Video className="h-8 w-8" />,
+    href: "/video-thumbnail-downloader",
+    title: "Video Thumbnail Downloader",
+    description: "Download thumbnails from YouTube, Vimeo, and Dailymotion videos.",
   },
   {
     icon: <Info className="h-8 w-8" />,
@@ -381,15 +381,16 @@ export const guides = [
     ]
   },
   {
-    icon: <Youtube className="h-8 w-8 text-primary" />,
-    href: "/guide#youtube-thumbnail-downloader",
-    title: "YouTube Thumbnail Downloader Guide",
-    description: "How to download thumbnails from a YouTube video.",
+    icon: <Video className="h-8 w-8 text-primary" />,
+    href: "/guide#video-thumbnail-downloader",
+    title: "Video Thumbnail Downloader Guide",
+    description: "How to download thumbnails from YouTube, Vimeo, or Dailymotion.",
     steps: [
-        "Go to the YouTube Thumbnail Downloader page.",
-        "Paste the URL of the YouTube video into the input field.",
-        "Click 'Get Thumbnails'.",
-        "A gallery of available thumbnail sizes will appear.",
+        "Go to the Video Thumbnail Downloader page.",
+        "Select the tab for the platform (YouTube, Vimeo, or Dailymotion).",
+        "Paste the URL of the video into the input field.",
+        "Click 'Get Thumbnail(s)'.",
+        "A gallery of available thumbnails will appear.",
         "Click the 'Download' button below the thumbnail you want to save."
     ]
   },

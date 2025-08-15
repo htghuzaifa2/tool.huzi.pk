@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/word-counter',
     '/time-zone-converter',
     '/color-picker',
-    '/youtube-thumbnail-downloader',
+    '/video-thumbnail-downloader',
     '/meta-tag-generator',
     '/markdown-editor',
     '/css-box-shadow-generator',
