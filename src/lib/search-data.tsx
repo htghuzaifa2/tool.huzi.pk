@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare } from "lucide-react";
 
 export const tools = [
   {
@@ -55,6 +55,18 @@ export const tools = [
     href: "/notepad",
     title: "Notepad",
     description: "A simple notepad to write, save locally, and download your notes.",
+  },
+  {
+    icon: <Info className="h-8 w-8" />,
+    href: "/about",
+    title: "About",
+    description: "Learn more about our mission and the creator of this website.",
+  },
+  {
+    icon: <MessageSquare className="h-8 w-8" />,
+    href: "/contact",
+    title: "Contact",
+    description: "Get in touch with us for questions, feedback, or suggestions.",
   },
 ];
 
@@ -171,6 +183,18 @@ export const guides = [
       "Click 'Save Note' to store the content in your browser. It will be there when you return.",
       "Click 'Download (.txt)' to save your note as a text file to your computer.",
       "Click 'Clear Notepad' to erase the content from the screen and from local storage."
+    ]
+  },
+    {
+    icon: <MessageSquare className="h-8 w-8 text-primary" />,
+    href: "/guide#contact-form",
+    title: "Contact Form Guide",
+    description: "How to send us a message.",
+    steps: [
+        "Go to the Contact page.",
+        "Fill in your name and message in the required fields.",
+        "You can optionally add your email and a subject.",
+        "Click 'Send Message'. This will open WhatsApp with a pre-filled message ready to be sent to us.",
     ]
   },
 ];

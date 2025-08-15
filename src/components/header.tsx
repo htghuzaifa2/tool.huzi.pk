@@ -12,7 +12,6 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
   { href: "/guide", label: "Guide" },
-  { href: "https://huzi.pk", label: "Shop", external: true },
 ]
 
 export function Header() {

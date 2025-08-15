@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
@@ -6,8 +7,11 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'tool.huzi.pk',
-  description: 'A collection of client-side tools and utilities.',
+  title: {
+    template: '%s - tool.huzi.pk',
+    default: 'tool.huzi.pk - Your Ultimate Digital Toolbox',
+  },
+  description: 'A collection of client-side tools and utilities. We offer a variety of free tools including a password generator, QR code generator, image converter, and more.',
 };
 
 export default function RootLayout({
