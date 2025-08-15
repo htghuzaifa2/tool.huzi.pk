@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search } from "lucide-react";
 
 export const tools = [
   {
@@ -257,6 +257,18 @@ export const tools = [
 ];
 
 export const guides = [
+  {
+    icon: <Search className="h-8 w-8 text-primary" />,
+    href: "/guide#search-guide",
+    title: "How to Find Tools",
+    description: "Quickly find any tool or guide using the search bar.",
+    steps: [
+      "Click the search icon in the header or press Ctrl+K (or Cmd+K on Mac).",
+      "Type the name of the tool you're looking for (e.g., 'password' or 'color picker').",
+      "Click on the desired tool from the search results to navigate to its page.",
+      "You can also switch between searching for 'Tools' and 'Guides' using the tabs.",
+    ],
+  },
   {
     icon: <CaseSensitive className="h-8 w-8 text-primary" />,
     href: "/guide#text-tools",
@@ -718,15 +730,41 @@ export const guides = [
   },
   {
     icon: <Youtube className="h-8 w-8 text-primary" />,
-    href: "/guide#thumbnail-downloaders",
-    title: "Thumbnail Downloader Guide",
-    description: "How to download thumbnails from videos.",
+    href: "/guide#youtube-thumbnail-downloader",
+    title: "YouTube Thumbnail Downloader Guide",
+    description: "How to download thumbnails from YouTube videos.",
     steps: [
-        "Navigate to the specific downloader (YouTube, Vimeo, or Dailymotion).",
+        "Navigate to the YouTube Thumbnail Downloader.",
         "Paste the URL of the video into the input field.",
-        "Click 'Get Thumbnail(s)' or 'Get Thumbnail'.",
+        "Click 'Get Thumbnails'.",
         "A gallery of available thumbnails will appear.",
         "Click the 'Download' button below the thumbnail you want to save."
+    ]
+  },
+  {
+    icon: <Video className="h-8 w-8 text-primary" />,
+    href: "/guide#vimeo-thumbnail-downloader",
+    title: "Vimeo Thumbnail Downloader Guide",
+    description: "How to download thumbnails from Vimeo videos.",
+    steps: [
+        "Navigate to the Vimeo Thumbnail Downloader.",
+        "Paste the URL of the video into the input field.",
+        "Click 'Get Thumbnail'.",
+        "The highest quality thumbnail will appear.",
+        "Click the 'Download' button below the thumbnail to save it."
+    ]
+  },
+  {
+    icon: <Video className="h-8 w-8 text-primary" />,
+    href: "/guide#dailymotion-thumbnail-downloader",
+    title: "Dailymotion Thumbnail Downloader Guide",
+    description: "How to download thumbnails from Dailymotion videos.",
+    steps: [
+        "Navigate to the Dailymotion Thumbnail Downloader.",
+        "Paste the URL of the video into the input field.",
+        "Click 'Get Thumbnail'.",
+        "The highest quality thumbnail will appear.",
+        "Click the 'Download' button below the thumbnail to save it."
     ]
   },
   {
@@ -745,14 +783,15 @@ export const guides = [
   },
   {
     icon: <MessageSquare className="h-8 w-8 text-primary" />,
-    href: "/guide#contact-form",
+    href: "/guide#contact",
     title: "Contact Form Guide",
     description: "How to send us a message.",
     steps: [
         "Go to the Contact page.",
         "Fill in your name and message in the required fields.",
         "You can optionally add your email and a subject.",
-        "Click 'Send Message'. This will open WhatsApp with a pre-filled message ready to be sent to us.",
+        "Click 'Send Message via WhatsApp'. This will open WhatsApp with a pre-filled message ready to be sent to us.",
+        "Alternatively, you can click the email link to send a direct email."
     ]
   },
 ];

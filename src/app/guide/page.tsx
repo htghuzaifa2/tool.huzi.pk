@@ -2,6 +2,7 @@
 "use client"
 
 import { useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides as allGuides } from "@/lib/search-data";
@@ -53,8 +54,9 @@ export default function GuidePage() {
 
         <div className="space-y-8">
           {currentGuides.map((guide, index) => (
-             <Card key={guide.href} id={guide.href.split('#')[1]}>
+             <Card key={guide.href} id={guide.href.replace('/guide#', '')}>
               <CardHeader>
+                <Link href={guide.href.replace('/guide#', '/')}>
                   <div className="flex items-center gap-4">
                       {guide.icon}
                       <div>
@@ -62,6 +64,7 @@ export default function GuidePage() {
                           <CardDescription>{guide.description}</CardDescription>
                       </div>
                   </div>
+                </Link>
               </CardHeader>
               <CardContent>
                   <Accordion type="single" collapsible>

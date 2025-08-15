@@ -132,8 +132,8 @@ export function SearchDialog() {
           <span className="sr-only">Search</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[640px] p-0 sm:p-6 sm:rounded-lg top-0 sm:top-[40%] translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border h-screen sm:h-[60vh]">
-         <DialogHeader className="p-4 border-b">
+      <DialogContent className="sm:max-w-[640px] p-0 sm:p-4 sm:rounded-lg top-0 sm:top-[40%] translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border h-screen sm:h-[70vh] flex flex-col">
+         <DialogHeader className="p-4 sm:p-0 border-b sm:border-0">
            <DialogTitle className="sr-only">Search</DialogTitle>
            <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -146,16 +146,16 @@ export function SearchDialog() {
           </div>
         </DialogHeader>
        
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex flex-col">
-          <div className="px-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex flex-col flex-1 overflow-hidden">
+          <div className="px-4 sm:px-0">
              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="tools">Tools</TabsTrigger>
                 <TabsTrigger value="guides">Guides</TabsTrigger>
             </TabsList>
           </div>
 
-          <ScrollArea className="flex-1">
-            <div className="p-4">
+          <ScrollArea className="flex-1 mt-4">
+            <div className="p-1">
                 <TabsContent value="tools" forceMount={true} hidden={activeTab !== 'tools'}>
                   {renderResults(filteredTools, toolsPage, setToolsPage)}
                 </TabsContent>

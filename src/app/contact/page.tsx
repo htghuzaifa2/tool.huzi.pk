@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { User, Mail, MessageSquare, PenSquare, AtSign } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
@@ -49,7 +49,7 @@ export default function ContactPage() {
 
   return (
     <div className="container mx-auto py-10">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-2xl mx-auto space-y-8">
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-4xl font-bold font-headline">Contact Us</CardTitle>
@@ -100,15 +100,20 @@ export default function ContactPage() {
                 <Button type="submit" size="lg">Send Message via WhatsApp</Button>
               </div>
             </form>
-            <Separator className="my-8" />
-            <div className="text-center space-y-2">
-                <h3 className="text-lg font-semibold">Or contact us by email</h3>
-                <a href="mailto:contact@huzi.pk" className="inline-flex items-center text-primary hover:underline">
+          </CardContent>
+        </Card>
+        
+        <Card>
+            <CardHeader>
+                <CardTitle className="text-xl text-center font-headline">Alternative Contact</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center space-y-2">
+                <p className="text-muted-foreground">Or contact us directly by email</p>
+                <a href="mailto:contact@huzi.pk" className="inline-flex items-center text-primary hover:underline font-semibold">
                     <AtSign className="mr-2 h-5 w-5" />
                     contact@huzi.pk
                 </a>
-            </div>
-          </CardContent>
+            </CardContent>
         </Card>
       </div>
     </div>
