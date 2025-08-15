@@ -1,23 +1,9 @@
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, BookText, Calculator, CaseSensitive, Heading, Ruler } from "lucide-react"
+import { ArrowRight, Calculator, CaseSensitive, Ruler } from "lucide-react"
 
 const tools = [
-  {
-    icon: <BookText className="h-8 w-8" />,
-    href: "/summarizer",
-    title: "AI Summarizer",
-    description: "Paste any text and get a concise summary using generative AI.",
-    pro: true,
-  },
-  {
-    icon: <Heading className="h-8 w-8" />,
-    href: "/title-generator",
-    title: "AI Title Generator",
-    description: "Generate a catchy and relevant title for your content.",
-    pro: true,
-  },
   {
     icon: <CaseSensitive className="h-8 w-8" />,
     href: "/text-tools",
@@ -47,7 +33,7 @@ export default function Home() {
             Your Ultimate Digital Toolbox
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-foreground/80">
-            A curated collection of client-side utilities and AI-powered tools to streamline your everyday tasks.
+            A curated collection of client-side utilities and tools to streamline your everyday tasks.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Button asChild size="lg">

@@ -6,7 +6,7 @@ import { Header } from '@/components/header';
 
 export const metadata: Metadata = {
   title: 'Toolbox Hub',
-  description: 'A collection of client-side tools and AI-powered utilities.',
+  description: 'A collection of client-side tools and utilities.',
 };
 
 export default function RootLayout({

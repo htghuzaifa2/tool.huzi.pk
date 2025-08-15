@@ -7,8 +7,6 @@ import { ThemeSwitcher } from "@/components/theme-switcher"
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/summarizer", label: "AI Summarizer" },
-  { href: "/title-generator", label: "AI Title Generator" },
   { href: "/text-tools", label: "Text Tools" },
   { href: "/unit-converter", label: "Unit Converter" },
   { href: "/calculator", label: "Calculator" },
