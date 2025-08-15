@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import { SearchDialog } from "./search-dialog"
-import { SidebarTrigger } from "@/components/ui/sidebar"
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -20,7 +19,6 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex items-center">
-          <SidebarTrigger className="mr-2" />
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Box className="h-6 w-6 text-primary" />
             <span className="hidden font-bold sm:inline-block">

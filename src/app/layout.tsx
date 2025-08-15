@@ -5,8 +5,6 @@ import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { AppSidebar } from '@/components/sidebar';
-import { SidebarProvider } from '@/components/ui/sidebar';
 
 export const metadata: Metadata = {
   title: {
@@ -34,16 +32,13 @@ export default function RootLayout({
           storageKey="toolbox-hub-theme"
           defaultTheme="dark"
         >
-          <SidebarProvider>
-            <div className="relative flex min-h-screen w-full flex-col">
-              <Header />
-              <div className="flex flex-1">
-                <AppSidebar />
-                <main className="flex-1 w-full">{children}</main>
-              </div>
-              <Footer />
+          <div className="relative flex min-h-screen w-full flex-col">
+            <Header />
+            <div className="flex flex-1">
+              <main className="flex-1 w-full">{children}</main>
             </div>
-          </SidebarProvider>
+            <Footer />
+          </div>
           <Toaster />
         </ThemeProvider>
       </body>
