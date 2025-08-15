@@ -6,9 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides as allGuides } from "@/lib/search-data";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUp } from "lucide-react";
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 25;
 
 export default function GuidePage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,12 +21,14 @@ export default function GuidePage() {
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -40,6 +42,13 @@ export default function GuidePage() {
           <p className="text-muted-foreground mt-2 text-lg">
             Your step-by-step instructions for using our powerful tools.
           </p>
+          {currentPage > 1 && (
+            <div className="mt-4">
+              <Button onClick={handlePrevPage} variant="outline">
+                <ArrowUp className="mr-2 h-5 w-5" /> Load Previous
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="space-y-8">
@@ -72,16 +81,13 @@ export default function GuidePage() {
           ))}
         </div>
 
-        {totalPages > 1 && (
-            <div className="mt-12 flex justify-center gap-4">
-              <Button onClick={handlePrevPage} disabled={currentPage === 1} variant="outline">
-                <ArrowLeft className="mr-2 h-5 w-5" /> Previous
-              </Button>
-              <Button onClick={handleNextPage} disabled={currentPage === totalPages} variant="outline">
-                Next <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          )}
+        {currentPage < totalPages && (
+          <div className="mt-12 flex justify-center">
+            <Button onClick={handleNextPage} variant="default" size="lg">
+              Load More <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

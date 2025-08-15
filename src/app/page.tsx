@@ -5,10 +5,10 @@ import { useState } from "react"
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Calculator, CaseSensitive, Ruler, QrCode, KeyRound, ArrowLeft } from "lucide-react"
+import { ArrowRight, ArrowUp } from "lucide-react"
 import { tools } from "@/lib/search-data"
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 25;
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,12 +21,14 @@ export default function Home() {
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      window.scrollTo({ top: document.getElementById('tools')?.offsetTop, behavior: 'smooth' });
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+       window.scrollTo({ top: document.getElementById('tools')?.offsetTop, behavior: 'smooth' });
     }
   };
 
@@ -50,9 +52,18 @@ export default function Home() {
 
       <section id="tools" className="py-16 bg-muted/40">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center font-headline mb-12">
-            Explore Our Tools
-          </h2>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold font-headline">
+              Explore Our Tools
+            </h2>
+             {currentPage > 1 && (
+                <div className="mt-4">
+                    <Button onClick={handlePrevPage} variant="outline">
+                        <ArrowUp className="mr-2 h-5 w-5" /> Load Previous
+                    </Button>
+                </div>
+            )}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentTools.map((tool) => (
               <Link href={tool.href} key={tool.href} className="group">
@@ -68,13 +79,10 @@ export default function Home() {
               </Link>
             ))}
           </div>
-           {totalPages > 1 && (
-            <div className="mt-12 flex justify-center gap-4">
-              <Button onClick={handlePrevPage} disabled={currentPage === 1} variant="outline">
-                <ArrowLeft className="mr-2 h-5 w-5" /> Previous
-              </Button>
-              <Button onClick={handleNextPage} disabled={currentPage === totalPages} variant="outline">
-                Next <ArrowRight className="ml-2 h-5 w-5" />
+           {currentPage < totalPages && (
+            <div className="mt-12 flex justify-center">
+              <Button onClick={handleNextPage} variant="default" size="lg">
+                Load More <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
           )}

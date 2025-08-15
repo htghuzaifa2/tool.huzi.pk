@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Search, ArrowLeft, ArrowRight } from "lucide-react"
+import { Search, ArrowLeft, ArrowRight, ArrowUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -25,7 +25,7 @@ type SearchResult = {
     description: string;
 };
 
-const ITEMS_PER_PAGE = 4; // Smaller page size for dialog
+const ITEMS_PER_PAGE = 25; 
 
 export function SearchDialog() {
   const [open, setOpen] = useState(false)
@@ -93,7 +93,14 @@ export function SearchDialog() {
 
       return (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+          {currentPage > 1 && (
+              <div className="mb-4 flex justify-center">
+                  <Button onClick={handlePrevPage} variant="outline" size="sm">
+                      <ArrowUp className="mr-2 h-4 w-4" /> Load Previous
+                  </Button>
+              </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {currentResults.map((result) => (
               <Link href={result.href} key={result.href} className="group" onClick={handleResultClick}>
                 <Card className="h-full hover:border-primary transition-colors duration-300">
@@ -106,13 +113,10 @@ export function SearchDialog() {
               </Link>
             ))}
           </div>
-          {totalPages > 1 && (
-            <div className="mt-4 flex justify-center gap-4">
-              <Button onClick={handlePrevPage} disabled={currentPage === 1} variant="outline" size="sm">
-                <ArrowLeft className="mr-2 h-4 w-4" /> Prev
-              </Button>
-              <Button onClick={handleNextPage} disabled={currentPage === totalPages} variant="outline" size="sm">
-                Next <ArrowRight className="ml-2 h-4 w-4" />
+          {currentPage < totalPages && (
+            <div className="mt-4 flex justify-center">
+              <Button onClick={handleNextPage} variant="outline" size="sm">
+                Load More <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           )}
@@ -129,7 +133,7 @@ export function SearchDialog() {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[640px] p-0 sm:p-6 sm:rounded-lg top-0 sm:top-1/2 translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border">
-        <DialogHeader className="p-4 border-b sm:hidden">
+         <DialogHeader className="p-4 border-b sm:hidden">
            <DialogTitle className="sr-only">Search</DialogTitle>
            <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
