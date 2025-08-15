@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText } from "lucide-react";
 
 export const tools = [
   {
@@ -49,6 +49,12 @@ export const tools = [
     href: "/image-converter",
     title: "Image Converter",
     description: "Easily convert image files between PNG, JPG, and WEBP formats.",
+  },
+   {
+    icon: <FileText className="h-8 w-8" />,
+    href: "/notepad",
+    title: "Notepad",
+    description: "A simple notepad to write, save locally, and download your notes.",
   },
 ];
 
@@ -152,6 +158,19 @@ export const guides = [
       "Once uploaded, choose your desired output format (PNG, JPG, or WEBP).",
       "Click the 'Convert Image' button.",
       "A preview of the converted image will appear. Click 'Download' to save it."
+    ]
+  },
+  {
+    icon: <FileText className="h-8 w-8 text-primary" />,
+    href: "/guide#notepad",
+    title: "Notepad Guide",
+    description: "How to use the local notepad.",
+    steps: [
+      "Go to the Notepad page.",
+      "Type your notes directly into the text area.",
+      "Click 'Save Note' to store the content in your browser. It will be there when you return.",
+      "Click 'Download (.txt)' to save your note as a text file to your computer.",
+      "Click 'Clear Notepad' to erase the content from the screen and from local storage."
     ]
   },
 ];
