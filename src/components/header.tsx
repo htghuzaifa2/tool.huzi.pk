@@ -1,7 +1,7 @@
 
 "use client"
 import Link from "next/link"
-import { Box, Menu } from "lucide-react"
+import { Box, Menu, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ThemeSwitcher } from "@/components/theme-switcher"
@@ -102,6 +102,10 @@ export function Header() {
             </Link>
           </div>
           <nav className="flex items-center">
+            <Button variant="ghost" size="icon" className="mr-2">
+              <Search className="h-5 w-5" />
+              <span className="sr-only">Search</span>
+            </Button>
             <ThemeSwitcher />
           </nav>
         </div>
