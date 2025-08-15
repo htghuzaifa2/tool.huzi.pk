@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage } from "lucide-react";
 
 export const tools = [
   {
@@ -55,6 +55,12 @@ export const tools = [
     href: "/image-converter",
     title: "Image Converter",
     description: "Easily convert image files between PNG, JPG, and WEBP formats.",
+  },
+  {
+    icon: <FileImage className="h-8 w-8" />,
+    href: "/image-to-pdf-converter",
+    title: "Image to PDF Converter",
+    description: "Convert multiple images (JPG, PNG, WebP) into a single PDF file.",
   },
    {
     icon: <Pencil className="h-8 w-8" />,
@@ -208,6 +214,19 @@ export const guides = [
       "Once uploaded, choose your desired output format (PNG, JPG, or WEBP).",
       "Click the 'Convert Image' button.",
       "A preview of the converted image will appear. Click 'Download' to save it."
+    ]
+  },
+   {
+    icon: <FileImage className="h-8 w-8 text-primary" />,
+    href: "/guide#image-to-pdf-converter",
+    title: "Image to PDF Converter Guide",
+    description: "How to convert images into a single PDF.",
+    steps: [
+      "Navigate to the Image to PDF Converter page.",
+      "Click the upload area to select one or more image files.",
+      "Your selected images will appear in the queue below.",
+      "Click the 'Convert to PDF' button to start the process.",
+      "Your browser will automatically download the generated PDF file."
     ]
   },
   {
