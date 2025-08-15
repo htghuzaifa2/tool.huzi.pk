@@ -32,7 +32,7 @@ const Tiptap = () => {
     ],
     content: `
       <h2>Welcome to the Rich Text Editor!</h2>
-      <p>This is a fully functional rich text editor built with Tiptap. You can format your text with the toolbar above.</p>
+      <p>This is a fully functional rich text editor built with Tiptap. You can format your text with the toolbar above or use the floating menu that appears when you select text.</p>
       <ul>
         <li>Create bullet lists</li>
         <li>Or numbered lists</li>
@@ -41,7 +41,7 @@ const Tiptap = () => {
     `,
     editorProps: {
       attributes: {
-        class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
+        class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none min-h-[150px]',
       },
     },
   })
@@ -150,7 +150,7 @@ const Tiptap = () => {
       </div>
       <EditorContent editor={editor} />
       {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-        <div className="p-1 flex flex-wrap items-center gap-1 border-b bg-background border rounded-md shadow-md">
+        <div className="p-1 flex flex-wrap items-center gap-1 border bg-background rounded-md shadow-md">
             <Toggle
                 size="sm"
                 pressed={editor.isActive('bold')}
