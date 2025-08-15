@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling, CodeXml } from "lucide-react";
 
 export const tools = [
   {
@@ -79,6 +79,12 @@ export const tools = [
     href: "/html-minifier",
     title: "HTML Minifier",
     description: "Minify HTML code by removing spaces, line breaks, and comments.",
+  },
+  {
+    icon: <CodeXml className="h-8 w-8" />,
+    href: "/html-entity-decoder",
+    title: "HTML Entity Decoder",
+    description: "Convert HTML entities back to normal text instantly.",
   },
   {
     icon: <Layers className="h-8 w-8" />,
