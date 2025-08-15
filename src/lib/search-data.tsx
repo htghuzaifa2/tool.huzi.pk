@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers } from "lucide-react";
 
 export const tools = [
   {
@@ -49,6 +49,12 @@ export const tools = [
     href: "/meta-tag-generator",
     title: "Meta Tag Generator",
     description: "Generate perfect SEO meta titles, descriptions, and keywords for your website.",
+  },
+  {
+    icon: <Layers className="h-8 w-8" />,
+    href: "/css-box-shadow-generator",
+    title: "CSS Box Shadow Generator",
+    description: "Visually design CSS box shadows and copy the generated code instantly.",
   },
   {
     icon: <HeartPulse className="h-8 w-8" />,
@@ -230,6 +236,20 @@ export const guides = [
         "Fill in the Title, Description, and Keywords for your webpage.",
         "The HTML meta tags will be generated automatically in the code block.",
         "Click the copy icon to copy the generated tags to your clipboard."
+    ]
+  },
+  {
+    icon: <Layers className="h-8 w-8 text-primary" />,
+    href: "/guide#css-box-shadow-generator",
+    title: "CSS Box Shadow Generator Guide",
+    description: "How to visually design a box shadow.",
+    steps: [
+        "Go to the CSS Box Shadow Generator page.",
+        "Use the sliders to adjust horizontal/vertical offset, blur, and spread.",
+        "Pick a color and adjust its opacity.",
+        "Toggle the 'inset' switch if needed.",
+        "Your shadow will update in the live preview area.",
+        "Click the copy icon to grab the generated CSS code."
     ]
   },
   {

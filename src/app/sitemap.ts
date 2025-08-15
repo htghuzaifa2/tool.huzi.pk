@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/youtube-thumbnail-downloader',
     '/meta-tag-generator',
     '/markdown-editor',
+    '/css-box-shadow-generator',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
