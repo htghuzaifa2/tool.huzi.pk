@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube } from "lucide-react";
 
 export const tools = [
   {
@@ -91,6 +91,12 @@ export const tools = [
     href: "/color-picker",
     title: "Color Picker",
     description: "Pick a color and get its HEX, RGB, and HSL codes for your projects.",
+  },
+  {
+    icon: <Youtube className="h-8 w-8" />,
+    href: "/youtube-thumbnail-downloader",
+    title: "YouTube Thumbnail Downloader",
+    description: "Download high-quality thumbnails from any YouTube video instantly.",
   },
   {
     icon: <Info className="h-8 w-8" />,
@@ -297,6 +303,19 @@ export const guides = [
         "Use the color swatch to visually select a color, or manually input a HEX code.",
         "The page will instantly display the HEX, RGB, and HSL values for the selected color.",
         "Click the copy icon next to any code to copy it to your clipboard.",
+    ]
+  },
+  {
+    icon: <Youtube className="h-8 w-8 text-primary" />,
+    href: "/guide#youtube-thumbnail-downloader",
+    title: "YouTube Thumbnail Downloader Guide",
+    description: "How to download thumbnails from a YouTube video.",
+    steps: [
+        "Go to the YouTube Thumbnail Downloader page.",
+        "Paste the URL of the YouTube video into the input field.",
+        "Click 'Get Thumbnails'.",
+        "A gallery of available thumbnail sizes will appear.",
+        "Click the 'Download' button below the thumbnail you want to save."
     ]
   },
   {
