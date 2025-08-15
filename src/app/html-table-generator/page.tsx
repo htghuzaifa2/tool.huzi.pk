@@ -55,7 +55,9 @@ export default function HtmlTableGeneratorPage() {
     }, [rows, cols, hasHeader, hasFooter]);
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(generatedHtml);
+        // Replace the escaped newlines with actual newlines for the clipboard
+        const plainHtml = generatedHtml.replace(/\\n/g, '\n');
+        navigator.clipboard.writeText(plainHtml);
         toast({
             title: "Copied!",
             description: "HTML table code copied to clipboard.",
@@ -119,7 +121,7 @@ export default function HtmlTableGeneratorPage() {
                                 <CardContent>
                                     <pre className="p-4 rounded-md bg-background/70 text-sm overflow-x-auto h-64">
                                         <code>
-                                            {generatedHtml}
+                                            {generatedHtml.replace(/\\n/g, '\n')}
                                         </code>
                                     </pre>
                                 </CardContent>
