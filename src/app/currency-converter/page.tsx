@@ -13,17 +13,17 @@ import { ArrowRightLeft, Banknote } from "lucide-react";
 // (e.g., European Central Bank, Open Exchange Rates) to get the latest data.
 const currencyData = {
     "USD": { "name": "United States Dollar", "rate": 1 },
-    "EUR": { "name": "Euro", "rate": 0.92 },
-    "JPY": { "name": "Japanese Yen", "rate": 157.50 },
-    "GBP": { "name": "British Pound", "rate": 0.78 },
-    "AUD": { "name": "Australian Dollar", "rate": 1.51 },
-    "CAD": { "name": "Canadian Dollar", "rate": 1.36 },
-    "CHF": { "name": "Swiss Franc", "rate": 0.89 },
-    "CNY": { "name": "Chinese Yuan", "rate": 7.25 },
-    "INR": { "name": "Indian Rupee", "rate": 83.55 },
-    "BRL": { "name": "Brazilian Real", "rate": 5.35 },
-    "RUB": { "name": "Russian Ruble", "rate": 90.50 },
-    "PKR": { "name": "Pakistani Rupee", "rate": 278.60 },
+    "EUR": { "name": "Euro", "rate": 0.93 },
+    "JPY": { "name": "Japanese Yen", "rate": 159.82 },
+    "GBP": { "name": "British Pound", "rate": 0.79 },
+    "AUD": { "name": "Australian Dollar", "rate": 1.50 },
+    "CAD": { "name": "Canadian Dollar", "rate": 1.37 },
+    "CHF": { "name": "Swiss Franc", "rate": 0.90 },
+    "CNY": { "name": "Chinese Yuan", "rate": 7.26 },
+    "INR": { "name": "Indian Rupee", "rate": 83.45 },
+    "BRL": { "name": "Brazilian Real", "rate": 5.45 },
+    "RUB": { "name": "Russian Ruble", "rate": 87.85 },
+    "PKR": { "name": "Pakistani Rupee", "rate": 278.50 },
 };
 
 type CurrencyCode = keyof typeof currencyData;
