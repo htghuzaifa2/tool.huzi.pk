@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/css-gradient-generator',
     '/csv-viewer',
     '/table-to-csv-converter',
+    '/html-table-generator',
     '/text-encryption',
     '/local-storage-editor',
   ].map((url) => ({

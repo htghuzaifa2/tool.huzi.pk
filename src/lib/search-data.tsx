@@ -57,6 +57,12 @@ export const tools = [
     description: "Generate perfect SEO meta titles, descriptions, and keywords for your website.",
   },
   {
+    icon: <Table className="h-8 w-8" />,
+    href: "/html-table-generator",
+    title: "HTML Table Generator",
+    description: "Create clean HTML table code from row and column inputs.",
+  },
+  {
     icon: <Layers className="h-8 w-8" />,
     href: "/css-box-shadow-generator",
     title: "CSS Box Shadow Generator",
