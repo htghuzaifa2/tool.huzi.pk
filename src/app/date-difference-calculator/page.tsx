@@ -1,0 +1,107 @@
+
+"use client"
+
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Calendar } from "lucide-react";
+import { differenceInDays, differenceInWeeks, differenceInMonths } from 'date-fns';
+
+type Difference = {
+    days: number;
+    weeks: number;
+    months: number;
+};
+
+export default function DateDifferenceCalculatorPage() {
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [difference, setDifference] = useState<Difference | null>(null);
+    const [error, setError] = useState('');
+
+    const calculateDifference = () => {
+        setError('');
+        if (!startDate || !endDate) {
+            setError('Please select both a start and an end date.');
+            return;
+        }
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        if (start > end) {
+            setError('The end date must be after the start date.');
+            setDifference(null);
+            return;
+        }
+        
+        const days = differenceInDays(end, start);
+        const weeks = differenceInWeeks(end, start);
+        const months = differenceInMonths(end, start);
+        
+        setDifference({ days, weeks, months });
+    };
+
+    return (
+        <div className="container mx-auto py-10">
+            <div className="max-w-2xl mx-auto">
+                <Card>
+                    <CardHeader className="text-center">
+                        <CardTitle className="text-4xl font-bold font-headline">Date Difference Calculator</CardTitle>
+                        <CardDescription>Calculate the duration between two dates.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="font-medium">Start Date</label>
+                                <Input
+                                    type="date"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                />
+                            </div>
+                             <div className="space-y-2">
+                                <label className="font-medium">End Date</label>
+                                <Input
+                                    type="date"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="text-center">
+                            <Button onClick={calculateDifference} size="lg">Calculate Difference</Button>
+                        </div>
+                        
+                        {error && <p className="text-red-500 text-center">{error}</p>}
+
+                        {difference && (
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                                <Card className="bg-muted">
+                                    <CardHeader>
+                                        <CardTitle className="text-4xl font-bold">{difference.months.toLocaleString()}</CardTitle>
+                                        <p className="text-muted-foreground">Months</p>
+                                    </CardHeader>
+                                </Card>
+                                <Card className="bg-muted">
+                                    <CardHeader>
+                                        <CardTitle className="text-4xl font-bold">{difference.weeks.toLocaleString()}</CardTitle>
+                                        <p className="text-muted-foreground">Weeks</p>
+                                    </CardHeader>
+                                </Card>
+                                <Card className="bg-muted">
+                                    <CardHeader>
+                                        <CardTitle className="text-4xl font-bold">{difference.days.toLocaleString()}</CardTitle>
+                                        <p className="text-muted-foreground">Days</p>
+                                    </CardHeader>
+                                </Card>
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+            </div>
+        </div>
+    );
+}

@@ -1,3 +1,4 @@
+
 import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/password-strength-checker',
     '/bmi-calculator',
     '/age-calculator',
+    '/date-difference-calculator',
     '/aspect-ratio-calculator',
     '/px-to-rem-converter',
     '/stopwatch-timer',

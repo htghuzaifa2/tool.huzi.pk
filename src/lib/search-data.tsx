@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling, CodeXml, Keyboard } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling, CodeXml, Keyboard, Calendar } from "lucide-react";
 
 export const tools = [
   {
@@ -121,6 +121,12 @@ export const tools = [
     href: "/age-calculator",
     title: "Age Calculator",
     description: "Find out your exact age in years, months, and days.",
+  },
+  {
+    icon: <Calendar className="h-8 w-8" />,
+    href: "/date-difference-calculator",
+    title: "Date Difference Calculator",
+    description: "Calculate the number of days, weeks, or months between two dates.",
   },
    {
     icon: <AspectRatio className="h-8 w-8" />,
@@ -378,6 +384,18 @@ export const guides = [
       "Select your date of birth from the calendar.",
       "Click the 'Calculate Age' button.",
       "Your age will be shown in years, months, and days."
+    ]
+  },
+  {
+    icon: <Calendar className="h-8 w-8 text-primary" />,
+    href: "/guide#date-difference-calculator",
+    title: "Date Difference Calculator Guide",
+    description: "How to calculate the time between two dates.",
+    steps: [
+      "Go to the Date Difference Calculator page.",
+      "Select a start date and an end date using the date pickers.",
+      "Click the 'Calculate Difference' button.",
+      "The duration between the two dates will be displayed in months, weeks, and days."
     ]
   },
     {
