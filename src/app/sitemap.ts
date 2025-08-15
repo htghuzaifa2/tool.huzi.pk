@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/time-zone-converter',
     '/color-picker',
     '/youtube-thumbnail-downloader',
+    '/text-to-speech',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
