@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { User, Mail, MessageSquare, PenSquare } from "lucide-react";
+import { User, Mail, MessageSquare, PenSquare, AtSign } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -96,9 +97,17 @@ export default function ContactPage() {
                 />
               </div>
               <div className="text-center">
-                <Button type="submit" size="lg">Send Message</Button>
+                <Button type="submit" size="lg">Send Message via WhatsApp</Button>
               </div>
             </form>
+            <Separator className="my-8" />
+            <div className="text-center space-y-2">
+                <h3 className="text-lg font-semibold">Or contact us by email</h3>
+                <a href="mailto:contact@huzi.pk" className="inline-flex items-center text-primary hover:underline">
+                    <AtSign className="mr-2 h-5 w-5" />
+                    contact@huzi.pk
+                </a>
+            </div>
           </CardContent>
         </Card>
       </div>
