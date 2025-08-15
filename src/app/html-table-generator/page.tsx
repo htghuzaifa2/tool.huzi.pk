@@ -18,36 +18,36 @@ export default function HtmlTableGeneratorPage() {
     const { toast } = useToast();
 
     const generatedHtml = useMemo(() => {
-        let tableHtml = '<table>\\n';
+        let tableHtml = '<table>\n';
 
         if (hasHeader) {
-            tableHtml += '  <thead>\\n';
-            tableHtml += '    <tr>\\n';
+            tableHtml += '  <thead>\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      <th>Header ${j}</th>\\n`;
+                tableHtml += `      <th>Header ${j}</th>\n`;
             }
-            tableHtml += '    </tr>\\n';
-            tableHtml += '  </thead>\\n';
+            tableHtml += '    </tr>\n';
+            tableHtml += '  </thead>\n';
         }
 
-        tableHtml += '  <tbody>\\n';
+        tableHtml += '  <tbody>\n';
         for (let i = 1; i <= rows; i++) {
-            tableHtml += '    <tr>\\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      <td>Row ${i}, Cell ${j}</td>\\n`;
+                tableHtml += `      <td>Row ${i}, Cell ${j}</td>\n`;
             }
-            tableHtml += '    </tr>\\n';
+            tableHtml += '    </tr>\n';
         }
-        tableHtml += '  </tbody>\\n';
+        tableHtml += '  </tbody>\n';
 
         if (hasFooter) {
-            tableHtml += '  <tfoot>\\n';
-            tableHtml += '    <tr>\\n';
+            tableHtml += '  <tfoot>\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      <td>Footer ${j}</td>\\n`;
+                tableHtml += `      <td>Footer ${j}</td>\n`;
             }
-            tableHtml += '    </tr>\\n';
-            tableHtml += '  </tfoot>\\n';
+            tableHtml += '    </tr>\n';
+            tableHtml += '  </tfoot>\n';
         }
 
         tableHtml += '</table>';
@@ -55,7 +55,7 @@ export default function HtmlTableGeneratorPage() {
     }, [rows, cols, hasHeader, hasFooter]);
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(generatedHtml.replace(/\\n/g, '\\n'));
+        navigator.clipboard.writeText(generatedHtml);
         toast({
             title: "Copied!",
             description: "HTML table code copied to clipboard.",
@@ -119,7 +119,7 @@ export default function HtmlTableGeneratorPage() {
                                 <CardContent>
                                     <pre className="p-4 rounded-md bg-background/70 text-sm overflow-x-auto h-64">
                                         <code>
-                                            {generatedHtml.replace(/\\n/g, '\n')}
+                                            {generatedHtml}
                                         </code>
                                     </pre>
                                 </CardContent>
