@@ -43,29 +43,54 @@ export default function ImageToPdfConverterPage() {
         toast({ title: 'Conversion Started', description: 'Your PDF is being generated...' });
 
         try {
-            const pdf = new jsPDF();
+            // Initialize with default portrait orientation
+            const pdf = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4'
+            });
             
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 const imgData = await readFileAsDataURL(file);
                 const img = await loadImage(imgData);
 
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = img.width;
-                const imgHeight = img.height;
-                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+                const isLandscape = img.width > img.height;
+                const orientation = isLandscape ? 'l' : 'p';
                 
-                const newWidth = imgWidth * ratio;
-                const newHeight = imgHeight * ratio;
+                // A4 dimensions in mm: Portrait (210x297), Landscape (297x210)
+                const pdfWidth = isLandscape ? 297 : 210;
+                const pdfHeight = isLandscape ? 210 : 297;
+
+                if (i > 0) {
+                    pdf.addPage([pdfWidth, pdfHeight], orientation);
+                } else {
+                    // For the first page, set the orientation if it's not the default
+                    if(isLandscape) {
+                        pdf.addPage([pdfWidth, pdfHeight], orientation);
+                        pdf.deletePage(1); // delete the initial blank page
+                    }
+                }
+
+                const margin = 10; // 10mm margin on all sides
+                const usableWidth = pdfWidth - (margin * 2);
+                const usableHeight = pdfHeight - (margin * 2);
+
+                const aspectRatio = img.width / img.height;
+                let newWidth, newHeight;
+
+                if (usableWidth / aspectRatio <= usableHeight) {
+                    newWidth = usableWidth;
+                    newHeight = newWidth / aspectRatio;
+                } else {
+                    newHeight = usableHeight;
+                    newWidth = newHeight * aspectRatio;
+                }
+                
                 const x = (pdfWidth - newWidth) / 2;
                 const y = (pdfHeight - newHeight) / 2;
                 
-                if (i > 0) {
-                    pdf.addPage();
-                }
-
-                pdf.addImage(imgData, 'JPEG', x, y, newWidth, newHeight);
+                pdf.addImage(imgData, file.type.split('/')[1].toUpperCase(), x, y, newWidth, newHeight);
             }
             
             pdf.save('converted-images.pdf');
