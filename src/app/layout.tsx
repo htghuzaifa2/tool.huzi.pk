@@ -57,6 +57,33 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  const storageKey = 'toolbox-hub-theme';
+                  const defaultTheme = 'dark';
+                  let theme;
+                  try {
+                    theme = localStorage.getItem(storageKey) || defaultTheme;
+                  } catch (e) {
+                    theme = defaultTheme;
+                  }
+                  const root = document.documentElement;
+                  root.classList.remove('light', 'dark', 'theme-blue', 'theme-orange');
+                  if (theme === 'light') {
+                    root.classList.add('light');
+                  } else if (theme === 'blue') {
+                    root.classList.add('theme-blue');
+                  } else if (theme === 'orange') {
+                    root.classList.add('theme-orange');
+                  } else {
+                    root.classList.add(theme);
+                  }
+                })();
+              `,
+            }}
+          />
          <title>tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks</title>
         <meta name="description" content="Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side." />
         <meta name="keywords" content="online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools" />
