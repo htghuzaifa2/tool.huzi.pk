@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image } from "lucide-react";
 
 export const tools = [
   {
@@ -31,6 +31,24 @@ export const tools = [
     href: "/password-generator",
     title: "Password Generator",
     description: "Generate strong, secure, and random passwords.",
+  },
+  {
+    icon: <HeartPulse className="h-8 w-8" />,
+    href: "/bmi-calculator",
+    title: "BMI Calculator",
+    description: "Calculate your Body Mass Index to assess your weight status.",
+  },
+  {
+    icon: <Cake className="h-8 w-8" />,
+    href: "/age-calculator",
+    title: "Age Calculator",
+    description: "Find out your exact age in years, months, and days.",
+  },
+  {
+    icon: <Image className="h-8 w-8" />,
+    href: "/image-converter",
+    title: "Image Converter",
+    description: "Easily convert image files between PNG, JPG, and WEBP formats.",
   },
 ];
 
@@ -95,6 +113,45 @@ export const guides = [
       "Check the boxes to include uppercase letters, lowercase letters, numbers, or symbols.",
       "A new password is generated automatically. Click the refresh button to get a new one.",
       "Click the copy icon to copy the password to your clipboard."
+    ]
+  },
+  {
+    icon: <HeartPulse className="h-8 w-8 text-primary" />,
+    href: "/guide#bmi-calculator",
+    title: "BMI Calculator Guide",
+    description: "How to calculate your Body Mass Index.",
+    steps: [
+      "Go to the BMI Calculator page.",
+      "Select your preferred unit system (Metric or Imperial).",
+      "Enter your height and weight in the provided fields.",
+      "Click the 'Calculate BMI' button.",
+      "Your BMI score and weight category will be displayed below."
+    ]
+  },
+  {
+    icon: <Cake className="h-8 w-8 text-primary" />,
+    href: "/guide#age-calculator",
+    title: "Age Calculator Guide",
+    description: "Find out your precise age.",
+    steps: [
+      "Navigate to the Age Calculator page.",
+      "Click the input field to open the date picker.",
+      "Select your date of birth from the calendar.",
+      "Click the 'Calculate Age' button.",
+      "Your age will be shown in years, months, and days."
+    ]
+  },
+  {
+    icon: <Image className="h-8 w-8 text-primary" />,
+    href: "/guide#image-converter",
+    title: "Image Converter Guide",
+    description: "Convert images to different formats.",
+    steps: [
+      "Visit the Image Converter page.",
+      "Click the upload area to select an image from your device.",
+      "Once uploaded, choose your desired output format (PNG, JPG, or WEBP).",
+      "Click the 'Convert Image' button.",
+      "A preview of the converted image will appear. Click 'Download' to save it."
     ]
   },
 ];
