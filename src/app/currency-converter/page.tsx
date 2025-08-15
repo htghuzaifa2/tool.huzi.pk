@@ -1,0 +1,133 @@
+
+"use client"
+
+import { useState, useEffect, useMemo } from "react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ArrowRightLeft, Banknote } from "lucide-react";
+
+const currencyData = {
+    "USD": { "name": "United States Dollar", "rate": 1 },
+    "EUR": { "name": "Euro", "rate": 0.92 },
+    "JPY": { "name": "Japanese Yen", "rate": 157.0 },
+    "GBP": { "name": "British Pound", "rate": 0.78 },
+    "AUD": { "name": "Australian Dollar", "rate": 1.5 },
+    "CAD": { "name": "Canadian Dollar", "rate": 1.37 },
+    "CHF": { "name": "Swiss Franc", "rate": 0.9 },
+    "CNY": { "name": "Chinese Yuan", "rate": 7.25 },
+    "INR": { "name": "Indian Rupee", "rate": 83.5 },
+    "BRL": { "name": "Brazilian Real", "rate": 5.25 },
+    "RUB": { "name": "Russian Ruble", "rate": 90.0 },
+    "PKR": { "name": "Pakistani Rupee", "rate": 278.0 },
+};
+
+type CurrencyCode = keyof typeof currencyData;
+
+export default function CurrencyConverterPage() {
+  const [amount, setAmount] = useState("1");
+  const [fromCurrency, setFromCurrency] = useState<CurrencyCode>("USD");
+  const [toCurrency, setToCurrency] = useState<CurrencyCode>("PKR");
+  const [result, setResult] = useState<string | null>(null);
+
+  const currencyOptions = useMemo(() => 
+    Object.entries(currencyData).map(([code, { name }]) => ({
+      value: code,
+      label: `${code} - ${name}`
+    })), 
+  []);
+
+  useEffect(() => {
+    const value = parseFloat(amount);
+    if (isNaN(value)) {
+      setResult(null);
+      return;
+    }
+
+    const rateFrom = currencyData[fromCurrency].rate;
+    const rateTo = currencyData[toCurrency].rate;
+    
+    // Convert amount to USD first, then to the target currency
+    const amountInUsd = value / rateFrom;
+    const convertedAmount = amountInUsd * rateTo;
+
+    setResult(convertedAmount.toFixed(2));
+  }, [amount, fromCurrency, toCurrency]);
+
+  const handleSwapCurrencies = () => {
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+  };
+  
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Allow only numbers and a single decimal point
+    const value = e.target.value;
+    if (/^\d*\.?\d*$/.test(value)) {
+      setAmount(value);
+    }
+  }
+
+  return (
+    <div className="container mx-auto py-10">
+      <div className="max-w-2xl mx-auto">
+         <Card>
+            <CardHeader className="text-center">
+                <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <Banknote className="w-8 h-8" />
+                </div>
+                <CardTitle className="text-4xl font-bold font-headline">Currency Converter</CardTitle>
+                <CardDescription>Quickly convert between major world currencies.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-2">
+                    <div className="w-full space-y-2">
+                        <label className="text-sm font-medium">From</label>
+                        <Input 
+                            type="text" 
+                            value={amount} 
+                            onChange={handleAmountChange} 
+                            className="text-lg"
+                        />
+                        <Select value={fromCurrency} onValueChange={(v) => setFromCurrency(v as CurrencyCode)}>
+                            <SelectTrigger><SelectValue/></SelectTrigger>
+                            <SelectContent>
+                                {currencyOptions.map(option => (
+                                    <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    <div className="pt-8">
+                        <Button variant="ghost" size="icon" onClick={handleSwapCurrencies}>
+                          <ArrowRightLeft className="h-6 w-6 text-muted-foreground" />
+                        </Button>
+                    </div>
+
+                    <div className="w-full space-y-2">
+                        <label className="text-sm font-medium">To</label>
+                        <Input type="text" value={result ?? "..."} readOnly className="text-lg font-bold bg-muted" />
+                         <Select value={toCurrency} onValueChange={(v) => setToCurrency(v as CurrencyCode)}>
+                            <SelectTrigger><SelectValue/></SelectTrigger>
+                            <SelectContent>
+                                {currencyOptions.map(option => (
+                                    <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+
+                {result && (
+                  <div className="text-center text-muted-foreground pt-4">
+                      <p className="font-bold text-lg text-foreground">{`${amount} ${fromCurrency} = ${result} ${toCurrency}`}</p>
+                      <p className="text-xs mt-1">Rates are for informational purposes only.</p>
+                  </div>
+                )}
+            </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}

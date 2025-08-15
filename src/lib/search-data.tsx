@@ -14,6 +14,12 @@ export const tools = [
     title: "Unit Converter",
     description: "Convert between various units for length, mass, and temperature.",
   },
+   {
+    icon: <Banknote className="h-8 w-8" />,
+    href: "/currency-converter",
+    title: "Currency Converter",
+    description: "Convert values between different world currencies.",
+  },
   {
     icon: <Calculator className="h-8 w-8" />,
     href: "/calculator",
@@ -106,6 +112,20 @@ export const guides = [
       "Enter the value you want to convert in the 'From' input field.",
       "Choose the 'From' and 'To' units from the dropdown menus.",
       "The converted result will appear instantly in the 'To' field."
+    ]
+  },
+  {
+    icon: <Banknote className="h-8 w-8 text-primary" />,
+    href: "/guide#currency-converter",
+    title: "Currency Converter Guide",
+    description: "How to convert between currencies.",
+    steps: [
+        "Go to the Currency Converter page.",
+        "Enter the amount you wish to convert.",
+        "Select the currency you are converting from in the first dropdown.",
+        "Select the currency you are converting to in the second dropdown.",
+        "The result will be displayed automatically.",
+        "Use the swap button to quickly reverse the 'from' and 'to' currencies."
     ]
   },
   {

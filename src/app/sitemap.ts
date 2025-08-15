@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const toolUrls: MetadataRoute.Sitemap = [
     '/text-tools',
     '/unit-converter',
+    '/currency-converter',
     '/calculator',
     '/qr-code-generator',
     '/password-generator',
