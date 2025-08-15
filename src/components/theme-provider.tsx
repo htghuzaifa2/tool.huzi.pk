@@ -33,7 +33,11 @@ export function ThemeProvider({
     if (typeof window === "undefined") {
       return defaultTheme;
     }
-    return (localStorage.getItem(storageKey) as Theme) || defaultTheme
+    try {
+      return (localStorage.getItem(storageKey) as Theme) || defaultTheme
+    } catch (e) {
+      return defaultTheme
+    }
   });
 
   useEffect(() => {
@@ -55,8 +59,10 @@ export function ThemeProvider({
   const value = {
     theme,
     setTheme: (theme: Theme) => {
-      if (typeof window !== "undefined") {
+      try {
         localStorage.setItem(storageKey, theme)
+      } catch (e) {
+        // ignore
       }
       setTheme(theme)
     },
