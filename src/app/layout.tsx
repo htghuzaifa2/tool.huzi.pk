@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'tool.huzi.pk',
@@ -32,6 +33,7 @@ export default function RootLayout({
           <div className="relative flex min-h-screen flex-col">
             <Header />
             <div className="flex-1">{children}</div>
+            <Footer />
           </div>
           <Toaster />
         </ThemeProvider>
