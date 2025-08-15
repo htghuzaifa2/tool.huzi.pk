@@ -34,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/html-table-generator',
     '/text-encryption',
     '/local-storage-editor',
+    '/base-converter',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary } from "lucide-react";
 
 export const tools = [
   {
@@ -25,6 +25,12 @@ export const tools = [
     href: "/calculator",
     title: "Calculator",
     description: "A simple and easy-to-use calculator for your daily needs.",
+  },
+  {
+    icon: <Binary className="h-8 w-8" />,
+    href: "/base-converter",
+    title: "Base Converter",
+    description: "Convert numbers between binary, octal, decimal, and hexadecimal.",
   },
   {
     icon: <QrCode className="h-8 w-8" />,
