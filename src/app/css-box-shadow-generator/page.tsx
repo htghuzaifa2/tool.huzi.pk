@@ -88,8 +88,8 @@ export default function BoxShadowGeneratorPage() {
                            <Label htmlFor="inset-switch">Inset</Label>
                         </div>
                     </div>
-                    <div className="space-y-6">
-                        <div className="h-64 flex items-center justify-center bg-muted rounded-lg">
+                    <div className="flex flex-col space-y-6">
+                        <div className="h-64 flex-1 flex items-center justify-center bg-muted rounded-lg">
                             <div className="w-40 h-40 bg-card rounded-lg" style={{ boxShadow: boxShadowStyle }}></div>
                         </div>
                         <Card className="w-full bg-muted">

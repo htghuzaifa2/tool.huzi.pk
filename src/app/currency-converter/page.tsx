@@ -102,7 +102,7 @@ export default function CurrencyConverterPage() {
                         </Select>
                     </div>
 
-                    <div className="pt-8">
+                    <div className="md:pt-8">
                         <Button variant="ghost" size="icon" onClick={handleSwapCurrencies}>
                           <ArrowRightLeft className="h-6 w-6 text-muted-foreground" />
                         </Button>

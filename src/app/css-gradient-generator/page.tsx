@@ -130,8 +130,8 @@ export default function CssGradientGeneratorPage() {
                             <PlusCircle className="mr-2 h-4 w-4" /> Add Color Stop
                         </Button>
                     </div>
-                     <div className="space-y-6">
-                        <div className="h-80 w-full rounded-lg border shadow-inner" style={{ background: gradientCss }}></div>
+                     <div className="flex flex-col space-y-6">
+                        <div className="h-80 w-full flex-1 rounded-lg border shadow-inner" style={{ background: gradientCss }}></div>
                         <Card className="w-full bg-muted">
                             <CardHeader className="flex-row items-center justify-between">
                                 <div className="flex items-center gap-2">

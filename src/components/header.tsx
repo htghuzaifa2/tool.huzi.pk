@@ -18,14 +18,14 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <div className="mr-4 hidden md:flex items-center">
+        <div className="mr-auto flex items-center md:mr-4">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Box className="h-6 w-6 text-primary" />
             <span className="hidden font-bold sm:inline-block">
               tool.huzi.pk
             </span>
           </Link>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
+          <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
             {navLinks.map((link) => 
                <Link
                   key={link.href}
@@ -70,8 +70,8 @@ export function Header() {
           </SheetContent>
         </Sheet>
         
-        <div className="flex flex-1 items-center justify-end space-x-2">
-           <div className="w-full flex-1 md:w-auto md:flex-none">
+        <div className="flex items-center justify-end space-x-2">
+           <div className="flex-1 md:w-auto md:flex-none">
              <Link href="/" className="flex items-center space-x-2 md:hidden absolute left-1/2 -translate-x-1/2">
               <Box className="h-6 w-6 text-primary" />
               <span className="font-bold">tool.huzi.pk</span>

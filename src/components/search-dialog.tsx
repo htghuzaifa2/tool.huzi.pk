@@ -132,7 +132,7 @@ export function SearchDialog() {
           <span className="sr-only">Search</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[640px] p-0 sm:p-6 sm:rounded-lg top-0 sm:top-1/2 translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border h-screen sm:h-auto">
+      <DialogContent className="sm:max-w-[640px] p-0 sm:p-6 sm:rounded-lg top-0 sm:top-[40%] translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border h-screen sm:h-[60vh]">
          <DialogHeader className="p-4 border-b">
            <DialogTitle className="sr-only">Search</DialogTitle>
            <div className="relative">
@@ -146,7 +146,7 @@ export function SearchDialog() {
           </div>
         </DialogHeader>
        
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex flex-col">
           <div className="px-4">
              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="tools">Tools</TabsTrigger>
@@ -154,7 +154,7 @@ export function SearchDialog() {
             </TabsList>
           </div>
 
-          <ScrollArea className="h-[calc(100vh-140px)] sm:h-[400px]">
+          <ScrollArea className="flex-1">
             <div className="p-4">
                 <TabsContent value="tools" forceMount={true} hidden={activeTab !== 'tools'}>
                   {renderResults(filteredTools, toolsPage, setToolsPage)}

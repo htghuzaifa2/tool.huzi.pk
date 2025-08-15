@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, AspectRatio, Scaling, CodeXml, Keyboard, Calendar, Smile } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile } from "lucide-react";
 
 export const tools = [
   {
@@ -129,7 +129,7 @@ export const tools = [
     description: "Calculate the number of days, weeks, or months between two dates.",
   },
    {
-    icon: <AspectRatio className="h-8 w-8" />,
+    icon: <Ratio className="h-8 w-8" />,
     href: "/aspect-ratio-calculator",
     title: "Aspect Ratio Calculator",
     description: "Calculate correct dimensions while maintaining an image’s aspect ratio.",
@@ -346,6 +346,19 @@ export const guides = [
         "Improve your password until it reaches the 'Very Strong' level."
     ]
   },
+  {
+    icon: <Lock className="h-8 w-8 text-primary" />,
+    href: "/guide#text-encryption",
+    title: "Text Encryption Guide",
+    description: "How to encrypt and decrypt text.",
+    steps: [
+      "Go to the Text Encryption Tool page.",
+      "Enter the text you want to process in the input area.",
+      "Set a 'shift key' (a number between 1 and 25).",
+      "Click 'Encrypt' to scramble the text or 'Decrypt' to unscramble it.",
+      "The result will appear in the output box, ready to be copied."
+    ]
+  },
    {
     icon: <Tags className="h-8 w-8 text-primary" />,
     href: "/guide#meta-tag-generator",
@@ -356,6 +369,56 @@ export const guides = [
         "Fill in the Title, Description, and Keywords for your webpage.",
         "The HTML meta tags will be generated automatically in the code block.",
         "Click the copy icon to copy the generated tags to your clipboard."
+    ]
+  },
+  {
+    icon: <Share2 className="h-8 w-8 text-primary" />,
+    href: "/guide#open-graph-generator",
+    title: "Open Graph Generator Guide",
+    description: "How to generate Open Graph tags.",
+    steps: [
+      "Go to the Open Graph Generator page.",
+      "Fill in the fields: Title, Type, Image URL, Page URL, and Description.",
+      "The HTML `og:` meta tags will generate instantly in the code box below.",
+      "Click the copy button to use them in your website's `<head>` section."
+    ]
+  },
+  {
+    icon: <Table className="h-8 w-8 text-primary" />,
+    href: "/guide#html-table-generator",
+    title: "HTML Table Generator Guide",
+    description: "How to create HTML tables.",
+    steps: [
+      "Visit the HTML Table Generator page.",
+      "Enter the number of rows and columns you need.",
+      "Check the boxes if you want to include a table header (`<thead>`) or footer (`<tfoot>`).",
+      "The HTML code will be created in the code box on the right.",
+      "Click the copy button to grab the code."
+    ]
+  },
+  {
+    icon: <Code className="h-8 w-8 text-primary" />,
+    href: "/guide#html-minifier",
+    title: "HTML Minifier Guide",
+    description: "How to minify your HTML code.",
+    steps: [
+      "Open the HTML Minifier tool.",
+      "Paste your full HTML code into the 'Original HTML' text area.",
+      "Click the 'Minify HTML' button.",
+      "Your compressed HTML will appear in the 'Minified HTML' box below.",
+      "Click the copy button to get the minified code."
+    ]
+  },
+  {
+    icon: <CodeXml className="h-8 w-8 text-primary" />,
+    href: "/guide#html-entity-decoder",
+    title: "HTML Entity Decoder Guide",
+    description: "How to decode HTML entities.",
+    steps: [
+      "Navigate to the HTML Entity Decoder page.",
+      "Paste your text containing HTML entities (e.g., `&lt;p&gt;`) into the left text area.",
+      "The decoded text (e.g., `<p>`) will instantly appear in the right text area.",
+      "Click the copy button above the decoded text to copy it to your clipboard."
     ]
   },
   {
@@ -370,6 +433,45 @@ export const guides = [
         "Toggle the 'inset' switch if needed.",
         "Your shadow will update in the live preview area.",
         "Click the copy icon to grab the generated CSS code."
+    ]
+  },
+  {
+    icon: <Pipette className="h-8 w-8 text-primary" />,
+    href: "/guide#css-gradient-generator",
+    title: "CSS Gradient Generator Guide",
+    description: "How to create CSS gradients.",
+    steps: [
+      "Open the CSS Gradient Generator.",
+      "Choose between 'Linear' and 'Radial' gradient types.",
+      "Adjust the sliders and color stops to design your gradient.",
+      "Add or remove color stops as needed.",
+      "The live preview shows your gradient in real-time.",
+      "Click the copy icon to get the final CSS `background` property."
+    ]
+  },
+  {
+    icon: <Sheet className="h-8 w-8 text-primary" />,
+    href: "/guide#csv-viewer",
+    title: "CSV Viewer Guide",
+    description: "How to view and search CSV files.",
+    steps: [
+      "Go to the CSV Viewer page.",
+      "Click the upload area and select a `.csv` file from your device.",
+      "The data will be displayed in a table.",
+      "You can sort columns by clicking on their headers.",
+      "Use the search bar at the top to filter rows across all columns."
+    ]
+  },
+  {
+    icon: <Table className="h-8 w-8 text-primary" />,
+    href: "/guide#table-to-csv-converter",
+    title: "Table to CSV Converter Guide",
+    description: "How to convert an HTML table to CSV.",
+    steps: [
+      "Visit the Table to CSV Converter page.",
+      "Paste your full HTML code containing a `<table>` element into the text area.",
+      "Click the 'Convert & Download CSV' button.",
+      "The tool will parse the table and trigger a download for the resulting `.csv` file."
     ]
   },
   {
@@ -401,17 +503,17 @@ export const guides = [
   {
     icon: <Calendar className="h-8 w-8 text-primary" />,
     href: "/guide#date-difference-calculator",
-    title: "Date Difference Calculator Guide",
-    description: "How to calculate the time between two dates.",
+    title: "Date Difference Guide",
+    description: "How to find the time between dates.",
     steps: [
       "Go to the Date Difference Calculator page.",
-      "Select a start date and an end date using the date pickers.",
+      "Select a 'Start Date' and an 'End Date' using the date pickers.",
       "Click the 'Calculate Difference' button.",
-      "The duration between the two dates will be displayed in months, weeks, and days."
+      "The result will be shown in total months, weeks, and days."
     ]
   },
     {
-    icon: <AspectRatio className="h-8 w-8 text-primary" />,
+    icon: <Ratio className="h-8 w-8 text-primary" />,
     href: "/guide#aspect-ratio-calculator",
     title: "Aspect Ratio Calculator Guide",
     description: "Learn how to calculate dimensions.",
@@ -421,6 +523,42 @@ export const guides = [
       "In the 'New Dimensions' section, type either your desired new width or new height.",
       "The other dimension will be calculated automatically to maintain the aspect ratio.",
       "Click 'Reset' to clear the fields and start over."
+    ]
+  },
+  {
+    icon: <Scaling className="h-8 w-8 text-primary" />,
+    href: "/guide#px-to-rem-converter",
+    title: "Pixel to Rem Converter Guide",
+    description: "How to convert between px and rem.",
+    steps: [
+      "Open the Pixel to Rem Converter page.",
+      "Set the 'Base Font Size' for your project (usually 16px).",
+      "Enter a value in either the 'Pixels (px)' or 'Rems (rem)' field.",
+      "The other field will update automatically based on your input."
+    ]
+  },
+  {
+    icon: <Timer className="h-8 w-8 text-primary" />,
+    href: "/guide#stopwatch-timer",
+    title: "Stopwatch & Timer Guide",
+    description: "How to use the timing tools.",
+    steps: [
+      "Go to the Stopwatch & Timer page.",
+      "Select either the 'Stopwatch' or 'Timer' tab.",
+      "For the Stopwatch, use Start/Pause, Reset, and Lap buttons to measure time.",
+      "For the Timer, set a duration using the preset buttons, then use Start/Pause and Reset."
+    ]
+  },
+  {
+    icon: <Keyboard className="h-8 w-8 text-primary" />,
+    href: "/guide#keyboard-event-tester",
+    title: "Keyboard Event Tester Guide",
+    description: "How to inspect keyboard events.",
+    steps: [
+      "Navigate to the Keyboard Event Tester page.",
+      "Simply press any key on your keyboard.",
+      "The tool will instantly display the `event.key`, `event.code`, and `event.which` values.",
+      "It will also show which modifier keys (Shift, Ctrl, Alt, Meta) were active during the keypress."
     ]
   },
   {
@@ -473,7 +611,8 @@ export const guides = [
         "Navigate to the Rich Text Editor page.",
         "Use the toolbar at the top to apply formatting.",
         "You can create headings, make text bold or italic, create lists, and more.",
-        "Your content is saved automatically in the editor."
+        "Content is saved to your browser's local storage automatically. Use the Save button for manual saves.",
+        "You can Download your note as an HTML file or Clear the editor."
     ]
   },
    {
@@ -500,6 +639,32 @@ export const guides = [
     ]
   },
   {
+    icon: <Pilcrow className="h-8 w-8 text-primary" />,
+    href: "/guide#lorem-ipsum-generator",
+    title: "Lorem Ipsum Generator Guide",
+    description: "How to generate placeholder text.",
+    steps: [
+      "Navigate to the Lorem Ipsum Generator page.",
+      "Enter the desired number of words into the input field.",
+      "Click the 'Generate Text' button.",
+      "Your placeholder text will appear in the text area below.",
+      "Click the copy icon to copy the text to your clipboard."
+    ]
+  },
+  {
+    icon: <Smile className="h-8 w-8 text-primary" />,
+    href: "/guide#random-emoji-generator",
+    title: "Random Emoji Generator Guide",
+    description: "How to generate random emojis.",
+    steps: [
+      "Go to the Random Emoji Generator page.",
+      "Set the number of emojis you want to generate.",
+      "Click the 'Generate' button.",
+      "Your random emoji(s) will appear in the display box.",
+      "Click 'Copy to Clipboard' to copy the result."
+    ]
+  },
+  {
     icon: <Globe className="h-8 w-8 text-primary" />,
     href: "/guide#time-zone-converter",
     title: "Time Zone Converter Guide",
@@ -511,6 +676,18 @@ export const guides = [
         "Use the dropdown menu to select the desired time zone for each entry.",
         "The times will update automatically every second.",
         "Click the trash icon to remove a time zone."
+    ]
+  },
+  {
+    icon: <Globe className="h-8 w-8 text-primary" />,
+    href: "/guide#ip-address-finder",
+    title: "IP Address Finder Guide",
+    description: "How to find your public IP address.",
+    steps: [
+      "Go to the IP Address Finder page.",
+      "The tool will automatically fetch and display your public IP address.",
+      "You can click 'Copy IP' to copy the address to your clipboard.",
+      "Click 'Refresh' to fetch the IP address again."
     ]
   },
   {
@@ -527,16 +704,29 @@ export const guides = [
   },
   {
     icon: <Youtube className="h-8 w-8 text-primary" />,
-    href: "/guide#youtube-thumbnail-downloader",
-    title: "YouTube Thumbnail Downloader Guide",
-    description: "How to download high-quality thumbnails from any YouTube video.",
+    href: "/guide#thumbnail-downloaders",
+    title: "Thumbnail Downloader Guide",
+    description: "How to download thumbnails from videos.",
     steps: [
-        "Go to the YouTube Thumbnail Downloader page.",
-        "Select the tab for the platform (YouTube, Vimeo, or Dailymotion).",
+        "Navigate to the specific downloader (YouTube, Vimeo, or Dailymotion).",
         "Paste the URL of the video into the input field.",
-        "Click 'Get Thumbnail(s)'.",
+        "Click 'Get Thumbnail(s)' or 'Get Thumbnail'.",
         "A gallery of available thumbnails will appear.",
         "Click the 'Download' button below the thumbnail you want to save."
+    ]
+  },
+  {
+    icon: <Database className="h-8 w-8 text-primary" />,
+    href: "/guide#local-storage-editor",
+    title: "Local Storage Editor Guide",
+    description: "How to manage your browser's local storage.",
+    steps: [
+      "Open the Local Storage Editor page.",
+      "The tool will display all entries currently in your browser's local storage for this domain.",
+      "Click on an entry to expand it.",
+      "You can edit the value in the text area and click 'Save'.",
+      "Click 'Delete' to remove an entry.",
+      "Use the 'Add New Entry' form to create new key-value pairs."
     ]
   },
   {

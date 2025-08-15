@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from 'react';
@@ -87,7 +88,7 @@ export default function KeyboardEventTesterPage() {
                                         <CardTitle className="text-xl">Modifier Keys</CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
                                             <div className={`p-4 rounded-md font-semibold ${keyInfo.shiftKey ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>Shift</div>
                                             <div className={`p-4 rounded-md font-semibold ${keyInfo.ctrlKey ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>Control</div>
                                             <div className={`p-4 rounded-md font-semibold ${keyInfo.altKey ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>Alt</div>
