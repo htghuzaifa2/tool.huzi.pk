@@ -97,11 +97,11 @@ export default function HtmlTableGeneratorPage() {
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Checkbox id="header" checked={hasHeader} onCheckedChange={(checked) => setHasHeader(Boolean(checked))} />
-                                <Label htmlFor="header">Include Table Header (`&lt;thead&gt;`)</Label>
+                                <Label htmlFor="header">Include Table Header (&lt;thead&gt;)</Label>
                             </div>
                              <div className="flex items-center space-x-2">
                                 <Checkbox id="footer" checked={hasFooter} onCheckedChange={(checked) => setHasFooter(Boolean(checked))} />
-                                <Label htmlFor="footer">Include Table Footer (`&lt;tfoot&gt;`)</Label>
+                                <Label htmlFor="footer">Include Table Footer (&lt;tfoot&gt;)</Label>
                             </div>
                         </div>
 
@@ -118,7 +118,7 @@ export default function HtmlTableGeneratorPage() {
                                 </CardHeader>
                                 <CardContent>
                                     <pre className="p-4 rounded-md bg-background/70 text-sm overflow-x-auto h-64">
-                                        <code>
+                                        <code className="whitespace-pre-wrap">
                                             {generatedHtml}
                                         </code>
                                     </pre>
