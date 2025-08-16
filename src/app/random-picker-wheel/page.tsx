@@ -14,12 +14,12 @@ import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import confetti from 'canvas-confetti';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-// Professional color palettes that match the website's themes
+// Modern, neon-inspired color palettes for each theme
 const themeColors = {
-    light: ['#5E5CE6', '#7879F1', '#4831D4', '#6C63FF', '#3D3B94', '#939DFF'],
-    dark: ['#63E6BE', '#A6F6E2', '#42D9A7', '#25B88A', '#74E8C0', '#1A9E72'],
-    blue: ['#00A6FB', '#4DBFFF', '#0081C9', '#80D4FF', '#0093E0', '#B3E5FF'],
-    orange: ['#FF8F00', '#FFA726', '#FFB74D', '#FF6F00', '#FFC107', '#FFD54F'],
+    light: ['#007BFF', '#FF8C00', '#3399FF', '#FFA500', '#66B2FF', '#FFD700'],
+    dark: ['#00BFFF', '#FF4500', '#1E90FF', '#FFA500', '#00FFFF', '#FF6347'],
+    blue: ['#00BFFF', '#FF4500', '#1E90FF', '#FFA500', '#00FFFF', '#FF6347'],
+    orange: ['#00BFFF', '#1E90FF', '#00FFFF', '#4682B4', '#5F9EA0', '#00CED1'],
 };
 
 const getCurrentThemeColors = () => {
@@ -76,6 +76,7 @@ export default function RandomPickerWheelPage() {
             ctx.closePath();
             ctx.fill();
 
+            // Add a border to each segment for better definition
             ctx.strokeStyle = 'hsl(var(--background))';
             ctx.lineWidth = 2;
             ctx.stroke();
@@ -83,10 +84,10 @@ export default function RandomPickerWheelPage() {
             ctx.save();
             // High-contrast text with a shadow for readability on all colors
             ctx.fillStyle = "#FFF";
-            ctx.shadowColor = "rgba(0,0,0,0.5)";
+            ctx.shadowColor = "rgba(0,0,0,0.6)";
             ctx.shadowBlur = 4;
-            ctx.shadowOffsetX = 1;
-            ctx.shadowOffsetY = 1;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
             ctx.font = 'bold 16px Inter, sans-serif';
             ctx.translate(
                 center + textRadius * Math.cos(angle + arc / 2),
@@ -223,7 +224,7 @@ export default function RandomPickerWheelPage() {
                                 <Play className="mr-2" /> {isSpinning ? 'Spinning...' : 'Spin The Wheel'}
                             </Button>
                         </div>
-                        <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px] overflow-hidden">
+                        <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px]" style={{overflow: 'hidden'}}>
                             <div 
                                 className="absolute top-0 left-1/2 -translate-x-1/2 z-10" 
                                 style={{
