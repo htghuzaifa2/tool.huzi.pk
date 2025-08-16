@@ -120,7 +120,7 @@ export default function YouTubeThumbnailDownloaderPage() {
                                                         alt={`${thumb.quality} thumbnail`} 
                                                         className="w-full h-full object-cover"
                                                          onError={(e) => {
-                                                            const card = e.currentTarget.closest('.group');
+                                                            const card = (e.target as HTMLElement).closest('.group');
                                                             if (card) {
                                                                 (card as HTMLElement).style.display = 'none';
                                                             }
@@ -132,7 +132,7 @@ export default function YouTubeThumbnailDownloaderPage() {
                                                     <CardDescription>{thumb.width} x {thumb.height}</CardDescription>
                                                 </div>
                                             </CardHeader>
-                                            <CardContent className="mt-auto">
+                                            <CardContent className="mt-auto p-4">
                                                 <Button 
                                                     className="w-full"
                                                     onClick={() => handleDownload(thumb.url, thumb.quality)}
@@ -152,8 +152,8 @@ export default function YouTubeThumbnailDownloaderPage() {
                 {youtubeGuide && (
                    <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
-                                <Button>
+                            <AccordionTrigger className="w-fit no-underline hover:no-underline">
+                                <Button variant="outline">
                                     <BookOpen className="mr-2 h-5 w-5" />
                                     Read The Guide
                                 </Button>
