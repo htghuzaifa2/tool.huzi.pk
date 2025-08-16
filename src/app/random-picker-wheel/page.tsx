@@ -45,8 +45,7 @@ export default function RandomPickerWheelPage() {
         const arc = Math.PI * 2 / options.length;
         const outsideRadius = canvas.width / 2 - 10;
         const textRadius = outsideRadius * 0.75;
-        const insideRadius = 40;
-
+        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#FFFFFF';
         ctx.lineWidth = 2;
@@ -186,7 +185,7 @@ export default function RandomPickerWheelPage() {
                             />
                         </div>
                         <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px]">
-                           <div style={{transform: `rotate(0deg)`}} ref={canvasRef} className="transition-transform duration-[5000ms] ease-out"></div>
+                           <canvas ref={canvasRef} className="transition-transform duration-[5000ms] ease-out"></canvas>
                            <Button 
                              onClick={handleSpin}
                              disabled={isSpinning || options.length < 2}
