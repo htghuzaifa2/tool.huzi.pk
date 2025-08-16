@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useMemo } from 'react';
@@ -38,7 +37,7 @@ export default function RandomEmojiGeneratorPage() {
             setGeneratedEmojis('');
         }
     };
-
+    
     const copyToClipboard = () => {
         if (!generatedEmojis) {
             toast({ title: "Nothing to Copy", variant: "destructive" });
@@ -63,7 +62,7 @@ export default function RandomEmojiGeneratorPage() {
                         <div 
                             className="h-40 flex items-center justify-center border-2 border-dashed rounded-lg text-6xl p-4 bg-muted"
                         >
-                           <span className="truncate">{generatedEmojis}</span>
+                           &lt;span className="truncate"&gt;{generatedEmojis}&lt;/span&gt;
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-end gap-4">
@@ -80,44 +79,43 @@ export default function RandomEmojiGeneratorPage() {
                                 />
                             </div>
                             <Button onClick={handleGenerate} size="lg">
-                                <RefreshCw className="mr-2 h-4 w-4" /> Generate
+                                &lt;RefreshCw className="mr-2 h-4 w-4" /&gt; Generate
                             </Button>
                         </div>
                         
-                        <Button onClick={copyToClipboard} size="lg" variant="outline" className="w-full" disabled={!generatedEmojis}>
-                            <Copy className="mr-2" /> Copy to Clipboard
-                        </Button>
-                    </CardContent>
-                </Card>
+                        &lt;Button onClick={copyToClipboard} size="lg" variant="outline" className="w-full" disabled={!generatedEmojis}&gt;
+                            &lt;Copy className="mr-2" /&gt; Copy to Clipboard
+                        &lt;/Button&gt;
+                    &lt;/CardContent&gt;
+                &lt;/Card&gt;
 
                 {emojiGeneratorGuide && (
-                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40 h-11 px-8">
-                                <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
-                                    <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
-                                    Read The Guide
-                                </span>
-                            </AccordionTrigger>
-                            <AccordionContent className="pt-6 w-full">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="font-headline">{emojiGeneratorGuide.title}</CardTitle>
-                                        <CardDescription>{emojiGeneratorGuide.description}</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                                            {emojiGeneratorGuide.steps.map((step, stepIndex) => (
-                                                <li key={stepIndex}>{step}</li>
+                    &lt;Accordion type="single" collapsible className="w-full"&gt;
+                        &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
+                            &lt;AccordionTrigger&gt;
+                                &lt;Button variant="outline" className="w-fit"&gt;
+                                    &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
+                                &lt;/Button&gt;
+                            &lt;/AccordionTrigger&gt;
+                            &lt;AccordionContent className="pt-6 w-full"&gt;
+                                &lt;Card&gt;
+                                    &lt;CardHeader&gt;
+                                        &lt;CardTitle className="font-headline"&gt;{emojiGeneratorGuide.title}&lt;/CardTitle&gt;
+                                        &lt;CardDescription&gt;{emojiGeneratorGuide.description}&lt;/CardDescription&gt;
+                                    &lt;/CardHeader&gt;
+                                    &lt;CardContent&gt;
+                                        &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
+                                            {emojiGeneratorGuide.steps.map((step, stepIndex) =&gt; (
+                                                &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
                                             ))}
-                                        </ol>
-                                    </CardContent>
-                                </Card>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
+                                        &lt;/ol&gt;
+                                    &lt;/CardContent&gt;
+                                &lt;/Card&gt;
+                            &lt;/AccordionContent&gt;
+                        &lt;/AccordionItem&gt;
+                    &lt;/Accordion&gt;
                 )}
-            </div>
-        </div>
+            &lt;/div&gt;
+        &lt;/div&gt;
     );
 }

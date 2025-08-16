@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react';
@@ -83,99 +82,99 @@ export default function YouTubeThumbnailDownloaderPage() {
     }
 
     return (
-        <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto space-y-8">
-                <Card>
-                    <CardHeader className="text-center">
-                        <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                            <Youtube className="w-8 h-8" />
-                        </div>
-                        <CardTitle className="text-4xl font-bold font-headline">YouTube Thumbnail Downloader</CardTitle>
-                        <CardDescription>Download high-quality thumbnails from any YouTube video instantly.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <div className="relative flex-grow">
-                                <Link className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                                <Input
+        &lt;div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8"&gt;
+            &lt;div className="max-w-4xl mx-auto space-y-8"&gt;
+                &lt;Card&gt;
+                    &lt;CardHeader className="text-center"&gt;
+                        &lt;div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4"&gt;
+                            &lt;Youtube className="w-8 h-8" /&gt;
+                        &lt;/div&gt;
+                        &lt;CardTitle className="text-4xl font-bold font-headline"&gt;YouTube Thumbnail Downloader&lt;/CardTitle&gt;
+                        &lt;CardDescription&gt;Download high-quality thumbnails from any YouTube video instantly.&lt;/CardDescription&gt;
+                    &lt;/CardHeader&gt;
+                    &lt;CardContent className="space-y-6"&gt;
+                        &lt;div className="flex flex-col sm:flex-row gap-4"&gt;
+                            &lt;div className="relative flex-grow"&gt;
+                                &lt;Link className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" /&gt;
+                                &lt;Input
                                     placeholder="Enter YouTube video URL"
                                     value={videoUrl}
-                                    onChange={(e) => setVideoUrl(e.target.value)}
+                                    onChange={(e) =&gt; setVideoUrl(e.target.value)}
                                     className="pl-10"
-                                />
-                            </div>
-                            <Button onClick={handleGetThumbnails}>Get Thumbnails</Button>
-                        </div>
+                                /&gt;
+                            &lt;/div&gt;
+                            &lt;Button onClick={handleGetThumbnails}&gt;Get Thumbnails&lt;/Button&gt;
+                        &lt;/div&gt;
                         
                         {thumbnails.length > 0 && (
-                            <div className="space-y-8">
-                                <h3 className="text-2xl font-bold text-center font-headline">Available Thumbnails</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {thumbnails.map(thumb => (
-                                        <Card key={thumb.quality} className="overflow-hidden flex flex-col group">
-                                            <CardHeader className="p-0">
-                                                <div className="aspect-video bg-muted overflow-hidden">
-                                                    <img 
+                            &lt;div className="space-y-8"&gt;
+                                &lt;h3 className="text-2xl font-bold text-center font-headline"&gt;Available Thumbnails&lt;/h3&gt;
+                                &lt;div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"&gt;
+                                    {thumbnails.map(thumb =&gt; (
+                                        &lt;Card key={thumb.quality} className="overflow-hidden flex flex-col group"&gt;
+                                            &lt;CardHeader className="p-0"&gt;
+                                                &lt;div className="aspect-video bg-muted overflow-hidden"&gt;
+                                                    &lt;img 
                                                         src={thumb.url} 
                                                         alt={`${thumb.quality} thumbnail`} 
                                                         className="w-full h-full object-cover"
-                                                         onError={(e) => {
+                                                         onError={(e) =&gt; {
                                                             const card = (e.target as HTMLElement).closest('.group');
                                                             if (card) {
                                                                 (card as HTMLElement).style.display = 'none';
                                                             }
                                                         }}
-                                                    />
-                                                </div>
-                                                <div className="p-4">
-                                                    <CardTitle className="text-lg">{thumb.quality}</CardTitle>
-                                                    <CardDescription>{thumb.width} x {thumb.height}</CardDescription>
-                                                </div>
-                                            </CardHeader>
-                                            <CardContent className="mt-auto p-4">
-                                                <Button 
+                                                    /&gt;
+                                                &lt;/div&gt;
+                                                &lt;div className="p-4"&gt;
+                                                    &lt;CardTitle className="text-lg"&gt;{thumb.quality}&lt;/CardTitle&gt;
+                                                    &lt;CardDescription&gt;{thumb.width} x {thumb.height}&lt;/CardDescription&gt;
+                                                &lt;/div&gt;
+                                            &lt;/CardHeader&gt;
+                                            &lt;CardContent className="mt-auto p-4"&gt;
+                                                &lt;Button 
                                                     className="w-full"
-                                                    onClick={() => handleDownload(thumb.url, thumb.quality)}
-                                                >
-                                                    <Download className="mr-2 h-4 w-4" />
+                                                    onClick={() =&gt; handleDownload(thumb.url, thumb.quality)}
+                                                &gt;
+                                                    &lt;Download className="mr-2 h-4 w-4" /&gt;
                                                     Download
-                                                </Button>
-                                            </CardContent>
-                                        </Card>
+                                                &lt;/Button&gt;
+                                            &lt;/CardContent&gt;
+                                        &lt;/Card&gt;
                                     ))}
-                                </div>
-                            </div>
+                                &lt;/div&gt;
+                            &lt;/div&gt;
                         )}
-                    </CardContent>
-                </Card>
+                    &lt;/CardContent&gt;
+                &lt;/Card&gt;
 
                 {youtubeGuide && (
-                   <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                           <AccordionTrigger>
-                                <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
-                                </Button>
-                            </AccordionTrigger>
-                            <AccordionContent className="pt-6 w-full">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="font-headline">{youtubeGuide.title}</CardTitle>
-                                        <CardDescription>{youtubeGuide.description}</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                                            {youtubeGuide.steps.map((step, stepIndex) => (
-                                                <li key={stepIndex}>{step}</li>
+                   &lt;Accordion type="single" collapsible className="w-full"&gt;
+                        &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
+                            &lt;AccordionTrigger&gt;
+                                &lt;Button variant="outline" className="w-fit"&gt;
+                                    &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
+                                &lt;/Button&gt;
+                            &lt;/AccordionTrigger&gt;
+                            &lt;AccordionContent className="pt-6 w-full"&gt;
+                                &lt;Card&gt;
+                                    &lt;CardHeader&gt;
+                                        &lt;CardTitle className="font-headline"&gt;{youtubeGuide.title}&lt;/CardTitle&gt;
+                                        &lt;CardDescription&gt;{youtubeGuide.description}&lt;/CardDescription&gt;
+                                    &lt;/CardHeader&gt;
+                                    &lt;CardContent&gt;
+                                        &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
+                                            {youtubeGuide.steps.map((step, stepIndex) =&gt; (
+                                                &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
                                             ))}
-                                        </ol>
-                                    </CardContent>
-                                </Card>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
+                                        &lt;/ol&gt;
+                                    &lt;/CardContent&gt;
+                                &lt;/Card&gt;
+                            &lt;/AccordionContent&gt;
+                        &lt;/AccordionItem&gt;
+                    &lt;/Accordion&gt;
                 )}
-            </div>
-        </div>
+            &lt;/div&gt;
+        &lt;/div&gt;
     )
 }

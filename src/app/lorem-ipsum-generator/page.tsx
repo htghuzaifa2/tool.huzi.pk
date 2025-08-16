@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react';
@@ -13,7 +12,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 
 const loremIpsumWords = [
-    'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'curabitur', 'vitae', 'diam', 'non', 'erat', 'mattis', 'placerat', 'sed', 'vel', 'urna', 'nullam', 'quis', 'ante', 'etiam', 'sit', 'amet', 'orci', 'eget', 'eros', 'faucibus', 'scelerisque', 'vivamus', 'eget', 'arcu', 'vel', 'quam', 'egestas', 'semper', 'aenean', 'posuere', 'quam', 'vel', 'leo', 'ultricies', 'nec', 'lacinia', 'risus', 'fermentum', 'donec', 'et', 'dui', 'purus', 'cras', 'eu', 'lorem', 'ac', 'risus', 'aliquam', 'euismod', 'quis', 'ac', 'nibh', 'fusce', 'ac', 'urna', 'vel', 'odio', 'tristique', 'tincidunt', 'quis', 'eu', 'enim', 'in', 'hac', 'habitasse', 'platea', 'dictumst', 'maecenas', 'ut', 'lorem', 'quis', 'ligula', 'imperdiet', 'auctor', 'sed', 'eu', 'arcu', 'morbi', 'et', 'erat', 'et', 'nibh', 'condimentum', 'interdum', 'eu', 'ac', 'ligula', 'integer', 'eu', 'lacus', 'sit', 'amet', 'augue', 'congue', 'hendrerit', 'in', 'vel', 'elit', 'phasellus', 'non', 'enim', 'quis', 'orci', 'consequat', 'consequat', 'ac', 'sit', 'amet', 'nisi', 'praesent', 'in', 'nisi', 'id', 'ante', 'molestie', 'ultrices', 'sed', 'non', 'nisi', 'quisque', 'porttitor', 'eros', 'in', 'tellus', 'semper', 'accumsan'
+    'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'curabitur', 'vitae', 'diam', 'non', 'erat', 'mattis', 'placerat', 'sed', 'vel', 'urna', 'nullam', 'quis', 'ante', 'etiam', 'sit', 'amet', 'orci', 'eget', 'eros', 'faucibus', 'scelerisque', 'vivamus', 'eget', 'arcu', 'vel', 'quam', 'egestas', 'semper', 'aenean', 'posuere', 'quam', 'vel', 'leo', 'ultricies', 'nec', 'lacinia', 'risus', 'fermentum', 'donec', 'et', 'dui', 'purus', 'cras', 'eu', 'lorem', 'ac', 'risus', 'aliquam', 'euismod', 'quis', 'ac', 'nibh', 'fusce', 'ac', 'urna', 'vel', 'odio', 'tristique', 'tincidunt', 'quis', 'eu', 'enim', 'in', 'hac', 'habitasse', 'platea', 'dictumst', 'maecenas', 'ut', 'lorem', 'quis', 'ligula', 'imperdiet', 'auctor', 'sed', 'eu', 'arcu', 'morbi', 'et', 'erat', 'et', 'nibh', 'condimentum', 'interdum', 'eu', 'ac', 'ligula', 'integer', 'eu', 'lacus', 'sit', 'amet', 'augue', 'congue', 'hendrerit', in', 'vel', 'elit', 'phasellus', 'non', 'enim', 'quis', 'orci', 'consequat', 'consequat', 'ac', 'sit', 'amet', 'nisi', 'praesent', 'in', 'nisi', 'id', 'ante', 'molestie', 'ultrices', 'sed', 'non', 'nisi', 'quisque', 'porttitor', 'eros', 'in', 'tellus', 'semper', 'accumsan'
 ];
 
 function generateLoremIpsum(wordCount: number): string {
@@ -90,7 +89,7 @@ export default function LoremIpsumGeneratorPage() {
                                     id="word-count"
                                     type="number"
                                     value={wordCount}
-                                    onChange={(e) => setWordCount(parseInt(e.target.value, 10))}
+                                    onChange={(e) => setCount(parseInt(e.target.value, 10))}
                                     min="1"
                                     className="mt-2"
                                 />
@@ -122,11 +121,10 @@ export default function LoremIpsumGeneratorPage() {
                 {loremIpsumGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40 h-11 px-8">
-                                <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
-                                    <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
-                                    Read The Guide
-                                </span>
+                            <AccordionTrigger>
+                                <Button variant="outline" className="w-fit">
+                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                </Button>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>

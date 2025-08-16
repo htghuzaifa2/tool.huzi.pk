@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from 'react';
@@ -91,73 +90,72 @@ export default function RandomPickerWheelPage() {
                                 disabled={isSpinning}
                             />
                              <Button onClick={handleSpin} disabled={isSpinning || options.length < 2} className="w-full" size="lg">
-                                <Play className="mr-2" /> {isSpinning ? 'Spinning...' : 'Spin the Wheel'}
+                                &lt;Play className="mr-2" /&gt; {isSpinning ? 'Spinning...' : 'Spin the Wheel'}
                             </Button>
-                        </div>
-                        <div className="space-y-4">
-                            <Card className="min-h-[300px] bg-muted overflow-hidden">
-                                <CardHeader>
-                                    <CardTitle className="text-center font-headline">The Wheel</CardTitle>
-                                </CardHeader>
-                                <CardContent className="relative flex items-center justify-center h-full">
-                                    <div className="space-y-2 w-full max-h-60 overflow-y-auto p-2">
-                                        {options.map((option, index) => (
-                                            <div 
+                        &lt;/div&gt;
+                        &lt;div className="space-y-4"&gt;
+                            &lt;Card className="min-h-[300px] bg-muted overflow-hidden"&gt;
+                                &lt;CardHeader&gt;
+                                    &lt;CardTitle className="text-center font-headline"&gt;The Wheel&lt;/CardTitle&gt;
+                                &lt;/CardHeader&gt;
+                                &lt;CardContent className="relative flex items-center justify-center h-full"&gt;
+                                    &lt;div className="space-y-2 w-full max-h-60 overflow-y-auto p-2"&gt;
+                                        {options.map((option, index) =&gt; (
+                                            &lt;div 
                                                 key={index}
                                                 className={`p-3 text-center rounded-md transition-all duration-100 ${highlightedIndex === index ? 'bg-primary text-primary-foreground scale-105 shadow-lg' : 'bg-background'}`}
-                                            >
+                                            &gt;
                                                 {option}
-                                            </div>
+                                            &lt;/div&gt;
                                         ))}
-                                    </div>
-                                </CardContent>
-                            </Card>
+                                    &lt;/div&gt;
+                                &lt;/CardContent&gt;
+                            &lt;/Card&gt;
 
                             {winner && (
-                                <Card className="border-green-500 bg-green-500/10 text-center">
-                                    <CardHeader>
-                                        <CardTitle className="text-2xl font-headline text-green-700 dark:text-green-300">Winner!</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p className="text-4xl font-bold">{winner}</p>
-                                        <Button variant="ghost" size="sm" onClick={copyToClipboard} className="mt-4 mx-auto">
-                                            <Copy className="mr-2 h-4 w-4" /> Copy Winner
-                                        </Button>
-                                    </CardContent>
-                                </Card>
+                                &lt;Card className="border-green-500 bg-green-500/10 text-center"&gt;
+                                    &lt;CardHeader&gt;
+                                        &lt;CardTitle className="text-2xl font-headline text-green-700 dark:text-green-300"&gt;Winner!&lt;/CardTitle&gt;
+                                    &lt;/CardHeader&gt;
+                                    &lt;CardContent&gt;
+                                        &lt;p className="text-4xl font-bold"&gt;{winner}&lt;/p&gt;
+                                        &lt;Button variant="ghost" size="sm" onClick={copyToClipboard} className="mt-4 mx-auto"&gt;
+                                            &lt;Copy className="mr-2 h-4 w-4" /&gt; Copy Winner
+                                        &lt;/Button&gt;
+                                    &lt;/CardContent&gt;
+                                &lt;/Card&gt;
                             )}
-                        </div>
-                    </CardContent>
-                </Card>
+                        &lt;/div&gt;
+                    &lt;/CardContent&gt;
+                &lt;/Card&gt;
 
                 {pickerWheelGuide && (
-                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40 h-11 px-8">
-                                <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
-                                    <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
-                                    Read The Guide
-                                </span>
-                            </AccordionTrigger>
-                            <AccordionContent className="pt-6 w-full">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="font-headline">{pickerWheelGuide.title}</CardTitle>
-                                        <CardDescription>{pickerWheelGuide.description}</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                                            {pickerWheelGuide.steps.map((step, stepIndex) => (
-                                                <li key={stepIndex}>{step}</li>
+                    &lt;Accordion type="single" collapsible className="w-full"&gt;
+                        &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
+                            &lt;AccordionTrigger&gt;
+                                &lt;Button variant="outline" className="w-fit"&gt;
+                                    &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
+                                &lt;/Button&gt;
+                            &lt;/AccordionTrigger&gt;
+                            &lt;AccordionContent className="pt-6 w-full"&gt;
+                                &lt;Card&gt;
+                                    &lt;CardHeader&gt;
+                                        &lt;CardTitle className="font-headline"&gt;{pickerWheelGuide.title}&lt;/CardTitle&gt;
+                                        &lt;CardDescription&gt;{pickerWheelGuide.description}&lt;/CardDescription&gt;
+                                    &lt;/CardHeader&gt;
+                                    &lt;CardContent&gt;
+                                        &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
+                                            {pickerWheelGuide.steps.map((step, stepIndex) =&gt; (
+                                                &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
                                             ))}
-                                        </ol>
-                                    </CardContent>
-                                </Card>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
+                                        &lt;/ol&gt;
+                                    &lt;/CardContent&gt;
+                                &lt;/Card&gt;
+                            &lt;/AccordionContent&gt;
+                        &lt;/AccordionItem&gt;
+                    &lt;/Accordion&gt;
                 )}
-            </div>
-        </div>
+            &lt;/div&gt;
+        &lt;/div&gt;
     );
 }

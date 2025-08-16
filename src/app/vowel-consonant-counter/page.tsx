@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useMemo } from "react"
@@ -33,74 +32,73 @@ export default function VowelConsonantCounterPage() {
   }, [text]);
 
   return (
-    <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <Card>
-            <CardHeader className="text-center">
-                <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <Voicemail className="w-8 h-8" />
-                </div>
-                <CardTitle className="text-4xl font-bold font-headline">Vowel & Consonant Counter</CardTitle>
-                <CardDescription>Instantly count the number of vowels and consonants in your text.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-                <Textarea
-                  placeholder="Start typing or paste your text here..."
+    &lt;div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8"&gt;
+      &lt;div className="max-w-4xl mx-auto space-y-8"&gt;
+        &lt;Card&gt;
+            &lt;CardHeader className="text-center"&gt;
+                &lt;div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4"&gt;
+                    &lt;Voicemail className="w-8 h-8" /&gt;
+                &lt;/div&gt;
+                &lt;CardTitle className="text-4xl font-bold font-headline"&gt;Vowel &amp; Consonant Counter&lt;/CardTitle&gt;
+                &lt;CardDescription&gt;Instantly count the number of vowels and consonants in your text.&lt;/CardDescription&gt;
+            &lt;/CardHeader&gt;
+            &lt;CardContent className="space-y-6"&gt;
+                &lt;Textarea
+                  placeholder="Start typing or paste your text here to see the magic happen..."
                   value={text}
-                  onChange={(e) => setText(e.target.value)}
+                  onChange={(e) =&gt; setText(e.target.value)}
                   className="min-h-[300px] text-base font-mono bg-muted/50"
-                />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-4xl font-bold">{stats.vowels}</CardTitle>
-                            <p className="text-muted-foreground">Vowels</p>
-                        </CardHeader>
-                    </Card>
-                     <Card>
-                        <CardHeader>
-                            <CardTitle className="text-4xl font-bold">{stats.consonants}</CardTitle>
-                            <p className="text-muted-foreground">Consonants</p>
-                        </CardHeader>
-                    </Card>
-                     <Card>
-                        <CardHeader>
-                            <CardTitle className="text-4xl font-bold">{stats.characters}</CardTitle>
-                            <p className="text-muted-foreground">Total Characters</p>
-                        </CardHeader>
-                    </Card>
-                </div>
-            </CardContent>
-        </Card>
+                /&gt;
+                &lt;div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center"&gt;
+                    &lt;Card&gt;
+                        &lt;CardHeader&gt;
+                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.vowels}&lt;/CardTitle&gt;
+                            &lt;p className="text-muted-foreground"&gt;Vowels&lt;/p&gt;
+                        &lt;/CardHeader&gt;
+                    &lt;/Card&gt;
+                     &lt;Card&gt;
+                        &lt;CardHeader&gt;
+                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.consonants}&lt;/CardTitle&gt;
+                            &lt;p className="text-muted-foreground"&gt;Consonants&lt;/p&gt;
+                        &lt;/CardHeader&gt;
+                    &lt;/Card&gt;
+                     &lt;Card&gt;
+                        &lt;CardHeader&gt;
+                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.characters}&lt;/CardTitle&gt;
+                            &lt;p className="text-muted-foreground"&gt;Total Characters&lt;/p&gt;
+                        &lt;/CardHeader&gt;
+                    &lt;/Card&gt;
+                &lt;/div&gt;
+            &lt;/CardContent&gt;
+        &lt;/Card&gt;
 
         {vowelConsonantGuide && (
-            <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                    <AccordionTrigger className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40 h-11 px-8">
-                        <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
-                            <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
-                            Read The Guide
-                        </span>
-                    </AccordionTrigger>
-                    <AccordionContent className="pt-6 w-full">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="font-headline">{vowelConsonantGuide.title}</CardTitle>
-                                <CardDescription>{vowelConsonantGuide.description}</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                                    {vowelConsonantGuide.steps.map((step, stepIndex) => (
-                                        <li key={stepIndex}>{step}</li>
+            &lt;Accordion type="single" collapsible className="w-full"&gt;
+                &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
+                    &lt;AccordionTrigger&gt;
+                        &lt;Button variant="outline" className="w-fit"&gt;
+                            &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
+                        &lt;/Button&gt;
+                    &lt;/AccordionTrigger&gt;
+                    &lt;AccordionContent className="pt-6 w-full"&gt;
+                        &lt;Card&gt;
+                            &lt;CardHeader&gt;
+                                &lt;CardTitle className="font-headline"&gt;{vowelConsonantGuide.title}&lt;/CardTitle&gt;
+                                &lt;CardDescription&gt;{vowelConsonantGuide.description}&lt;/CardDescription&gt;
+                            &lt;/CardHeader&gt;
+                            &lt;CardContent&gt;
+                                &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
+                                    {vowelConsonantGuide.steps.map((step, stepIndex) =&gt; (
+                                        &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
                                     ))}
-                                </ol>
-                            </CardContent>
-                        </Card>
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
+                                &lt;/ol&gt;
+                            &lt;/CardContent&gt;
+                        &lt;/Card&gt;
+                    &lt;/AccordionContent&gt;
+                &lt;/AccordionItem&gt;
+            &lt;/Accordion&gt;
         )}
-      </div>
-    </div>
+      &lt;/div&gt;
+    &lt;/div&gt;
   )
 }

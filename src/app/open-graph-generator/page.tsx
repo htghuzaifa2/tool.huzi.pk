@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react';
@@ -24,11 +23,11 @@ export default function OpenGraphGeneratorPage() {
 
     const generateTags = () => {
         let tags = '';
-        if (title) tags += `<meta property="og:title" content="${title}">\n`;
-        if (type) tags += `<meta property="og:type" content="${type}">\n`;
-        if (imageUrl) tags += `<meta property="og:image" content="${imageUrl}">\n`;
-        if (url) tags += `<meta property="og:url" content="${url}">\n`;
-        if (description) tags += `<meta property="og:description" content="${description}">`;
+        if (title) tags += '&lt;meta property="og:title" content="${title}"&gt;\n';
+        if (type) tags += '&lt;meta property="og:type" content="${type}"&gt;\n';
+        if (imageUrl) tags += '&lt;meta property="og:image" content="${imageUrl}"&gt;\n';
+        if (url) tags += '&lt;meta property="og:url" content="${url}"&gt;\n';
+        if (description) tags += '&lt;meta property="og:description" content="${description}"&gt;';
         return tags.trim();
     };
 
@@ -63,7 +62,7 @@ export default function OpenGraphGeneratorPage() {
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div className="space-y-2">
-                            <Label htmlFor="title">OG Title</Label>
+                            <label htmlFor="title">OG Title</label>
                             <Input 
                                 id="title"
                                 placeholder="Your Page Title"
@@ -140,11 +139,10 @@ export default function OpenGraphGeneratorPage() {
                 {openGraphGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40 h-11 px-8">
-                                <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
-                                    <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
-                                    Read The Guide
-                                </span>
+                            <AccordionTrigger>
+                                <Button variant="outline" className="w-fit">
+                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                </Button>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>

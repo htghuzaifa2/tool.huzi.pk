@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react';
@@ -92,88 +91,87 @@ export default function TextEncryptionPage() {
                         <CardDescription>Encrypt or decrypt text using a simple Caesar cipher.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                        <div className="grid gap-2">
-                           <Label htmlFor="input-text">Input Text</Label>
-                           <Textarea
+                        &lt;div className="grid gap-2"&gt;
+                           &lt;Label htmlFor="input-text"&gt;Input Text&lt;/Label&gt;
+                           &lt;Textarea
                                 id="input-text"
                                 placeholder="Enter the text you want to process..."
                                 value={inputText}
-                                onChange={(e) => setInputText(e.target.value)}
+                                onChange={(e) =&gt; setInputText(e.target.value)}
                                 className="min-h-[150px] font-mono"
-                           />
-                        </div>
-                        <div className="grid gap-2">
-                           <Label htmlFor="shift-key">Cipher Shift Key (1-25)</Label>
-                           <div className="relative">
-                               <Key className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                               <Input
+                           /&gt;
+                        &lt;/div&gt;
+                        &lt;div className="grid gap-2"&gt;
+                           &lt;Label htmlFor="shift-key"&gt;Cipher Shift Key (1-25)&lt;/Label&gt;
+                           &lt;div className="relative"&gt;
+                               &lt;Key className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" /&gt;
+                               &lt;Input
                                     id="shift-key"
                                     type="number"
                                     min="1"
                                     max="25"
                                     value={shiftKey}
-                                    onChange={(e) => setShiftKey(e.target.value)}
+                                    onChange={(e) =&gt; setShiftKey(e.target.value)}
                                     className="pl-10"
-                                />
-                           </div>
-                        </div>
+                                /&gt;
+                           &lt;/div&gt;
+                        &lt;/div&gt;
 
-                        <div className="flex justify-center gap-4">
-                            <Button onClick={() => processText('encrypt')} size="lg">
-                                <Lock className="mr-2" /> Encrypt
-                            </Button>
-                            <Button onClick={() => processText('decrypt')} size="lg" variant="secondary">
-                                <Unlock className="mr-2" /> Decrypt
-                            </Button>
-                        </div>
+                        &lt;div className="flex justify-center gap-4"&gt;
+                            &lt;Button onClick={() =&gt; processText('encrypt')} size="lg"&gt;
+                                &lt;Lock className="mr-2" /&gt; Encrypt
+                            &lt;/Button&gt;
+                            &lt;Button onClick={() =&gt; processText('decrypt')} size="lg" variant="secondary"&gt;
+                                &lt;Unlock className="mr-2" /&gt; Decrypt
+                            &lt;/Button&gt;
+                        &lt;/div&gt;
                         
                         {outputText && (
-                            <div className="grid gap-2">
-                                <Label htmlFor="output-text">Output Text</Label>
-                                <div className="relative">
-                                    <Textarea
+                            &lt;div className="grid gap-2"&gt;
+                                &lt;Label htmlFor="output-text"&gt;Output Text&lt;/Label&gt;
+                                &lt;div className="relative"&gt;
+                                    &lt;Textarea
                                         id="output-text"
                                         value={outputText}
                                         readOnly
                                         className="min-h-[150px] font-mono bg-muted"
-                                    />
-                                    <Button variant="ghost" size="icon" className="absolute right-2 top-2" onClick={copyToClipboard}>
-                                        <Copy className="h-5 w-5" />
-                                    </Button>
-                                </div>
-                           </div>
+                                    /&gt;
+                                    &lt;Button variant="ghost" size="icon" className="absolute right-2 top-2" onClick={copyToClipboard}&gt;
+                                        &lt;Copy className="h-5 w-5" /&gt;
+                                    &lt;/Button&gt;
+                                &lt;/div&gt;
+                           &lt;/div&gt;
                         )}
-                    </CardContent>
-                </Card>
+                    &lt;/CardContent&gt;
+                &lt;/Card&gt;
 
                 {textEncryptionGuide && (
-                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40 h-11 px-8">
-                                <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
-                                    <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
-                                    Read The Guide
-                                </span>
-                            </AccordionTrigger>
-                            <AccordionContent className="pt-6 w-full">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="font-headline">{textEncryptionGuide.title}</CardTitle>
-                                        <CardDescription>{textEncryptionGuide.description}</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                                            {textEncryptionGuide.steps.map((step, stepIndex) => (
-                                                <li key={stepIndex}>{step}</li>
+                    &lt;Accordion type="single" collapsible className="w-full"&gt;
+                        &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
+                            &lt;AccordionTrigger&gt;
+                                &lt;Button variant="outline" className="w-fit"&gt;
+                                    &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
+                                &lt;/Button&gt;
+                            &lt;/AccordionTrigger&gt;
+                            &lt;AccordionContent className="pt-6 w-full"&gt;
+                                &lt;Card&gt;
+                                    &lt;CardHeader&gt;
+                                        &lt;CardTitle className="font-headline"&gt;{textEncryptionGuide.title}&lt;/CardTitle&gt;
+                                        &lt;CardDescription&gt;{textEncryptionGuide.description}&lt;/CardDescription&gt;
+                                    &lt;/CardHeader&gt;
+                                    &lt;CardContent&gt;
+                                        &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
+                                            {textEncryptionGuide.steps.map((step, stepIndex) =&gt; (
+                                                &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
                                             ))}
-                                        </ol>
-                                    </CardContent>
-                                </Card>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
+                                        &lt;/ol&gt;
+                                    &lt;/CardContent&gt;
+                                &lt;/Card&gt;
+                            &lt;/AccordionContent&gt;
+                        &lt;/AccordionItem&gt;
+                    &lt;/Accordion&gt;
                 )}
-            </div>
-        </div>
+            &lt;/div&gt;
+        &lt;/div&gt;
     );
 }

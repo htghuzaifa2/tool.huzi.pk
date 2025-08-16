@@ -1,8 +1,6 @@
-
 "use client"
 
 import { useState, useEffect, useCallback } from 'react';
-import QRCode from 'qrcode';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -98,6 +96,7 @@ export default function QRCodeGeneratorPage() {
                  document.body.appendChild(link);
                  link.click();
                  document.body.removeChild(link);
+                 link.href = URL.revokeObjectURL(url);
             } else { // svg
                 const svgString = await QRCode.toString(value, {
                     type: 'svg',
@@ -117,7 +116,7 @@ export default function QRCodeGeneratorPage() {
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                URL.revokeObjectURL(url);
+                link.href = URL.revokeObjectURL(url);
             }
         } catch (err) {
              console.error(err);
@@ -158,116 +157,115 @@ export default function QRCodeGeneratorPage() {
                         <div className="space-y-6">
                             <Tabs value={qrType} onValueChange={(v) => setQrType(v as QrType)} className="w-full">
                                 <TabsList className="grid w-full grid-cols-3">
-                                    <TabsTrigger value="text"><QrCode className="mr-2"/>Text/URL</TabsTrigger>
-                                    <TabsTrigger value="wifi"><Wifi className="mr-2"/>WiFi</TabsTrigger>
-                                    <TabsTrigger value="vcard"><Contact className="mr-2"/>vCard</TabsTrigger>
+                                    <TabsTrigger value="text">&lt;QrCode className="mr-2"/&gt;Text/URL</TabsTrigger>
+                                    <TabsTrigger value="wifi">&lt;Wifi className="mr-2"/&gt;WiFi</TabsTrigger>
+                                    <TabsTrigger value="vcard">&lt;Contact className="mr-2"/&gt;vCard</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="text" className="pt-4 space-y-4">
-                                  {inputFields.text.map(field => <div key={field.label}><Label>{field.label}</Label><Input placeholder={field.placeholder} value={field.value} onChange={(e) => field.setter(e.target.value)} /></div>)}
+                                  {inputFields.text.map(field => &lt;div key={field.label}&gt;&lt;Label&gt;{field.label}&lt;/Label&gt;&lt;Input placeholder={field.placeholder} value={field.value} onChange={(e) =&gt; field.setter(e.target.value)} /&gt;&lt;/div&gt;)}
                                 </TabsContent>
                                 <TabsContent value="wifi" className="pt-4 space-y-4">
-                                  {inputFields.wifi.map(field => <div key={field.label}><Label>{field.label}</Label><Input placeholder={field.placeholder} value={field.value} onChange={(e) => field.setter(e.target.value)} /></div>)}
-                                  <div>
-                                    <Label>Encryption</Label>
-                                    <Select value={encryption} onValueChange={setEncryption}>
-                                        <SelectTrigger><SelectValue/></SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="WPA">WPA/WPA2</SelectItem>
-                                            <SelectItem value="WEP">WEP</SelectItem>
-                                            <SelectItem value="nopass">None</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                  </div>
+                                  {inputFields.wifi.map(field => &lt;div key={field.label}&gt;&lt;Label&gt;{field.label}&lt;/Label&gt;&lt;Input placeholder={field.placeholder} value={field.value} onChange={(e) =&gt; field.setter(e.target.value)} /&gt;&lt;/div&gt;)}
+                                  &lt;div&gt;
+                                    &lt;Label&gt;Encryption&lt;/Label&gt;
+                                    &lt;Select value={encryption} onValueChange={setEncryption}&gt;
+                                        &lt;SelectTrigger&gt;&lt;SelectValue/&gt;&lt;/SelectTrigger&gt;
+                                        &lt;SelectContent&gt;
+                                            &lt;SelectItem value="WPA"&gt;WPA/WPA2&lt;/SelectItem&gt;
+                                            &lt;SelectItem value="WEP"&gt;WEP&lt;/SelectItem&gt;
+                                            &lt;SelectItem value="nopass"&gt;None&lt;/SelectItem&gt;
+                                        &lt;/SelectContent&gt;
+                                    &lt;/Select&gt;
+                                  &lt;/div&gt;
                                 </TabsContent>
                                 <TabsContent value="vcard" className="pt-4 space-y-4">
-                                  {inputFields.vcard.map(field => <div key={field.label}><Label>{field.label}</Label><Input placeholder={field.placeholder} value={field.value} onChange={(e) => field.setter(e.target.value)} /></div>)}
+                                  {inputFields.vcard.map(field => &lt;div key={field.label}&gt;&lt;Label&gt;{field.label}&lt;/Label&gt;&lt;Input placeholder={field.placeholder} value={field.value} onChange={(e) =&gt; field.setter(e.target.value)} /&gt;&lt;/div&gt;)}
                                 </TabsContent>
                             </Tabs>
-                            <Accordion type="single" collapsible className="w-full">
-                              <AccordionItem value="item-1">
-                                <AccordionTrigger><Palette className="mr-2" />Colors</AccordionTrigger>
-                                <AccordionContent className="grid grid-cols-2 gap-4 pt-2">
-                                  <div className="space-y-2">
-                                    <Label htmlFor="qr-color">QR Code Color</Label>
-                                    <Input id="qr-color" type="color" value={qrColor} onChange={(e) => setQrColor(e.target.value)} className="h-12"/>
-                                  </div>
-                                   <div className="space-y-2">
-                                    <Label htmlFor="bg-color">Background Color</Label>
-                                    <Input id="bg-color" type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="h-12"/>
-                                  </div>
-                                </AccordionContent>
-                              </AccordionItem>
-                              <AccordionItem value="item-2">
-                                <AccordionTrigger><Settings className="mr-2" />Options</AccordionTrigger>
-                                <AccordionContent className="space-y-4 pt-2">
-                                  <div className="space-y-2">
-                                    <Label>Size: {size}px</Label>
-                                    <Input type="range" min="64" max="1024" step="8" value={size} onChange={e => setSize(Number(e.target.value))} />
-                                  </div>
-                                  <div className="space-y-2">
-                                    <Label>Error Correction</Label>
-                                    <Select value={errorCorrection} onValueChange={(v) => setErrorCorrection(v as ErrorCorrectionLevel)}>
-                                        <SelectTrigger><SelectValue/></SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="L">Low (L)</SelectItem>
-                                            <SelectItem value="M">Medium (M)</SelectItem>
-                                            <SelectItem value="Q">Quartile (Q)</SelectItem>
-                                            <SelectItem value="H">High (H)</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                  </div>
-                                </AccordionContent>
-                              </AccordionItem>
-                            </Accordion>
-                        </div>
-                        <div className="space-y-4">
+                            &lt;Accordion type="single" collapsible className="w-full"&gt;
+                              &lt;AccordionItem value="item-1"&gt;
+                                &lt;AccordionTrigger&gt;&lt;Palette className="mr-2" /&gt;Colors&lt;/AccordionTrigger&gt;
+                                &lt;AccordionContent className="grid grid-cols-2 gap-4 pt-2"&gt;
+                                  &lt;div className="space-y-2"&gt;
+                                    &lt;Label htmlFor="qr-color"&gt;QR Code Color&lt;/Label&gt;
+                                    &lt;Input id="qr-color" type="color" value={qrColor} onChange={(e) =&gt; setQrColor(e.target.value)} className="h-12"/&gt;
+                                  &lt;/div&gt;
+                                   &lt;div className="space-y-2"&gt;
+                                    &lt;Label htmlFor="bg-color"&gt;Background Color&lt;/Label&gt;
+                                    &lt;Input id="bg-color" type="color" value={bgColor} onChange={(e) =&gt; setBgColor(e.target.value)} className="h-12"/&gt;
+                                  &lt;/div&gt;
+                                &lt;/AccordionContent&gt;
+                              &lt;/AccordionItem&gt;
+                              &lt;AccordionItem value="item-2"&gt;
+                                &lt;AccordionTrigger&gt;&lt;Settings className="mr-2" /&gt;Options&lt;/AccordionTrigger&gt;
+                                &lt;AccordionContent className="space-y-4 pt-2"&gt;
+                                  &lt;div className="space-y-2"&gt;
+                                    &lt;Label&gt;Size: {size}px&lt;/Label&gt;
+                                    &lt;Input type="range" min="64" max="1024" step="8" value={size} onChange={e =&gt; setSize(Number(e.target.value))} /&gt;
+                                  &lt;/div&gt;
+                                  &lt;div className="space-y-2"&gt;
+                                    &lt;Label&gt;Error Correction&lt;/Label&gt;
+                                    &lt;Select value={errorCorrection} onValueChange={(v) =&gt; setErrorCorrection(v as ErrorCorrectionLevel)}&gt;
+                                        &lt;SelectTrigger&gt;&lt;SelectValue/&gt;&lt;/SelectTrigger&gt;
+                                        &lt;SelectContent&gt;
+                                            &lt;SelectItem value="L"&gt;Low (L)&lt;/SelectItem&gt;
+                                            &lt;SelectItem value="M"&gt;Medium (M)&lt;/SelectItem&gt;
+                                            &lt;SelectItem value="Q"&gt;Quartile (Q)&lt;/SelectItem&gt;
+                                            &lt;SelectItem value="H"&gt;High (H)&lt;/SelectItem&gt;
+                                        &lt;/SelectContent&gt;
+                                    &lt;/Select&gt;
+                                  &lt;/div&gt;
+                                &lt;/AccordionContent&gt;
+                              &lt;/AccordionItem&gt;
+                            &lt;/Accordion&gt;
+                        &lt;/div&gt;
+                        &lt;div className="space-y-4"&gt;
                            {qrCodeDataUrl && (
-                                <div className="flex flex-col items-center space-y-4 p-4 border rounded-lg bg-muted">
-                                    <div className="p-4 bg-white rounded-lg shadow-md" style={{backgroundColor: bgColor}}>
-                                        <img src={qrCodeDataUrl} alt="Generated QR Code" width={256} height={256} />
-                                    </div>
-                                    <div className="flex gap-4">
-                                        <Button onClick={() => handleDownload('png')}>
-                                            <Download className="mr-2" /> Download PNG
-                                        </Button>
-                                        <Button onClick={() => handleDownload('svg')} variant="secondary">
-                                            <Download className="mr-2" /> Download SVG
-                                        </Button>
-                                    </div>
-                                </div>
+                                &lt;div className="flex flex-col items-center space-y-4 p-4 border rounded-lg bg-muted"&gt;
+                                    &lt;div className="p-4 bg-white rounded-lg shadow-md" style={{backgroundColor: bgColor}}&gt;
+                                        &lt;img src={qrCodeDataUrl} alt="Generated QR Code" width={256} height={256} /&gt;
+                                    &lt;/div&gt;
+                                    &lt;div className="flex gap-4"&gt;
+                                        &lt;Button onClick={() =&gt; handleDownload('png')}&gt;
+                                            &lt;Download className="mr-2" /&gt; Download PNG
+                                        &lt;/Button&gt;
+                                        &lt;Button onClick={() =&gt; handleDownload('svg')} variant="secondary"&gt;
+                                            &lt;Download className="mr-2" /&gt; Download SVG
+                                        &lt;/Button&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
                             )}
-                        </div>
-                    </CardContent>
-                </Card>
+                        &lt;/div&gt;
+                    &lt;/CardContent&gt;
+                &lt;/Card&gt;
 
                 {qrCodeGuide && (
-                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40 h-11 px-8">
-                                <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
-                                    <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
-                                    Read The Guide
-                                </span>
-                            </AccordionTrigger>
-                            <AccordionContent className="pt-6 w-full">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="font-headline">{qrCodeGuide.title}</CardTitle>
-                                        <CardDescription>{qrCodeGuide.description}</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                                            {qrCodeGuide.steps.map((step, stepIndex) => (
-                                                <li key={stepIndex}>{step}</li>
+                    &lt;Accordion type="single" collapsible className="w-full"&gt;
+                        &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
+                            &lt;AccordionTrigger&gt;
+                                &lt;Button variant="outline" className="w-fit"&gt;
+                                    &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
+                                &lt;/Button&gt;
+                            &lt;/AccordionTrigger&gt;
+                            &lt;AccordionContent className="pt-6 w-full"&gt;
+                                &lt;Card&gt;
+                                    &lt;CardHeader&gt;
+                                        &lt;CardTitle className="font-headline"&gt;{qrCodeGuide.title}&lt;/CardTitle&gt;
+                                        &lt;CardDescription&gt;{qrCodeGuide.description}&lt;/CardDescription&gt;
+                                    &lt;/CardHeader&gt;
+                                    &lt;CardContent&gt;
+                                        &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
+                                            {qrCodeGuide.steps.map((step, stepIndex) =&gt; (
+                                                &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
                                             ))}
-                                        </ol>
-                                    </CardContent>
-                                </Card>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
+                                        &lt;/ol&gt;
+                                    &lt;/CardContent&gt;
+                                &lt;/Card&gt;
+                            &lt;/AccordionContent&gt;
+                        &lt;/AccordionItem&gt;
+                    &lt;/Accordion&gt;
                 )}
-            </div>
-        </div>
+            &lt;/div&gt;
+        &lt;/div&gt;
     );
 }
