@@ -3,6 +3,12 @@ import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, I
 
 export const tools = [
   {
+    icon: <Gift className="h-8 w-8" />,
+    href: "/random-picker-wheel",
+    title: "Random Picker Wheel",
+    description: "Add a list of options and spin a wheel to randomly choose one.",
+  },
+  {
     icon: <FileText className="h-8 w-8" />,
     href: "/resume-builder",
     title: "Resume Builder",
@@ -31,12 +37,6 @@ export const tools = [
     href: "/qr-code-generator",
     title: "QR Code Generator",
     description: "Create custom QR codes for URLs, text, WiFi, and more.",
-  },
-  {
-    icon: <Gift className="h-8 w-8" />,
-    href: "/random-picker-wheel",
-    title: "Random Picker Wheel",
-    description: "Add a list of options and spin a wheel to randomly choose one.",
   },
   {
     icon: <Combine className="h-8 w-8" />,
