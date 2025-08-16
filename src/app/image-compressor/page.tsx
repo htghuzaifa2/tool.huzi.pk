@@ -7,7 +7,7 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Upload, Download, RefreshCw, Image as ImageIcon, Loader2, BookOpen } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionHeader } from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
 
 
@@ -216,19 +216,17 @@ export default function ImageCompressorPage() {
                 
                 {imageCompressorGuide && (
                     <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none">
-                             <AccordionHeader className="flex justify-center">
-                                <AccordionTrigger asChild>
-                                    <Button
-                                    size="lg"
-                                    variant="ghost"
-                                    className="w-auto"
-                                    >
-                                    <BookOpen className="mr-2 h-5 w-5" />
-                                    Read The Guide
-                                    </Button>
-                                </AccordionTrigger>
-                            </AccordionHeader>
+                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
+                            <AccordionTrigger asChild>
+                                <Button
+                                size="lg"
+                                variant="ghost"
+                                className="w-auto"
+                                >
+                                <BookOpen className="mr-2 h-5 w-5" />
+                                Read The Guide
+                                </Button>
+                            </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>
                                     <CardHeader>
