@@ -86,15 +86,10 @@ export default function VimeoThumbnailDownloaderPage() {
     
     const handleDownload = async (url: string) => {
         try {
-            // Using a CORS proxy to prevent potential cross-origin issues on download
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-            const response = await fetch(proxyUrl);
+            const response = await fetch(url);
             if (!response.ok) throw new Error('Could not fetch image for download.');
             
-            const corsData = await response.json();
-            const imageResponse = await fetch(corsData.contents);
-            const blob = await imageResponse.blob();
-
+            const blob = await response.blob();
             const blobUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = blobUrl;
@@ -148,9 +143,13 @@ export default function VimeoThumbnailDownloaderPage() {
                                     </div>
                                     <div className="p-4">
                                         <CardTitle className="text-lg">{thumbnail.quality}</CardTitle>
-
-                                    </CardDescription>
-                                </CardContent>
+                                    </div>
+                                </CardHeader>
+                                <CardFooter className="p-4 mt-auto">
+                                    <Button className="w-full" onClick={() => handleDownload(thumbnail.url)}>
+                                        <Download className="mr-2 h-4 w-4" /> Download
+                                    </Button>
+                                </CardFooter>
                             </Card>
                         </CardFooter>
                     )}
@@ -160,7 +159,7 @@ export default function VimeoThumbnailDownloaderPage() {
                    <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" id="guide-section" className="border-none flex flex-col items-center">
                             <AccordionTrigger onClick={handleGuideClick}>
-                                <FancyAccordionButton />
+                               <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>
