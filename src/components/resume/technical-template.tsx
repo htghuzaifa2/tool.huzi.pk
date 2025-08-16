@@ -111,4 +111,3 @@ export function TechnicalTemplate({ data, accentColor, showEmail, showPhone, sho
         </div>
     );
 }
-
