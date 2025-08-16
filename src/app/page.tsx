@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button"
 import { ArrowRight, ArrowUp } from "lucide-react"
 import { tools } from "@/lib/search-data"
+import { GetStartedButton } from "@/components/ui/get-started-button"
 
 const ITEMS_PER_PAGE = 25;
 
@@ -43,9 +44,9 @@ export default function Home() {
             A curated collection of client-side utilities and tools to streamline your everyday tasks.
           </p>
           <div className="mt-8 flex justify-center gap-4">
-            <Button asChild size="lg">
-              <Link href="#tools">Get Started <ArrowRight className="ml-2 h-5 w-5" /></Link>
-            </Button>
+            <a href="#tools">
+              <GetStartedButton />
+            </a>
           </div>
         </div>
       </section>
