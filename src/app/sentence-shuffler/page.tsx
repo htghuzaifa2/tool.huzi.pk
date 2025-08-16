@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from 'react';
@@ -6,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
 import { ArrowDown, Copy, Shuffle } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 
 export default function SentenceShufflerPage() {
     const [inputText, setInputText] = useState('This is the first sentence. This is the second one! And here comes the third?');
@@ -23,8 +25,16 @@ export default function SentenceShufflerPage() {
         }
 
         try {
-            // Regex to split text into sentences, keeping delimiters and whitespace.
-            const sentences = inputText.match(/[^.!?]+[.!?]+\s*/g) || [];
+            // Regex to split text into sentences, keeping delimiters and trailing whitespace.
+            // This handles multiple spaces after a delimiter.
+            const sentences = inputText.match(/[^.!?]+[.!?]+[ \t\r\n]*/g) || [];
+            
+            // Handle case where there might be text without a closing delimiter
+            const lastMatchEnd = sentences.length > 0 ? inputText.lastIndexOf(sentences[sentences.length - 1]) + sentences[sentences.length - 1].length : 0;
+            const remainingText = inputText.substring(lastMatchEnd).trim();
+            if (remainingText) {
+                sentences.push(remainingText);
+            }
 
             if (sentences.length <= 1) {
                 toast({
@@ -84,12 +94,13 @@ export default function SentenceShufflerPage() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="grid gap-2">
-                           <label className="font-medium">Original Text</label>
+                           <Label htmlFor="input-text">Original Text</Label>
                            <Textarea
+                                id="input-text"
                                 placeholder="Enter a paragraph with multiple sentences..."
                                 value={inputText}
                                 onChange={(e) => setInputText(e.target.value)}
-                                className="min-h-[200px] font-mono text-sm"
+                                className="min-h-[200px]"
                            />
                         </div>
                         
@@ -101,16 +112,17 @@ export default function SentenceShufflerPage() {
 
                         <div className="grid gap-2">
                             <div className="flex items-center justify-between">
-                                <label className="font-medium">Shuffled Text</label>
+                                <Label htmlFor="output-text">Shuffled Text</Label>
                                 <Button variant="ghost" size="icon" onClick={copyToClipboard} disabled={!shuffledText}>
                                     <Copy className="h-5 w-5" />
                                 </Button>
                             </div>
                            <Textarea
+                                id="output-text"
                                 placeholder="Shuffled sentences will appear here..."
                                 value={shuffledText}
                                 readOnly
-                                className="min-h-[200px] font-mono text-sm bg-muted"
+                                className="min-h-[200px] bg-muted"
                            />
                         </div>
                     </CardContent>
