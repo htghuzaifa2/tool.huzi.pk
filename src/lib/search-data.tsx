@@ -1,7 +1,13 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge } from "lucide-react";
 
 export const tools = [
+  {
+    icon: <Merge className="h-8 w-8" />,
+    href: "/pdf-merger",
+    title: "PDF Merger",
+    description: "Combine multiple PDF files into one single document.",
+  },
   {
     icon: <Minimize className="h-8 w-8" />,
     href: "/image-compressor",
@@ -347,6 +353,19 @@ export const tools = [
 ];
 
 export const guides = [
+  {
+    icon: <Merge className="h-8 w-8 text-primary" />,
+    href: "/guide#pdf-merger",
+    title: "PDF Merger Guide",
+    description: "How to combine multiple PDFs into one.",
+    steps: [
+      "Go to the PDF Merger page.",
+      "Click the upload area or drag and drop your PDF files.",
+      "Once uploaded, you can drag the files in the list to reorder them.",
+      "Click the 'Merge PDFs' button to combine them.",
+      "Your browser will automatically download the single, merged PDF file."
+    ]
+  },
   {
     icon: <Minimize className="h-8 w-8 text-primary" />,
     href: "/guide#image-compressor",

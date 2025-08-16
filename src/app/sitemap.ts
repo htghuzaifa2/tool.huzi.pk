@@ -5,6 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://tool.huzi.pk';
 
   const toolUrls: MetadataRoute.Sitemap = [
+    '/pdf-merger',
     '/text-tools',
     '/unit-converter',
     '/currency-converter',
