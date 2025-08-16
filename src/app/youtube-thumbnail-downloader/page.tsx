@@ -9,7 +9,7 @@ import { Youtube, Link, Download, ChevronDown, BookOpen } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
-import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
+import { GetStartedButton } from '@/components/ui/get-started-button';
 
 type Thumbnail = {
     quality: string;
@@ -162,7 +162,7 @@ export default function YouTubeThumbnailDownloaderPage() {
                    <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
                             <AccordionTrigger>
-                                <FancyAccordionButton />
+                               <GetStartedButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>
