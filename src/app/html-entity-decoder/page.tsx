@@ -6,10 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
-import { Copy, CodeXml, ArrowRightLeft, BookOpen, ChevronDown } from 'lucide-react';
+import { Copy, CodeXml, ArrowRightLeft } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 // Using a div element's textContent to decode entities
 const decodeHtml = (html: string): string => {
@@ -131,13 +132,8 @@ export default function HtmlEscaperUnescaperPage() {
                  {htmlEscaperGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" id="guide-section" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild onClick={handleGuideClick}>
-                                <Button variant="outline" className="w-fit">
-                                    <span>
-                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
-                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
-                                    </span>
-                                </Button>
+                            <AccordionTrigger onClick={handleGuideClick}>
+                                <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>
