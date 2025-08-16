@@ -11,7 +11,7 @@ import { Download, FileText } from 'lucide-react';
 import { ResumeForm, resumeSchema, type ResumeData } from '@/components/resume-form';
 import { ResumeTemplate } from '@/components/resume-template';
 import jsPDF from 'jspdf';
-import { guides } from '@/lib/search-data';
+import { guides } from "@/lib/search-data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
@@ -105,7 +105,7 @@ export default function ResumeBuilderPage() {
                     <p className="text-muted-foreground mt-2 text-lg">Create a professional resume in minutes.</p>
                 </div>
 
-                <div className="grid md:grid-cols-[1fr_450px] gap-8 items-start">
+                <div className="grid lg:grid-cols-2 gap-8 items-start">
                     <Card>
                         <CardHeader>
                             <CardTitle>Your Information</CardTitle>
@@ -116,12 +116,12 @@ export default function ResumeBuilderPage() {
                         </CardContent>
                     </Card>
 
-                    <div className="sticky top-24 space-y-4">
+                    <div className="space-y-4 lg:sticky lg:top-24">
                         <Button onClick={handleDownloadPdf} className="w-full" size="lg">
                             <Download className="mr-2" /> Download as PDF
                         </Button>
                         <Card className="overflow-hidden">
-                            <div id="resume-preview-container" className="h-[636px] overflow-y-auto bg-white shadow-lg">
+                            <div id="resume-preview-container" className="h-[792px] w-full overflow-y-auto bg-background shadow-lg">
                                 <ResumeTemplate />
                             </div>
                         </Card>
@@ -158,4 +158,3 @@ export default function ResumeBuilderPage() {
         </FormProvider>
     );
 }
-
