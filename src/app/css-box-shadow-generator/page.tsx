@@ -9,7 +9,7 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Code, Layers, BookOpen } from 'lucide-react';
+import { Copy, Code, Layers, BookOpen, ChevronDown } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
 
@@ -128,6 +128,7 @@ export default function BoxShadowGeneratorPage() {
                                 <Button variant="outline" className="w-fit">
                                     <span>
                                         <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
                                     </span>
                                 </Button>
                             </AccordionTrigger>

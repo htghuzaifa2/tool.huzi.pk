@@ -5,7 +5,7 @@ import { useState, useMemo } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { CheckCircle2, AlertTriangle, Braces, BookOpen } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Braces, BookOpen, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
@@ -74,6 +74,7 @@ export default function JsonValidatorPage() {
                                 <Button variant="outline" className="w-fit">
                                     <span>
                                         <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
                                     </span>
                                 </Button>
                             </AccordionTrigger>

@@ -35,6 +35,7 @@ const AccordionTrigger = React.forwardRef<
       {...props}
     >
       {children}
+      {/* We only show the chevron if the trigger is not being used as a child */}
       {!props.asChild && <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>

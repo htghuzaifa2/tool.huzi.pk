@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useToast } from "@/hooks/use-toast";
-import { Database, Save, Trash2, PlusCircle, RefreshCw, AlertTriangle, BookOpen } from 'lucide-react';
+import { Database, Save, Trash2, PlusCircle, RefreshCw, AlertTriangle, BookOpen, ChevronDown } from 'lucide-react';
 import { guides } from "@/lib/search-data";
 
 type StorageEntry = {
@@ -196,6 +196,7 @@ export default function LocalStorageEditorPage() {
                                 <Button variant="outline" className="w-fit">
                                     <span>
                                         <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
                                     </span>
                                 </Button>
                             </AccordionTrigger>

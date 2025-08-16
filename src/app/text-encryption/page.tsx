@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useToast } from "@/hooks/use-toast";
-import { Lock, Unlock, Key, ArrowRight, Copy, BookOpen } from 'lucide-react';
+import { Lock, Unlock, Key, ArrowRight, Copy, BookOpen, ChevronDown } from 'lucide-react';
 import { z } from 'zod';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
@@ -153,6 +153,7 @@ export default function TextEncryptionPage() {
                                 <Button variant="outline" className="w-fit">
                                     <span>
                                         <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
                                     </span>
                                 </Button>
                             </AccordionTrigger>

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Calendar, BookOpen } from "lucide-react";
+import { Calendar, BookOpen, ChevronDown } from "lucide-react";
 import { differenceInDays, differenceInWeeks, differenceInMonths } from 'date-fns';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
@@ -112,6 +112,7 @@ export default function DateDifferenceCalculatorPage() {
                                 <Button variant="outline" className="w-fit">
                                     <span>
                                         <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
                                     </span>
                                 </Button>
                             </AccordionTrigger>
