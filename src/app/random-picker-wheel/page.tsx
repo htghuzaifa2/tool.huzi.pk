@@ -3,27 +3,42 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
-import { Gift, Play } from 'lucide-react';
+import { Gift, Play, Plus, Trash2 } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import confetti from 'canvas-confetti';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
-const colors = ["#3F51B5", "#7952B3", "#5C6BC0", "#9575CD", "#7E8CCB", "#B3A2D8"];
+const themeColors = {
+    light: ['#3F51B5', '#7952B3', '#5C6BC0', '#9575CD', '#7E8CCB', '#B3A2D8'],
+    dark: ['#9FA8DA', '#B39DDB', '#7986CB', '#D1C4E9', '#AAB3E2', '#DCD3F0'],
+    blue: ['#64B5F6', '#4DD0E1', '#90CAF9', '#80DEEA', '#A5D6F7', '#B2EBF2'],
+    orange: ['#FFB74D', '#FF8A65', '#FFCC80', '#FFAB91', '#FDD8B1', '#FFCBBF'],
+};
 
+const getCurrentThemeColors = () => {
+    if (typeof window === 'undefined') return themeColors.dark;
+    const body = document.documentElement;
+    if (body.classList.contains('theme-blue')) return themeColors.blue;
+    if (body.classList.contains('theme-orange')) return themeColors.orange;
+    if (body.classList.contains('light')) return themeColors.light;
+    return themeColors.dark;
+}
 
 export default function RandomPickerWheelPage() {
-    const [optionsText, setOptionsText] = useState('Apple\nBanana\nOrange\nGrape\nStrawberry\nMango');
-    const [options, setOptions] = useState<string[]>([]);
+    const [newOption, setNewOption] = useState('');
+    const [options, setOptions] = useState<string[]>(['Apple', 'Banana', 'Orange', 'Grape', 'Strawberry', 'Mango']);
     const [isSpinning, setIsSpinning] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const { toast } = useToast();
     const pickerWheelGuide = guides.find(g => g.href.includes('random-picker-wheel'));
     const [currentAngle, setCurrentAngle] = useState(0);
+    const [colors, setColors] = useState(themeColors.dark);
 
     const handleGuideClick = () => {
         requestAnimationFrame(() => {
@@ -45,7 +60,7 @@ export default function RandomPickerWheelPage() {
         
         const arc = Math.PI * 2 / options.length;
         const outsideRadius = canvas.width / 2 - 10;
-        const textRadius = outsideRadius * 0.75;
+        const textRadius = outsideRadius * 0.7;
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
@@ -72,18 +87,26 @@ export default function RandomPickerWheelPage() {
             ctx.restore();
         }
 
-    }, [options]);
-
+    }, [options, colors]);
+    
     useEffect(() => {
-        const parsedOptions = optionsText.split('\n').map(o => o.trim()).filter(Boolean);
-        setOptions(parsedOptions);
-    }, [optionsText]);
+        setColors(getCurrentThemeColors());
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    setColors(getCurrentThemeColors());
+                }
+            });
+        });
+        observer.observe(document.documentElement, { attributes: true });
+        return () => observer.disconnect();
+    }, []);
 
     useEffect(() => {
         const resizeCanvas = () => {
           const canvas = canvasRef.current;
           if (canvas && canvas.parentElement) {
-            const size = Math.min(canvas.parentElement.clientWidth * 0.9, 450);
+            const size = Math.min(canvas.parentElement.clientWidth, 450);
             canvas.width = size;
             canvas.height = size;
             drawWheel();
@@ -93,6 +116,23 @@ export default function RandomPickerWheelPage() {
         window.addEventListener('resize', resizeCanvas);
         return () => window.removeEventListener('resize', resizeCanvas);
     }, [drawWheel]);
+    
+     useEffect(() => {
+        drawWheel();
+    }, [options, colors, drawWheel]);
+
+    const handleAddOption = () => {
+        if (newOption.trim() === '') {
+            toast({ title: "Option cannot be empty.", variant: "destructive" });
+            return;
+        }
+        setOptions([...options, newOption.trim()]);
+        setNewOption('');
+    }
+    
+    const handleRemoveOption = (indexToRemove: number) => {
+        setOptions(options.filter((_, index) => index !== indexToRemove));
+    }
 
     const handleSpin = () => {
         if (isSpinning || options.length < 2) return;
@@ -104,9 +144,10 @@ export default function RandomPickerWheelPage() {
         const arcSize = 360 / options.length;
         
         const randomOffset = (Math.random() - 0.5) * arcSize * 0.8;
-        const stopAngle = (winnerIndex * arcSize) + (arcSize / 2) + randomOffset;
+        // The pointer is at the top (270 degrees or -90 degrees in math terms)
+        const stopAngle = (winnerIndex * arcSize) + (arcSize / 2) - 90 + randomOffset;
         
-        const totalRotations = Math.floor(Math.random() * 5) + 5;
+        const totalRotations = Math.floor(Math.random() * 5) + 8; // More spins
         const finalAngle = (totalRotations * 360) + (360 - stopAngle);
 
         setCurrentAngle(prev => prev + finalAngle);
@@ -124,12 +165,12 @@ export default function RandomPickerWheelPage() {
             });
 
             setIsSpinning(false);
-        }, 5000);
+        }, 6000); // Increased duration for spin animation
     };
 
     return (
         <div className="container mx-auto py-10">
-            <div className="max-w-4xl mx-auto space-y-8">
+            <div className="max-w-6xl mx-auto space-y-8">
                 <Card>
                     <CardHeader className="text-center">
                         <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
@@ -138,31 +179,58 @@ export default function RandomPickerWheelPage() {
                         <CardTitle className="text-4xl font-bold font-headline">Random Picker Wheel</CardTitle>
                         <CardDescription>Add a list of options, spin the wheel, and let fate decide a winner!</CardDescription>
                     </CardHeader>
-                    <CardContent className="grid md:grid-cols-2 gap-8 items-center">
-                        <div className="space-y-4 md:order-last">
-                            <Label htmlFor="options-input">Enter options (one per line)</Label>
-                            <Textarea
-                                id="options-input"
-                                placeholder="Option 1\nOption 2\nOption 3"
-                                value={optionsText}
-                                onChange={(e) => setOptionsText(e.target.value)}
-                                className="min-h-[250px] font-mono"
-                                disabled={isSpinning}
-                            />
+                    <CardContent className="grid md:grid-cols-2 gap-8 items-start">
+                        <div className="space-y-4">
+                             <div className="space-y-2">
+                                <Label htmlFor="new-option-input">Add an Option</Label>
+                                <div className="flex gap-2">
+                                    <Input
+                                        id="new-option-input"
+                                        placeholder="Enter a new option..."
+                                        value={newOption}
+                                        onChange={(e) => setNewOption(e.target.value)}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleAddOption()}
+                                        disabled={isSpinning}
+                                    />
+                                    <Button onClick={handleAddOption} disabled={isSpinning}><Plus className="h-4 w-4" /></Button>
+                                </div>
+                            </div>
+                            <ScrollArea className="h-72 w-full rounded-md border p-4">
+                                <div className="space-y-2">
+                                    {options.length > 0 ? options.map((option, index) => (
+                                        <div key={index} className="flex items-center justify-between bg-muted p-2 rounded-md">
+                                            <span>{option}</span>
+                                            <Button variant="ghost" size="icon" onClick={() => handleRemoveOption(index)} disabled={isSpinning}>
+                                                <Trash2 className="h-4 w-4 text-destructive" />
+                                            </Button>
+                                        </div>
+                                    )) : (
+                                        <p className="text-muted-foreground text-center">Add some options to get started!</p>
+                                    )}
+                                </div>
+                            </ScrollArea>
+                             <Button onClick={handleSpin} disabled={isSpinning || options.length < 2} size="lg" className="w-full">
+                                <Play className="mr-2" /> {isSpinning ? 'Spinning...' : 'Spin The Wheel'}
+                            </Button>
                         </div>
                         <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px]">
-                           <div className="absolute w-full h-full">
-                               <canvas 
-                                 ref={canvasRef}
-                                 style={{
-                                     transform: `rotate(${currentAngle}deg)`,
-                                     transition: isSpinning ? 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none',
-                                 }}
-                               ></canvas>
-                           </div>
-                            <div className="absolute w-full h-full flex items-center justify-center pointer-events-none">
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-[16px] border-t-card-foreground"></div>
-                            </div>
+                            {/* Pointer */}
+                            <div 
+                                className="absolute top-0 left-1/2 -translate-x-1/2 z-10" 
+                                style={{
+                                    borderLeft: '15px solid transparent',
+                                    borderRight: '15px solid transparent',
+                                    borderTop: '30px solid hsl(var(--card-foreground))',
+                                    filter: 'drop-shadow(0px -2px 2px rgba(0,0,0,0.2))'
+                                }}
+                            ></div>
+                           <canvas 
+                                ref={canvasRef}
+                                style={{
+                                    transform: `rotate(${currentAngle}deg)`,
+                                    transition: isSpinning ? 'transform 6s cubic-bezier(0.2, 0.8, 0.4, 1)' : 'none',
+                                }}
+                           ></canvas>
                            <Button 
                              onClick={handleSpin}
                              disabled={isSpinning || options.length < 2}
