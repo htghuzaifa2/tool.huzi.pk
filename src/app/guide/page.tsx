@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides as allGuides } from "@/lib/search-data";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowUp, Minimize } from "lucide-react";
+import { ArrowRight, ArrowUp } from "lucide-react";
 
 const ITEMS_PER_PAGE = 25;
 
@@ -69,7 +69,9 @@ export default function GuidePage() {
               <CardContent>
                   <Accordion type="single" collapsible>
                       <AccordionItem value={`item-${index}`}>
-                          <AccordionTrigger className="font-semibold">How to Use</AccordionTrigger>
+                          <AccordionTrigger>
+                            How to Use
+                          </AccordionTrigger>
                           <AccordionContent>
                               <ol className="list-decimal list-inside space-y-2 pt-2 text-muted-foreground">
                                   {guide.steps.map((step, stepIndex) => (
