@@ -82,8 +82,8 @@ export default function RandomPickerWheelPage() {
     useEffect(() => {
         const resizeCanvas = () => {
           const canvas = canvasRef.current;
-          if (canvas) {
-            const size = Math.min(canvas.parentElement!.clientWidth * 0.9, 450);
+          if (canvas && canvas.parentElement) {
+            const size = Math.min(canvas.parentElement.clientWidth * 0.9, 450);
             canvas.width = size;
             canvas.height = size;
             drawWheel();
@@ -104,17 +104,16 @@ export default function RandomPickerWheelPage() {
         const winner = options[winnerIndex];
         const arcSize = 360 / options.length;
         
-        // 2. Calculate the exact angle to stop at for the winner
-        // Add some random offset within the segment for variability
+        // 2. Calculate where the wheel should stop
+        // Add a small random offset inside the winning slice for variety
         const randomOffset = (Math.random() - 0.5) * arcSize * 0.8;
         const stopAngle = (winnerIndex * arcSize) + (arcSize / 2) + randomOffset;
         
-        // 3. Calculate rotation
-        // Add multiple full rotations for visual effect
-        const totalRotations = Math.floor(Math.random() * 5) + 5; // 5 to 9 full rotations
+        // 3. Add multiple rotations for a good spinning effect
+        const totalRotations = Math.floor(Math.random() * 5) + 5; // 5 to 9 full spins
         const finalAngle = (totalRotations * 360) + (360 - stopAngle);
 
-        setCurrentAngle(finalAngle);
+        setCurrentAngle(prev => prev + finalAngle);
         
         // 4. Announce winner after animation
         setTimeout(() => {
@@ -130,9 +129,8 @@ export default function RandomPickerWheelPage() {
             });
 
             setIsSpinning(false);
-        }, 5000); // Corresponds to the transition duration
+        }, 5000); // 5s to match CSS transition
     };
-
 
     return (
         <div className="container mx-auto py-10">
@@ -158,13 +156,13 @@ export default function RandomPickerWheelPage() {
                             />
                         </div>
                         <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px]">
-                           <div 
-                               className="absolute w-full h-full"
-                               style={{
-                                   transform: `rotate(${currentAngle}deg)`,
-                                   transition: isSpinning ? 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none',
-                               }}
-                           >
+                            <style jsx>{`
+                                .spinning-wheel {
+                                    transform: rotate(${currentAngle}deg);
+                                    transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
+                                }
+                            `}</style>
+                           <div className={`absolute w-full h-full ${isSpinning ? 'spinning-wheel' : ''}`}>
                                <canvas ref={canvasRef}></canvas>
                            </div>
                             <div className="absolute w-full h-full flex items-center justify-center pointer-events-none">
