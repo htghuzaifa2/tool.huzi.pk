@@ -86,6 +86,12 @@ export const tools = [
     description: "Find all possible letter combinations (permutations) for a given word.",
   },
   {
+    icon: <Shuffle className="h-8 w-8" />,
+    href: "/sentence-shuffler",
+    title: "Sentence Shuffler",
+    description: "Randomly shuffle sentences in a paragraph while keeping punctuation intact.",
+  },
+  {
     icon: <Tags className="h-8 w-8" />,
     href: "/meta-tag-generator",
     title: "Meta Tag Generator",
