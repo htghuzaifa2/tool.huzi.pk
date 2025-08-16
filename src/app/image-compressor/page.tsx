@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useRef } from 'react';
@@ -218,7 +217,7 @@ export default function ImageCompressorPage() {
                 {imageCompressorGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none">
-                            <div className="flex justify-center">
+                             <div className="flex justify-center">
                                 <AccordionTrigger asChild>
                                      <Button
                                       size="lg"
