@@ -3,6 +3,7 @@
 
 import { Mail, Phone, MapPin, Link as LinkIcon, Star } from 'lucide-react';
 import type { ResumeData } from './form';
+import { useState, useEffect } from 'react';
 
 interface TemplateProps {
     data: ResumeData;
@@ -23,6 +24,16 @@ const SkillBar = ({ skill, level }: { skill: string; level: number }) => (
 );
 
 export function CreativeTemplate({ data, accentColor, showEmail, showPhone, showAddress, showPhoto }: TemplateProps) {
+    const [skillLevels, setSkillLevels] = useState<number[]>([]);
+    const skills = data.skills?.split(',').map(s => s.trim()) || [];
+
+    useEffect(() => {
+        // Generate random levels only on the client, after hydration.
+        setSkillLevels(
+            skills.map(() => Math.floor(Math.random() * 50) + 50)
+        );
+    }, [data.skills, skills.length]);
+    
     const renderDescription = (text?: string) => {
         if (!text) return null;
         return text.split('\n').map((line, index) => {
@@ -30,8 +41,6 @@ export function CreativeTemplate({ data, accentColor, showEmail, showPhone, show
             return <li key={index} className="text-muted-foreground/90 leading-snug">{line.replace(/^-/, '').trim()}</li>
         });
     };
-
-    const skills = data.skills?.split(',').map(s => s.trim()) || [];
 
     return (
         <div className="flex w-full h-full bg-card text-card-foreground">
@@ -66,7 +75,7 @@ export function CreativeTemplate({ data, accentColor, showEmail, showPhone, show
                             <h3 className="text-sm font-bold uppercase tracking-widest border-b border-white/30 pb-1 mb-3">Skills</h3>
                             <div className="space-y-2 text-xs">
                                {skills.map((skill, i) => (
-                                   <SkillBar key={i} skill={skill} level={Math.floor(Math.random() * 50) + 50} />
+                                   <SkillBar key={i} skill={skill} level={skillLevels[i] || 0} />
                                ))}
                             </div>
                         </div>
