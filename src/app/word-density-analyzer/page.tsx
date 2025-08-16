@@ -1,0 +1,159 @@
+"use client"
+
+import { useState, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { BarChart, ArrowUpDown } from 'lucide-react';
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+type WordStat = {
+  word: string;
+  count: number;
+  density: string;
+};
+
+const columns: ColumnDef<WordStat>[] = [
+  {
+    accessorKey: "word",
+    header: ({ column }) => (
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+        Word
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+  },
+  {
+    accessorKey: "count",
+    header: ({ column }) => (
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+        Count
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="text-center">{row.getValue("count")}</div>,
+  },
+  {
+    accessorKey: "density",
+    header: "Density",
+    cell: ({ row }) => <div className="text-right">{row.getValue("density")}</div>
+  },
+];
+
+
+export default function WordDensityAnalyzerPage() {
+    const [text, setText] = useState("Here is some sample text. This text is for demonstration purposes. Text analysis is useful.");
+    const [sorting, setSorting] = useState<SortingState>([{ id: 'count', desc: true }]);
+
+    const wordStats = useMemo(() => {
+        if (!text.trim()) return { stats: [], total: 0 };
+
+        const words = text
+            .toLowerCase()
+            .replace(/[^\w\s']|_/g, "") // remove punctuation except apostrophes
+            .replace(/\s+/g, " ")
+            .split(/\s+/)
+            .filter(Boolean);
+
+        const totalWords = words.length;
+        if (totalWords === 0) return { stats: [], total: 0 };
+
+        const wordCounts = words.reduce((acc, word) => {
+            acc[word] = (acc[word] || 0) + 1;
+            return acc;
+        }, {} as Record<string, number>);
+
+        const stats: WordStat[] = Object.entries(wordCounts).map(([word, count]) => ({
+            word,
+            count,
+            density: `${((count / totalWords) * 100).toFixed(2)}%`,
+        }));
+
+        return { stats, total: totalWords };
+    }, [text]);
+    
+    const table = useReactTable({
+        data: wordStats.stats,
+        columns,
+        state: {
+            sorting,
+        },
+        onSortingChange: setSorting,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+    });
+
+    return (
+        <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+                <Card>
+                    <CardHeader className="text-center">
+                        <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                            <BarChart className="w-8 h-8" />
+                        </div>
+                        <CardTitle className="text-4xl font-bold font-headline">Word Density Analyzer</CardTitle>
+                        <CardDescription>Analyze your text to see how many times each word appears.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                               <Textarea
+                                    placeholder="Paste your text here..."
+                                    value={text}
+                                    onChange={(e) => setText(e.target.value)}
+                                    className="min-h-[300px] md:min-h-[400px] font-mono text-sm"
+                               />
+                               <p className="text-sm text-center text-muted-foreground">Total words: {wordStats.total}</p>
+                            </div>
+                            <div className="space-y-4">
+                                <ScrollArea className="h-[400px] rounded-md border">
+                                    <Table>
+                                        <TableHeader>
+                                            {table.getHeaderGroups().map(headerGroup => (
+                                                <TableRow key={headerGroup.id}>
+                                                    {headerGroup.headers.map(header => (
+                                                        <TableHead key={header.id}>
+                                                            {flexRender(header.column.columnDef.header, header.getContext())}
+                                                        </TableHead>
+                                                    ))}
+                                                </TableRow>
+                                            ))}
+                                        </TableHeader>
+                                        <TableBody>
+                                            {table.getRowModel().rows?.length ? (
+                                                table.getRowModel().rows.map(row => (
+                                                    <TableRow key={row.id}>
+                                                        {row.getVisibleCells().map(cell => (
+                                                            <TableCell key={cell.id} className="font-mono text-sm">
+                                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                            </TableCell>
+                                                        ))}
+                                                    </TableRow>
+                                                ))
+                                            ) : (
+                                                <TableRow>
+                                                    <TableCell colSpan={columns.length} className="h-24 text-center">
+                                                        No text to analyze.
+                                                    </TableCell>
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </ScrollArea>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </div>
+    );
+}

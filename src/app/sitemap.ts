@@ -55,6 +55,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/vowel-consonant-counter',
     '/punctuation-remover',
     '/number-sorter',
+    '/word-density-analyzer',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

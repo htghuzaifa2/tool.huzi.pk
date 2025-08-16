@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart } from "lucide-react";
 
 export const tools = [
   {
@@ -25,6 +25,12 @@ export const tools = [
     href: "/punctuation-remover",
     title: "Punctuation Remover",
     description: "Remove all punctuation marks from text with one click.",
+  },
+  {
+    icon: <BarChart className="h-8 w-8" />,
+    href: "/word-density-analyzer",
+    title: "Word Density Analyzer",
+    description: "Analyze your text to see how many times each word appears.",
   },
   {
     icon: <Ruler className="h-8 w-8" />,
@@ -730,7 +736,7 @@ export const guides = [
     icon: <Type className="h-8 w-8 text-primary" />,
     href: "/guide#word-counter",
     title: "Word Counter Guide",
-    description: "How to count words, characters, and more.",
+    description: "Count words, characters, sentences, and paragraphs in your text.",
     steps: [
         "Go to the Word Counter page.",
         "Type or paste your text into the text area.",
