@@ -1,4 +1,4 @@
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll } from "lucide-react";
 
 export const tools = [
   {
@@ -36,6 +36,12 @@ export const tools = [
     href: "/base-converter",
     title: "Base Converter",
     description: "Convert numbers between binary, octal, decimal, and hexadecimal.",
+  },
+  {
+    icon: <Scroll className="h-8 w-8" />,
+    href: "/roman-numeral-converter",
+    title: "Roman Numeral Converter",
+    description: "Convert numbers to Roman numerals and vice versa.",
   },
   {
     icon: <QrCode className="h-8 w-8" />,

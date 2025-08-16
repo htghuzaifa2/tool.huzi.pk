@@ -48,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/random-username-generator',
     '/morse-code-translator',
     '/anagram-finder',
+    '/roman-numeral-converter',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
