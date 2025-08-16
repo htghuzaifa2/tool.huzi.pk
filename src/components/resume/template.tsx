@@ -3,11 +3,15 @@
 
 import { useFormContext } from 'react-hook-form';
 import type { ResumeData } from './form';
-import type { TemplateName, FontFamily } from '@/app/resume-builder/page';
+import type { FontFamily } from '@/app/resume-builder/page';
 import { ProfessionalTemplate } from './professional-template';
 import { ModernTemplate } from './modern-template';
 import { MinimalistTemplate } from './minimalist-template';
 import { ClassicTemplate } from './classic-template';
+import { CreativeTemplate } from './creative-template';
+import { TechnicalTemplate } from './technical-template';
+
+export type TemplateName = "professional" | "modern" | "minimalist" | "classic" | "creative" | "technical";
 
 interface ResumeTemplateProps {
     template: TemplateName;
@@ -18,6 +22,7 @@ interface ResumeTemplateProps {
     showEmail: boolean;
     showPhone: boolean;
     showAddress: boolean;
+    showPhoto: boolean;
 }
 
 export function ResumeTemplate({ template, ...customization }: ResumeTemplateProps) {
@@ -40,6 +45,10 @@ export function ResumeTemplate({ template, ...customization }: ResumeTemplatePro
                 return <MinimalistTemplate {...commonProps} />;
             case 'classic':
                 return <ClassicTemplate {...commonProps} />;
+            case 'creative':
+                return <CreativeTemplate {...commonProps} />;
+            case 'technical':
+                return <TechnicalTemplate {...commonProps} />;
             case 'professional':
             default:
                 return <ProfessionalTemplate {...commonProps} />;
@@ -53,6 +62,8 @@ export function ResumeTemplate({ template, ...customization }: ResumeTemplatePro
             style={{ 
                 fontSize: `${customization.fontSize}pt`,
                 lineHeight: customization.lineHeight,
+                color: 'hsl(var(--foreground))',
+                backgroundColor: 'hsl(var(--background))'
             }}
         >
             {renderTemplate()}

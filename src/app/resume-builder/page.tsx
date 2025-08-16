@@ -6,9 +6,9 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Download, FileText, Palette, Type, TextQuote, Mail, Phone, MapPin, AlignVerticalSpaceAround } from 'lucide-react';
+import { Download, FileText, Palette, Type, AlignVerticalSpaceAround, Mail, Phone, MapPin, Settings } from 'lucide-react';
 import { ResumeForm, resumeSchema, type ResumeData } from '@/components/resume/form';
-import { ResumeTemplate } from '@/components/resume/template';
+import { ResumeTemplate, type TemplateName } from '@/components/resume/template';
 import jsPDF from 'jspdf';
 import { guides } from "@/lib/search-data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -18,6 +18,7 @@ import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const defaultValues: ResumeData = {
     fullName: 'John Doe',
@@ -55,13 +56,31 @@ const defaultValues: ResumeData = {
         }
     ],
     skills: 'React, TypeScript, Node.js, GraphQL, PostgreSQL, Docker, AWS',
+    projects: [
+      {
+        id: '1',
+        name: 'E-commerce Platform',
+        description: 'A full-stack e-commerce website with features like product catalog, shopping cart, and secure checkout. Built with Next.js, Stripe, and Prisma.',
+        url: 'https://example.com'
+      }
+    ],
+    photoUrl: 'https://placehold.co/400x400.png'
 };
 
-export type TemplateName = "professional" | "modern" | "minimalist" | "classic";
+
 export type FontFamily = "sans" | "serif" | "mono";
 
+const templateOptions: { name: TemplateName, label: string, description: string }[] = [
+    { name: "professional", label: "Professional", description: "A classic, single-column layout." },
+    { name: "modern", label: "Modern", description: "A two-column design with a sidebar." },
+    { name: "minimalist", label: "Minimalist", description: "Clean and focused on typography." },
+    { name: "classic", label: "Classic", description: "A timeless, centered-heading style." },
+    { name: "creative", label: "Creative", description: "A stylish layout with a sidebar photo." },
+    { name: "technical", label: "Technical", description: "A clean, monospace-font layout for developers." },
+];
+
 export default function ResumeBuilderPage() {
-    const [template, setTemplate] = useState<TemplateName>("professional");
+    const [template, setTemplate] = useState<TemplateName>("creative");
     const [accentColor, setAccentColor] = useState("#3F51B5");
     const [fontSize, setFontSize] = useState(10);
     const [lineHeight, setLineHeight] = useState(1.5);
@@ -71,6 +90,8 @@ export default function ResumeBuilderPage() {
     const [showEmail, setShowEmail] = useState(true);
     const [showPhone, setShowPhone] = useState(true);
     const [showAddress, setShowAddress] = useState(true);
+    const [showPhoto, setShowPhoto] = useState(true);
+    const isMobile = useIsMobile();
 
     const methods = useForm<ResumeData>({
         resolver: zodResolver(resumeSchema),
@@ -111,65 +132,32 @@ export default function ResumeBuilderPage() {
             },
         });
     };
-
-    return (
-        <FormProvider {...methods}>
-            <div className="container mx-auto py-10">
-                <div className="text-center mb-12">
-                    <div className="mx-auto bg-primary text-primary-foreground rounded-full w-20 h-20 flex items-center justify-center mb-4">
-                        <FileText className="w-10 h-10" />
-                    </div>
-                    <h1 className="text-4xl md:text-5xl font-bold font-headline">Resume Builder</h1>
-                    <p className="text-muted-foreground mt-2 text-lg">Create and customize a professional resume in minutes.</p>
-                </div>
-
-                <div className="grid lg:grid-cols-[1fr_1.2fr] gap-8 items-start">
-                    <div className="space-y-6">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Your Information</CardTitle>
-                                <CardDescription>Fill out the form to build your resume.</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <ResumeForm />
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Customize Layout</CardTitle>
-                                <CardDescription>Change the look of your resume.</CardDescription>
-                            </CardHeader>
-                            <CardContent className="space-y-6">
-                                <div>
-                                    <Label>Template</Label>
-                                    <div className="grid grid-cols-2 gap-4 mt-2">
-                                        {(["professional", "modern", "minimalist", "classic"] as TemplateName[]).map(t => (
-                                             <button key={t} onClick={() => setTemplate(t)} className={cn('border-2 rounded-lg p-2 transition-all', template === t ? 'border-primary ring-2 ring-primary' : 'border-border hover:border-primary/50')}>
-                                                 <div className="bg-muted h-24 w-full rounded-md flex items-center justify-center">
-                                                     <p className="text-sm font-semibold capitalize">{t}</p>
-                                                 </div>
-                                             </button>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div>
-                                    <Label>Contact Information</Label>
-                                    <div className="grid grid-cols-3 gap-4 mt-2">
-                                        <div className="flex items-center space-x-2">
-                                            <Switch id="showEmail" checked={showEmail} onCheckedChange={setShowEmail} />
-                                            <Label htmlFor="showEmail" className="flex items-center gap-1"><Mail className="w-4 h-4" /> Email</Label>
+    
+    const editorControls = (
+         <Accordion type="multiple" defaultValue={['templates', 'content']} className="w-full">
+            <AccordionItem value="templates">
+                <AccordionTrigger className="text-xl font-bold font-headline">Templates & Styles</AccordionTrigger>
+                <AccordionContent>
+                    <Card>
+                         <CardHeader>
+                            <CardTitle>Templates</CardTitle>
+                            <CardDescription>Choose a layout that best fits your profile.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                {templateOptions.map(t => (
+                                    <button key={t.name} onClick={() => setTemplate(t.name)} className={cn('border-2 rounded-lg p-2 text-left transition-all hover:border-primary/80 hover:scale-105', template === t.name ? 'border-primary ring-2 ring-primary' : 'border-border')}>
+                                        <div className="bg-muted h-28 w-full rounded-md flex items-center justify-center mb-2">
+                                           <FileText className="w-8 h-8 text-muted-foreground" />
                                         </div>
-                                         <div className="flex items-center space-x-2">
-                                            <Switch id="showPhone" checked={showPhone} onCheckedChange={setShowPhone} />
-                                            <Label htmlFor="showPhone" className="flex items-center gap-1"><Phone className="w-4 h-4" /> Phone</Label>
-                                        </div>
-                                         <div className="flex items-center space-x-2">
-                                            <Switch id="showAddress" checked={showAddress} onCheckedChange={setShowAddress} />
-                                            <Label htmlFor="showAddress" className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Address</Label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
+                                        <p className="text-sm font-semibold">{t.label}</p>
+                                        <p className="text-xs text-muted-foreground">{t.description}</p>
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="space-y-4 pt-4">
+                                <h3 className="text-lg font-semibold">Style Customization</h3>
+                                 <div className="grid grid-cols-2 gap-4">
                                      <div>
                                         <Label htmlFor="accent-color">Accent Color</Label>
                                         <div className="relative mt-2">
@@ -201,31 +189,96 @@ export default function ResumeBuilderPage() {
                                         <Slider id="line-height" min={1.2} max={1.8} step={0.1} value={[lineHeight]} onValueChange={(v) => setLineHeight(v[0])} className="mt-2" />
                                     </div>
                                 </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-
-                    <div className="space-y-4 lg:sticky lg:top-4">
-                        <Button onClick={handleDownloadPdf} className="w-full" size="lg">
-                            <Download className="mr-2" /> Download as PDF
-                        </Button>
-                        <Card className="overflow-hidden">
-                            <div className="h-[792px] w-full bg-background shadow-lg overflow-hidden">
-                                <div className="h-full w-full scale-[0.4] sm:scale-[0.6] md:scale-[0.75] lg:scale-[0.55] xl:scale-[0.7] origin-top-left">
-                                  <ResumeTemplate 
-                                    template={template}
-                                    accentColor={accentColor}
-                                    fontSize={fontSize}
-                                    fontFamily={fontFamily}
-                                    lineHeight={lineHeight}
-                                    showEmail={showEmail}
-                                    showPhone={showPhone}
-                                    showAddress={showAddress}
-                                  />
+                            </div>
+                            <div className="space-y-4 pt-4">
+                                 <h3 className="text-lg font-semibold">Visibility</h3>
+                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div className="flex items-center space-x-2">
+                                        <Switch id="showEmail" checked={showEmail} onCheckedChange={setShowEmail} />
+                                        <Label htmlFor="showEmail" className="flex items-center gap-1"><Mail className="w-4 h-4" /> Email</Label>
+                                    </div>
+                                     <div className="flex items-center space-x-2">
+                                        <Switch id="showPhone" checked={showPhone} onCheckedChange={setShowPhone} />
+                                        <Label htmlFor="showPhone" className="flex items-center gap-1"><Phone className="w-4 h-4" /> Phone</Label>
+                                    </div>
+                                     <div className="flex items-center space-x-2">
+                                        <Switch id="showAddress" checked={showAddress} onCheckedChange={setShowAddress} />
+                                        <Label htmlFor="showAddress" className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Address</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <Switch id="showPhoto" checked={showPhoto} onCheckedChange={setShowPhoto} />
+                                        <Label htmlFor="showPhoto" className="flex items-center gap-1"><FileText className="w-4 h-4" /> Photo</Label>
+                                    </div>
                                 </div>
                             </div>
-                        </Card>
+                        </CardContent>
+                    </Card>
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="content">
+                <AccordionTrigger className="text-xl font-bold font-headline">Resume Content</AccordionTrigger>
+                <AccordionContent>
+                     <ResumeForm />
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+    );
+
+    const resumePreview = (
+        <div className="w-full">
+            <Button onClick={handleDownloadPdf} className="w-full mb-4 lg:hidden" size="lg">
+                <Download className="mr-2" /> Download as PDF
+            </Button>
+            <Card className="overflow-hidden sticky top-4">
+                <div className="h-auto w-full bg-background shadow-lg overflow-hidden aspect-[1/1.294]">
+                    <div className="h-full w-full scale-[0.4] sm:scale-[0.55] md:scale-[0.7] lg:scale-[0.5] xl:scale-[0.65] origin-top-left">
+                        <ResumeTemplate 
+                            template={template}
+                            accentColor={accentColor}
+                            fontSize={fontSize}
+                            fontFamily={fontFamily}
+                            lineHeight={lineHeight}
+                            showEmail={showEmail}
+                            showPhone={showPhone}
+                            showAddress={showAddress}
+                            showPhoto={showPhoto}
+                        />
                     </div>
+                </div>
+            </Card>
+        </div>
+    );
+
+    return (
+        <FormProvider {...methods}>
+            <div className="container mx-auto py-10">
+                <div className="text-center mb-12">
+                    <div className="mx-auto bg-primary text-primary-foreground rounded-full w-20 h-20 flex items-center justify-center mb-4">
+                        <FileText className="w-10 h-10" />
+                    </div>
+                    <h1 className="text-4xl md:text-5xl font-bold font-headline">Resume Builder</h1>
+                    <p className="text-muted-foreground mt-2 text-lg">Create and customize a professional resume in minutes.</p>
+                </div>
+
+                 <div className="grid lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_550px] gap-8 items-start">
+                    {isMobile ? (
+                        <div className="space-y-6">
+                            {resumePreview}
+                            {editorControls}
+                        </div>
+                    ) : (
+                        <>
+                            <div className="space-y-6">
+                                {editorControls}
+                            </div>
+                            <div className="space-y-4">
+                                <Button onClick={handleDownloadPdf} className="w-full" size="lg">
+                                    <Download className="mr-2" /> Download as PDF
+                                </Button>
+                                {resumePreview}
+                            </div>
+                        </>
+                    )}
                 </div>
 
                  {resumeBuilderGuide && (
@@ -258,3 +311,4 @@ export default function ResumeBuilderPage() {
         </FormProvider>
     );
 }
+

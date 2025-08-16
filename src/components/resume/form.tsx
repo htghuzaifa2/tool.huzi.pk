@@ -16,6 +16,7 @@ export const resumeSchema = z.object({
     email: z.string().email('Invalid email address').optional().or(z.literal('')),
     phone: z.string().optional(),
     address: z.string().optional(),
+    photoUrl: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
     summary: z.string().optional(),
     experience: z.array(z.object({
         id: z.string(),
@@ -34,6 +35,12 @@ export const resumeSchema = z.object({
         description: z.string().optional(),
     })).optional(),
     skills: z.string().optional(),
+    projects: z.array(z.object({
+        id: z.string(),
+        name: z.string().min(1, 'Project name is required'),
+        description: z.string().optional(),
+        url: z.string().optional(),
+    })).optional(),
 });
 
 export type ResumeData = z.infer<typeof resumeSchema>;
@@ -50,6 +57,11 @@ export function ResumeForm() {
         control,
         name: "education",
     });
+
+    const { fields: projectFields, append: appendProject, remove: removeProject } = useFieldArray({
+        control,
+        name: "projects",
+    });
     
     return (
         <div className="space-y-6">
@@ -65,6 +77,11 @@ export function ResumeForm() {
                         <Label>Job Title</Label>
                         <Input placeholder="Software Engineer" {...register('jobTitle')} />
                         {errors.jobTitle && <p className="text-sm text-destructive">{errors.jobTitle.message}</p>}
+                    </div>
+                    <div>
+                        <Label>Photo URL</Label>
+                        <Input placeholder="https://..." {...register('photoUrl')} />
+                         {errors.photoUrl && <p className="text-sm text-destructive">{errors.photoUrl.message}</p>}
                     </div>
                     <div>
                         <Label>Email Address</Label>
@@ -109,6 +126,23 @@ export function ResumeForm() {
                     </Button>
                 </CardContent>
             </Card>
+
+             <Card>
+                <CardHeader><CardTitle className="text-xl">Projects</CardTitle></CardHeader>
+                <CardContent className="space-y-4">
+                    {projectFields.map((field, index) => (
+                        <div key={field.id} className="p-4 border rounded-md space-y-3 relative">
+                             <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeProject(index)}><Trash2 className="h-4 w-4 text-destructive"/></Button>
+                            <Input placeholder="Project Name" {...register(`projects.${index}.name`)} />
+                            <Input placeholder="Project URL (optional)" {...register(`projects.${index}.url`)} />
+                            <Textarea placeholder="Brief project description..." {...register(`projects.${index}.description`)} />
+                        </div>
+                    ))}
+                    <Button type="button" variant="outline" onClick={() => appendProject({ id: Date.now().toString(), name: '', url: '', description: '' })}>
+                        <PlusCircle className="mr-2" /> Add Project
+                    </Button>
+                </CardContent>
+            </Card>
             
             <Card>
                 <CardHeader><CardTitle className="text-xl">Education</CardTitle></CardHeader>
@@ -140,3 +174,4 @@ export function ResumeForm() {
         </div>
     );
 }
+
