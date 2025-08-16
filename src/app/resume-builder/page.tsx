@@ -6,12 +6,13 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Download, FileText, Palette, Type, AlignVerticalSpaceAround, Mail, Phone, MapPin, Settings } from 'lucide-react';
+import { Download, FileText, Palette, Type, AlignVerticalSpaceAround, Mail, Phone, MapPin, Settings, Maximize } from 'lucide-react';
 import { ResumeForm, resumeSchema, type ResumeData } from '@/components/resume/form';
 import { ResumeTemplate, type TemplateName } from '@/components/resume/template';
 import jsPDF from 'jspdf';
 import { guides } from "@/lib/search-data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -111,7 +112,7 @@ export default function ResumeBuilderPage() {
     };
 
     const handleDownloadPdf = () => {
-        const resumeElement = document.getElementById('resume-preview');
+        const resumeElement = document.getElementById('resume-preview-fullscreen-content');
         if (!resumeElement) return;
 
         const doc = new jsPDF({
@@ -225,28 +226,46 @@ export default function ResumeBuilderPage() {
     );
 
     const resumePreview = (
-        <div className="w-full">
-            <Button onClick={handleDownloadPdf} className="w-full mb-4 lg:hidden" size="lg">
-                <Download className="mr-2" /> Download as PDF
-            </Button>
-            <Card className="overflow-hidden sticky top-4">
-                <div className="h-auto w-full bg-background shadow-lg overflow-hidden aspect-[1/1.294]">
-                    <div className="h-full w-full scale-[0.4] sm:scale-[0.55] md:scale-[0.7] lg:scale-[0.5] xl:scale-[0.65] origin-top-left">
-                        <ResumeTemplate 
-                            template={template}
-                            accentColor={accentColor}
-                            fontSize={fontSize}
-                            fontFamily={fontFamily}
-                            lineHeight={lineHeight}
-                            showEmail={showEmail}
-                            showPhone={showPhone}
-                            showAddress={showAddress}
-                            showPhoto={showPhoto}
-                        />
-                    </div>
+         <Card className="overflow-hidden sticky top-4">
+             <div className="h-auto w-full bg-background shadow-lg overflow-hidden aspect-[1/1.294] relative group">
+                <div className="h-full w-full scale-[0.4] sm:scale-[0.55] md:scale-[0.7] lg:scale-[0.5] xl:scale-[0.65] origin-top-left">
+                    <ResumeTemplate 
+                        template={template}
+                        accentColor={accentColor}
+                        fontSize={fontSize}
+                        fontFamily={fontFamily}
+                        lineHeight={lineHeight}
+                        showEmail={showEmail}
+                        showPhone={showPhone}
+                        showAddress={showAddress}
+                        showPhoto={showPhoto}
+                    />
                 </div>
-            </Card>
-        </div>
+                 <Dialog>
+                    <DialogTrigger asChild>
+                        <Button variant="outline" size="icon" className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Maximize className="w-5 h-5"/>
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl h-[95vh] p-0">
+                         <div className="w-full h-full overflow-y-auto">
+                            <ResumeTemplate 
+                                id="fullscreen-content"
+                                template={template}
+                                accentColor={accentColor}
+                                fontSize={fontSize}
+                                fontFamily={fontFamily}
+                                lineHeight={lineHeight}
+                                showEmail={showEmail}
+                                showPhone={showPhone}
+                                showAddress={showAddress}
+                                showPhoto={showPhoto}
+                            />
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            </div>
+        </Card>
     );
 
     return (

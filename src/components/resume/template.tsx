@@ -23,9 +23,10 @@ interface ResumeTemplateProps {
     showPhone: boolean;
     showAddress: boolean;
     showPhoto: boolean;
+    id?: string;
 }
 
-export function ResumeTemplate({ template, ...customization }: ResumeTemplateProps) {
+export function ResumeTemplate({ template, id, ...customization }: ResumeTemplateProps) {
     const { watch } = useFormContext<ResumeData>();
     const data = watch();
 
@@ -57,7 +58,7 @@ export function ResumeTemplate({ template, ...customization }: ResumeTemplatePro
 
     return (
         <div 
-            id="resume-preview" 
+            id={`resume-preview-${id || 'main'}`}
             className={`w-[816px] h-[1056px] bg-background text-foreground p-10 ${fontClasses[customization.fontFamily]}`}
             style={{ 
                 fontSize: `${customization.fontSize}pt`,
@@ -66,7 +67,9 @@ export function ResumeTemplate({ template, ...customization }: ResumeTemplatePro
                 backgroundColor: 'hsl(var(--background))'
             }}
         >
-            {renderTemplate()}
+            <div id={`resume-preview-content-${id || 'main'}`}>
+                {renderTemplate()}
+            </div>
         </div>
     );
 }
