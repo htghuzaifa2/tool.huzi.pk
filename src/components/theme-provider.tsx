@@ -29,16 +29,18 @@ export function ThemeProvider({
   storageKey = "toolbox-hub-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") {
-      return defaultTheme;
-    }
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+
+  useEffect(() => {
+    // This code now runs only on the client, after the initial render.
+    let storedTheme: Theme;
     try {
-      return (localStorage.getItem(storageKey) as Theme) || defaultTheme
+      storedTheme = (localStorage.getItem(storageKey) as Theme) || defaultTheme;
     } catch (e) {
-      return defaultTheme
+      storedTheme = defaultTheme;
     }
-  });
+    setTheme(storedTheme);
+  }, [storageKey, defaultTheme]);
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -58,13 +60,13 @@ export function ThemeProvider({
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
+    setTheme: (newTheme: Theme) => {
       try {
-        localStorage.setItem(storageKey, theme)
+        localStorage.setItem(storageKey, newTheme)
       } catch (e) {
         // ignore
       }
-      setTheme(theme)
+      setTheme(newTheme)
     },
   }
 
