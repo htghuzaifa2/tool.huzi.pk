@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react';
@@ -9,7 +8,9 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Code, Layers } from 'lucide-react';
+import { Copy, Code, Layers, BookOpen } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { guides } from "@/lib/search-data";
 
 const hexToRgba = (hex: string, opacity: number): string => {
     let r = 0, g = 0, b = 0;
@@ -38,6 +39,7 @@ export default function BoxShadowGeneratorPage() {
     const [shadowOpacity, setShadowOpacity] = useState(0.75);
     const [isInset, setIsInset] = useState(false);
     const { toast } = useToast();
+    const boxShadowGuide = guides.find(g => g.href.includes('css-box-shadow-generator'));
 
     const boxShadowStyle = `${isInset ? 'inset ' : ''}${horizontalOffset}px ${verticalOffset}px ${blurRadius}px ${spreadRadius}px ${hexToRgba(shadowColor, shadowOpacity)}`;
 
@@ -52,70 +54,104 @@ export default function BoxShadowGeneratorPage() {
 
     return (
         <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
-            <Card>
-                <CardHeader className="text-center">
-                    <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                        <Layers className="w-8 h-8" />
-                    </div>
-                    <CardTitle className="text-4xl font-bold font-headline">CSS Box Shadow Generator</CardTitle>
-                    <CardDescription>Visually design CSS box shadows and copy the generated code instantly.</CardDescription>
-                </CardHeader>
-                <CardContent className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-6 p-4 border rounded-lg">
-                         <div className="space-y-4">
-                            <Label htmlFor="h-offset">Horizontal Offset: <span className="font-bold">{horizontalOffset}px</span></Label>
-                            <Slider id="h-offset" min={-50} max={50} value={[horizontalOffset]} onValueChange={(v) => setHorizontalOffset(v[0])} />
+            <div className="space-y-8">
+                <Card>
+                    <CardHeader className="text-center">
+                        <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                            <Layers className="w-8 h-8" />
                         </div>
-                        <div className="space-y-4">
-                            <Label htmlFor="v-offset">Vertical Offset: <span className="font-bold">{verticalOffset}px</span></Label>
-                            <Slider id="v-offset" min={-50} max={50} value={[verticalOffset]} onValueChange={(v) => setVerticalOffset(v[0])} />
+                        <CardTitle className="text-4xl font-bold font-headline">CSS Box Shadow Generator</CardTitle>
+                        <CardDescription>Visually design CSS box shadows and copy the generated code instantly.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="grid md:grid-cols-2 gap-8">
+                        <div className="space-y-6 p-4 border rounded-lg">
+                            <div className="space-y-4">
+                                <Label htmlFor="h-offset">Horizontal Offset: <span className="font-bold">{horizontalOffset}px</span></Label>
+                                <Slider id="h-offset" min={-50} max={50} value={[horizontalOffset]} onValueChange={(v) => setHorizontalOffset(v[0])} />
+                            </div>
+                            <div className="space-y-4">
+                                <Label htmlFor="v-offset">Vertical Offset: <span className="font-bold">{verticalOffset}px</span></Label>
+                                <Slider id="v-offset" min={-50} max={50} value={[verticalOffset]} onValueChange={(v) => setVerticalOffset(v[0])} />
+                            </div>
+                            <div className="space-y-4">
+                                <Label htmlFor="blur">Blur Radius: <span className="font-bold">{blurRadius}px</span></Label>
+                                <Slider id="blur" min={0} max={100} value={[blurRadius]} onValueChange={(v) => setBlurRadius(v[0])} />
+                            </div>
+                            <div className="space-y-4">
+                                <Label htmlFor="spread">Spread Radius: <span className="font-bold">{spreadRadius}px</span></Label>
+                                <Slider id="spread" min={-50} max={50} value={[spreadRadius]} onValueChange={(v) => setSpreadRadius(v[0])} />
+                            </div>
+                            <div className="space-y-4">
+                                <Label htmlFor="opacity">Shadow Opacity: <span className="font-bold">{shadowOpacity}</span></Label>
+                                <Slider id="opacity" min={0} max={1} step={0.01} value={[shadowOpacity]} onValueChange={(v) => setShadowOpacity(v[0])} />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <Label htmlFor="color">Shadow Color</Label>
+                                <Input id="color" type="color" value={shadowColor} onChange={(e) => setShadowColor(e.target.value)} className="w-24 h-12 p-1"/>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                            <Switch id="inset-switch" checked={isInset} onCheckedChange={setIsInset} />
+                            <Label htmlFor="inset-switch">Inset</Label>
+                            </div>
                         </div>
-                        <div className="space-y-4">
-                            <Label htmlFor="blur">Blur Radius: <span className="font-bold">{blurRadius}px</span></Label>
-                            <Slider id="blur" min={0} max={100} value={[blurRadius]} onValueChange={(v) => setBlurRadius(v[0])} />
+                        <div className="flex flex-col space-y-6">
+                            <div className="h-64 flex-1 flex items-center justify-center bg-muted rounded-lg">
+                                <div className="w-40 h-40 bg-card rounded-lg" style={{ boxShadow: boxShadowStyle }}></div>
+                            </div>
+                            <Card className="w-full bg-muted">
+                                <CardHeader className="flex-row items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <Code className="h-5 w-5" />
+                                        <CardTitle className="text-lg font-headline">Generated CSS</CardTitle>
+                                    </div>
+                                    <Button variant="ghost" size="icon" onClick={copyToClipboard}>
+                                        <Copy className="h-5 w-5" />
+                                    </Button>
+                                </CardHeader>
+                                <CardContent>
+                                    <pre className="p-4 rounded-md bg-background/70 text-sm overflow-x-auto">
+                                        <code>
+                                            box-shadow: {boxShadowStyle};
+                                        </code>
+                                    </pre>
+                                </CardContent>
+                            </Card>
                         </div>
-                         <div className="space-y-4">
-                            <Label htmlFor="spread">Spread Radius: <span className="font-bold">{spreadRadius}px</span></Label>
-                            <Slider id="spread" min={-50} max={50} value={[spreadRadius]} onValueChange={(v) => setSpreadRadius(v[0])} />
-                        </div>
-                         <div className="space-y-4">
-                            <Label htmlFor="opacity">Shadow Opacity: <span className="font-bold">{shadowOpacity}</span></Label>
-                            <Slider id="opacity" min={0} max={1} step={0.01} value={[shadowOpacity]} onValueChange={(v) => setShadowOpacity(v[0])} />
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <Label htmlFor="color">Shadow Color</Label>
-                            <Input id="color" type="color" value={shadowColor} onChange={(e) => setShadowColor(e.target.value)} className="w-24 h-12 p-1"/>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                           <Switch id="inset-switch" checked={isInset} onCheckedChange={setIsInset} />
-                           <Label htmlFor="inset-switch">Inset</Label>
-                        </div>
-                    </div>
-                    <div className="flex flex-col space-y-6">
-                        <div className="h-64 flex-1 flex items-center justify-center bg-muted rounded-lg">
-                            <div className="w-40 h-40 bg-card rounded-lg" style={{ boxShadow: boxShadowStyle }}></div>
-                        </div>
-                        <Card className="w-full bg-muted">
-                            <CardHeader className="flex-row items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <Code className="h-5 w-5" />
-                                    <CardTitle className="text-lg font-headline">Generated CSS</CardTitle>
+                    </CardContent>
+                </Card>
+
+                {boxShadowGuide && (
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="guide" className="border-none">
+                            <AccordionTrigger asChild>
+                                <div className="flex justify-center">
+                                    <Button size="lg" variant="ghost" className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40">
+                                        <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
+                                            <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
+                                            Read The Guide
+                                        </span>
+                                    </Button>
                                 </div>
-                                <Button variant="ghost" size="icon" onClick={copyToClipboard}>
-                                    <Copy className="h-5 w-5" />
-                                </Button>
-                            </CardHeader>
-                            <CardContent>
-                                <pre className="p-4 rounded-md bg-background/70 text-sm overflow-x-auto">
-                                    <code>
-                                        box-shadow: {boxShadowStyle};
-                                    </code>
-                                </pre>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </CardContent>
-            </Card>
+                            </AccordionTrigger>
+                            <AccordionContent className="pt-6 w-full">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle className="font-headline">{boxShadowGuide.title}</CardTitle>
+                                        <CardDescription>{boxShadowGuide.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                            {boxShadowGuide.steps.map((step, stepIndex) => (
+                                                <li key={stepIndex}>{step}</li>
+                                            ))}
+                                        </ol>
+                                    </CardContent>
+                                </Card>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                )}
+            </div>
         </div>
     );
 }

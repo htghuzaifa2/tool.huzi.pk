@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from "react";
@@ -6,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRightLeft, Binary } from "lucide-react";
+import { ArrowRightLeft, Binary, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { guides } from "@/lib/search-data";
 
 type Base = '2' | '8' | '10' | '16';
 const baseOptions: { value: Base; label: string }[] = [
@@ -30,6 +31,7 @@ export default function BaseConverterPage() {
     const [toBase, setToBase] = useState<Base>('10');
     const [result, setResult] = useState("");
     const { toast } = useToast();
+    const baseConverterGuide = guides.find(g => g.href.includes('base-converter'));
 
     useEffect(() => {
         if (!inputValue.trim()) {
@@ -88,7 +90,7 @@ export default function BaseConverterPage() {
 
     return (
         <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-2xl mx-auto space-y-8">
                 <Card>
                     <CardHeader className="text-center">
                          <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
@@ -138,6 +140,38 @@ export default function BaseConverterPage() {
                         </div>
                     </CardContent>
                 </Card>
+
+                {baseConverterGuide && (
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="guide" className="border-none">
+                            <AccordionTrigger asChild>
+                                <div className="flex justify-center">
+                                    <Button size="lg" variant="ghost" className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40">
+                                        <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
+                                            <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
+                                            Read The Guide
+                                        </span>
+                                    </Button>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="pt-6 w-full">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle className="font-headline">{baseConverterGuide.title}</CardTitle>
+                                        <CardDescription>{baseConverterGuide.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                            {baseConverterGuide.steps.map((step, stepIndex) => (
+                                                <li key={stepIndex}>{step}</li>
+                                            ))}
+                                        </ol>
+                                    </CardContent>
+                                </Card>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                )}
             </div>
         </div>
     );

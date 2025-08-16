@@ -1,9 +1,11 @@
-
 "use client"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { BookOpen } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { guides } from "@/lib/search-data";
 
 const buttonClasses = "text-2xl h-16"
 
@@ -12,6 +14,7 @@ export default function CalculatorPage() {
   const [currentValue, setCurrentValue] = useState<string | null>(null)
   const [operator, setOperator] = useState<string | null>(null)
   const [waitingForOperand, setWaitingForOperand] = useState(false)
+  const calculatorGuide = guides.find(g => g.href.includes('calculator'));
 
   const handleDigitClick = (digit: string) => {
     if (waitingForOperand) {
@@ -82,7 +85,7 @@ export default function CalculatorPage() {
 
   return (
     <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-sm mx-auto">
+      <div className="max-w-sm mx-auto space-y-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold font-headline">Calculator</h1>
           <p className="text-muted-foreground mt-2">
@@ -122,6 +125,38 @@ export default function CalculatorPage() {
             </div>
           </CardContent>
         </Card>
+
+        {calculatorGuide && (
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="guide" className="border-none">
+                    <AccordionTrigger asChild>
+                        <div className="flex justify-center">
+                            <Button size="lg" variant="ghost" className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40">
+                                <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
+                                    <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
+                                    Read The Guide
+                                </span>
+                            </Button>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-6 w-full">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="font-headline">{calculatorGuide.title}</CardTitle>
+                                <CardDescription>{calculatorGuide.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                    {calculatorGuide.steps.map((step, stepIndex) => (
+                                        <li key={stepIndex}>{step}</li>
+                                    ))}
+                                </ol>
+                            </CardContent>
+                        </Card>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        )}
       </div>
     </div>
   )
