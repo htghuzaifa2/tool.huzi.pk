@@ -86,7 +86,7 @@ export default function YouTubeThumbnailDownloaderPage() {
                 variant: "destructive",
             });
         }
-    }
+    };
     
     const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         const card = e.currentTarget.closest('.thumbnail-card');
