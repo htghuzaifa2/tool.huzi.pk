@@ -5,7 +5,9 @@ import { useState, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
+import { Copy } from "lucide-react"
 
 const toTitleCase = (str: string) => {
   return str.replace(
@@ -18,16 +20,43 @@ const toSentenceCase = (str: string) => {
     return str.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, (c) => c.toUpperCase());
 };
 
+const invertCase = (str: string) => {
+    return str.split('').map(char => {
+        if (char === char.toUpperCase()) {
+            return char.toLowerCase();
+        } else {
+            return char.toUpperCase();
+        }
+    }).join('');
+};
+
 export default function TextToolsPage() {
-  const [text, setText] = useState("")
+  const [text, setText] = useState("Hello World! This is an example sentence.")
+  const { toast } = useToast();
 
   const stats = useMemo(() => {
     const trimmedText = text.trim();
     const words = trimmedText ? trimmedText.split(/\s+/).length : 0;
     const characters = text.length;
-    const lines = text.split(/\r\n|\r|\n/).length;
-    return { words, characters, lines };
+    const lines = text.split(/\r\n|\r|\n/).filter(line => line.trim() !== '').length;
+    const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0).length;
+    return { words, characters, lines, paragraphs };
   }, [text]);
+
+  const copyToClipboard = () => {
+        if (!text) {
+            toast({
+                title: "Nothing to Copy",
+                variant: "destructive"
+            });
+            return;
+        }
+        navigator.clipboard.writeText(text);
+        toast({
+            title: "Copied!",
+            description: "Text copied to clipboard.",
+        });
+    };
 
   return (
     <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -47,9 +76,10 @@ export default function TextToolsPage() {
           
           <TabsContent value="case-converter">
             <Card>
-              <CardHeader>
-                <CardTitle>Case Converter</CardTitle>
-              </CardHeader>
+               <CardHeader>
+                    <CardTitle>Case Converter</CardTitle>
+                    <CardDescription>Convert your text to various case formats.</CardDescription>
+                </CardHeader>
               <CardContent className="space-y-4">
                 <Textarea
                   placeholder="Enter text to convert..."
@@ -57,11 +87,15 @@ export default function TextToolsPage() {
                   onChange={(e) => setText(e.target.value)}
                   className="min-h-[250px] text-base"
                 />
-                <div className="flex flex-wrap gap-2">
-                  <Button onClick={() => setText(text.toUpperCase())}>Uppercase</Button>
-                  <Button onClick={() => setText(text.toLowerCase())}>Lowercase</Button>
-                  <Button onClick={() => setText(toTitleCase(text))}>Title Case</Button>
-                  <Button onClick={() => setText(toSentenceCase(text))}>Sentence Case</Button>
+                <div className="flex flex-wrap gap-2 justify-between items-center">
+                    <div className="flex flex-wrap gap-2">
+                        <Button onClick={() => setText(text.toUpperCase())}>Uppercase</Button>
+                        <Button onClick={() => setText(text.toLowerCase())}>Lowercase</Button>
+                        <Button onClick={() => setText(toTitleCase(text))}>Title Case</Button>
+                        <Button onClick={() => setText(toSentenceCase(text))}>Sentence Case</Button>
+                        <Button onClick={() => setText(invertCase(text))}>Invert Case</Button>
+                    </div>
+                    <Button variant="ghost" size="icon" onClick={copyToClipboard}><Copy className="h-5 w-5"/></Button>
                 </div>
               </CardContent>
             </Card>
@@ -71,6 +105,7 @@ export default function TextToolsPage() {
              <Card>
               <CardHeader>
                 <CardTitle>Text Counter</CardTitle>
+                 <CardDescription>Analyze your text for word, character, and line counts.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <Textarea
@@ -79,7 +114,7 @@ export default function TextToolsPage() {
                   onChange={(e) => setText(e.target.value)}
                   className="min-h-[250px] text-base"
                 />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-4xl font-bold">{stats.words}</CardTitle>
@@ -96,6 +131,12 @@ export default function TextToolsPage() {
                         <CardHeader>
                             <CardTitle className="text-4xl font-bold">{stats.lines}</CardTitle>
                             <p className="text-muted-foreground">Lines</p>
+                        </CardHeader>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.paragraphs}</CardTitle>
+                            <p className="text-muted-foreground">Paragraphs</p>
                         </CardHeader>
                     </Card>
                 </div>

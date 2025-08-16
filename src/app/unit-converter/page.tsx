@@ -4,14 +4,14 @@
 import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { ArrowRightLeft } from "lucide-react"
 
 type Category = "length" | "mass" | "temperature";
 
 const units = {
-  length: { meters: "Meters", kilometers: "Kilometers", miles: "Miles", feet: "Feet" },
-  mass: { kilograms: "Kilograms", grams: "Grams", pounds: "Pounds", ounces: "Ounces" },
+  length: { meters: "Meters", kilometers: "Kilometers", miles: "Miles", feet: "Feet", inches: "Inches", yards: "Yards" },
+  mass: { kilograms: "Kilograms", grams: "Grams", pounds: "Pounds", ounces: "Ounces", stones: "Stones" },
   temperature: { celsius: "Celsius", fahrenheit: "Fahrenheit", kelvin: "Kelvin" },
 };
 
@@ -21,11 +21,14 @@ const conversionFactors: Record<string, number> = {
   kilometers: 1000,
   miles: 1609.34,
   feet: 0.3048,
+  inches: 0.0254,
+  yards: 0.9144,
   // Mass to kilograms
   kilograms: 1,
   grams: 0.001,
   pounds: 0.453592,
   ounces: 0.0283495,
+  stones: 6.35029,
 };
 
 export default function UnitConverterPage() {
@@ -64,8 +67,17 @@ export default function UnitConverterPage() {
       output = valueInBase / conversionFactors[toUnit];
     }
     
-    setResult(output.toFixed(4));
+    // Use toLocaleString for better number formatting
+    setResult(Number(output.toFixed(4)).toLocaleString(undefined, { maximumFractionDigits: 4 }));
   }, [inputValue, fromUnit, toUnit, category]);
+
+  const handleInputChange = (value: string) => {
+    // Allow negative numbers and a single decimal point for temperature
+    const regex = category === 'temperature' ? /^-?\d*\.?\d*$/ : /^\d*\.?\d*$/;
+    if (regex.test(value)) {
+      setInputValue(value);
+    }
+  }
 
   return (
     <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -94,7 +106,7 @@ export default function UnitConverterPage() {
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-2">
               <div className="w-full space-y-2">
                  <label className="text-sm font-medium">From</label>
-                 <Input type="number" value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="text-lg" />
+                 <Input type="text" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} className="text-lg" />
                  <Select value={fromUnit} onValueChange={setFromUnit}>
                     <SelectTrigger><SelectValue/></SelectTrigger>
                     <SelectContent>

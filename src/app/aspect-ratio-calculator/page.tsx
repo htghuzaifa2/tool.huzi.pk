@@ -7,6 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Ratio, RefreshCw } from 'lucide-react';
 
+// Function to remove trailing zeros and the decimal point if not needed
+const formatNumber = (num: number) => {
+    return num.toFixed(2).replace(/\.00$/, '').replace(/(\.\d*?)0+$/, '$1');
+};
+
 export default function AspectRatioCalculatorPage() {
     const [originalWidth, setOriginalWidth] = useState('1920');
     const [originalHeight, setOriginalHeight] = useState('1080');
@@ -23,7 +28,7 @@ export default function AspectRatioCalculatorPage() {
                 const nw = parseFloat(newWidth);
                 if (nw > 0) {
                     const calculatedHeight = (nw * oh) / ow;
-                    setNewHeight(calculatedHeight.toFixed(2).replace(/\.00$/, ''));
+                    setNewHeight(formatNumber(calculatedHeight));
                 } else {
                     setNewHeight('');
                 }
@@ -31,7 +36,7 @@ export default function AspectRatioCalculatorPage() {
                 const nh = parseFloat(newHeight);
                 if (nh > 0) {
                     const calculatedWidth = (nh * ow) / oh;
-                    setNewWidth(calculatedWidth.toFixed(2).replace(/\.00$/, ''));
+                    setNewWidth(formatNumber(calculatedWidth));
                 } else {
                     setNewWidth('');
                 }
@@ -45,6 +50,12 @@ export default function AspectRatioCalculatorPage() {
         setNewWidth('');
         setNewHeight('');
         setLastChanged(null);
+    }
+    
+    const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>, value: string) => {
+        if (/^\d*\.?\d*$/.test(value)) {
+            setter(value);
+        }
     }
 
     return (
@@ -64,12 +75,12 @@ export default function AspectRatioCalculatorPage() {
                             <div className="flex flex-col md:flex-row items-center gap-4">
                                 <div className="w-full space-y-2">
                                     <label htmlFor="orig-w" className="text-sm font-medium">Width</label>
-                                    <Input id="orig-w" type="number" placeholder="e.g., 1920" value={originalWidth} onChange={(e) => setOriginalWidth(e.target.value)} />
+                                    <Input id="orig-w" type="text" placeholder="e.g., 1920" value={originalWidth} onChange={(e) => handleInputChange(setOriginalWidth, e.target.value)} />
                                 </div>
                                 <span className="font-bold text-2xl md:pt-6">:</span>
                                 <div className="w-full space-y-2">
                                     <label htmlFor="orig-h" className="text-sm font-medium">Height</label>
-                                    <Input id="orig-h" type="number" placeholder="e.g., 1080" value={originalHeight} onChange={(e) => setOriginalHeight(e.target.value)} />
+                                    <Input id="orig-h" type="text" placeholder="e.g., 1080" value={originalHeight} onChange={(e) => handleInputChange(setOriginalHeight, e.target.value)} />
                                 </div>
                             </div>
                         </Card>
@@ -81,10 +92,10 @@ export default function AspectRatioCalculatorPage() {
                                     <label htmlFor="new-w" className="text-sm font-medium">Width</label>
                                     <Input 
                                         id="new-w" 
-                                        type="number" 
+                                        type="text" 
                                         placeholder="Enter new width"
                                         value={newWidth} 
-                                        onChange={(e) => { setNewWidth(e.target.value); setLastChanged('width'); }}
+                                        onChange={(e) => { handleInputChange(setNewWidth, e.target.value); setLastChanged('width'); }}
                                     />
                                 </div>
                                 <span className="font-bold text-2xl md:pt-6">=</span>
@@ -92,10 +103,10 @@ export default function AspectRatioCalculatorPage() {
                                     <label htmlFor="new-h" className="text-sm font-medium">Height</label>
                                      <Input 
                                         id="new-h" 
-                                        type="number" 
+                                        type="text" 
                                         placeholder="Enter new height"
                                         value={newHeight} 
-                                        onChange={(e) => { setNewHeight(e.target.value); setLastChanged('height'); }}
+                                        onChange={(e) => { handleInputChange(setNewHeight, e.target.value); setLastChanged('height'); }}
                                     />
                                 </div>
                             </div>

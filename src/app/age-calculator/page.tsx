@@ -6,14 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Calendar } from "lucide-react";
+import { intervalToDuration } from 'date-fns';
 
 export default function AgeCalculatorPage() {
     const [birthDate, setBirthDate] = useState('');
-    const [age, setAge] = useState<{ years: number; months: number; days: number } | null>(null);
+    const [age, setAge] = useState<{ years?: number; months?: number; days?: number } | null>(null);
     const [error, setError] = useState('');
 
     const calculateAge = () => {
         setError('');
+        setAge(null);
+
         if (!birthDate) {
             setError('Please enter your date of birth.');
             return;
@@ -24,26 +27,11 @@ export default function AgeCalculatorPage() {
 
         if (birth > today) {
             setError('Date of birth cannot be in the future.');
-            setAge(null);
             return;
         }
         
-        let years = today.getFullYear() - birth.getFullYear();
-        let months = today.getMonth() - birth.getMonth();
-        let days = today.getDate() - birth.getDate();
-
-        if (months < 0 || (months === 0 && days < 0)) {
-            years--;
-            months += 12;
-        }
-        
-        if (days < 0) {
-            months--;
-            const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-            days += prevMonth.getDate();
-        }
-
-        setAge({ years, months, days });
+        const ageDuration = intervalToDuration({ start: birth, end: today });
+        setAge(ageDuration);
     };
 
     return (
@@ -74,19 +62,19 @@ export default function AgeCalculatorPage() {
                             <div className="grid grid-cols-3 gap-4 text-center">
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle className="text-4xl font-bold">{age.years}</CardTitle>
+                                        <CardTitle className="text-4xl font-bold">{age.years || 0}</CardTitle>
                                         <p className="text-muted-foreground">Years</p>
                                     </CardHeader>
                                 </Card>
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle className="text-4xl font-bold">{age.months}</CardTitle>
+                                        <CardTitle className="text-4xl font-bold">{age.months || 0}</CardTitle>
                                         <p className="text-muted-foreground">Months</p>
                                     </CardHeader>
                                 </Card>
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle className="text-4xl font-bold">{age.days}</CardTitle>
+                                        <CardTitle className="text-4xl font-bold">{age.days || 0}</CardTitle>
                                         <p className="text-muted-foreground">Days</p>
                                     </CardHeader>
                                 </Card>

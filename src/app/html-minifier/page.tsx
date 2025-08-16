@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowDown, Copy, Code } from 'lucide-react';
 
 export default function HtmlMinifierPage() {
-    const [htmlInput, setHtmlInput] = useState('');
+    const [htmlInput, setHtmlInput] = useState('<!-- This is a comment -->\n<div class="   extra-space   ">\n    <p>Hello World</p>\n</div>');
     const [minifiedHtml, setMinifiedHtml] = useState('');
     const { toast } = useToast();
 
@@ -24,12 +24,13 @@ export default function HtmlMinifierPage() {
         }
 
         try {
-            // 1. Remove comments
-            let minified = htmlInput.replace(/<!--[\s\S]*?-->/g, '');
-            // 2. Remove newlines and tabs, and reduce multiple spaces to a single space
-            minified = minified.replace(/\s+/g, ' ').trim();
-            // 3. Remove spaces between tags
-            minified = minified.replace(/> </g, '><');
+            // A more robust minification process
+            let minified = htmlInput
+                .replace(/<!--[\s\S]*?-->/g, '')      // 1. Remove comments
+                .replace(/\s+/g, ' ')               // 2. Collapse whitespace (newlines, tabs, multiple spaces) into a single space
+                .replace(/>\s+</g, '><')            // 3. Remove space between tags
+                .replace(/\s(class|id|href|src)=/g, ' $1=') // Ensure required spaces around attributes
+                .trim();                            // 4. Trim leading/trailing whitespace
 
             setMinifiedHtml(minified);
             toast({
@@ -62,7 +63,7 @@ export default function HtmlMinifierPage() {
     };
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
                 <Card>
                     <CardHeader className="text-center">

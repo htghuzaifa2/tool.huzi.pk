@@ -1,15 +1,16 @@
 
 "use client"
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, RefreshCw } from 'lucide-react';
+import { Copy, RefreshCw, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export default function PasswordGeneratorPage() {
     const [password, setPassword] = useState('');
@@ -17,7 +18,7 @@ export default function PasswordGeneratorPage() {
     const [includeUppercase, setIncludeUppercase] = useState(true);
     const [includeLowercase, setIncludeLowercase] = useState(true);
     const [includeNumbers, setIncludeNumbers] = useState(true);
-    const [includeSymbols, setIncludeSymbols] = useState(false);
+    const [includeSymbols, setIncludeSymbols] = useState(true);
     const { toast } = useToast();
 
     const generatePassword = useCallback(() => {
@@ -38,6 +39,7 @@ export default function PasswordGeneratorPage() {
                 description: "Please select at least one character type.",
                 variant: "destructive"
             });
+            setPassword('');
             return;
         }
 
@@ -61,9 +63,33 @@ export default function PasswordGeneratorPage() {
             });
         }
     };
+    
+    const strength = useMemo(() => {
+        let score = 0;
+        if (password.length >= 8) score++;
+        if (password.length >= 12) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[a-z]/.test(password)) score++;
+        if (/\d/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+        return score;
+    }, [password]);
+
+    const getStrengthLabel = () => {
+        if (strength <= 2) return 'Weak';
+        if (strength <= 4) return 'Moderate';
+        return 'Strong';
+    };
+
+    const getStrengthColor = () => {
+        if (strength <= 2) return 'bg-red-500';
+        if (strength <= 4) return 'bg-yellow-500';
+        return 'bg-green-500';
+    };
+
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md mx-auto">
                 <Card>
                     <CardHeader className="text-center">
@@ -86,6 +112,14 @@ export default function PasswordGeneratorPage() {
                                 <Copy className="h-5 w-5" />
                             </Button>
                         </div>
+
+                         <div className="space-y-2">
+                            <div className="flex items-center justify-between text-sm">
+                               <span className="font-medium">Strength:</span>
+                               <span className={`font-semibold ${getStrengthColor().replace('bg-', 'text-')}`}>{getStrengthLabel()}</span>
+                            </div>
+                            <Progress value={(strength / 6) * 100} className={getStrengthColor()} />
+                         </div>
                         
                         <div className="space-y-4">
                             <div className="flex justify-between items-center">
@@ -104,19 +138,19 @@ export default function PasswordGeneratorPage() {
                         <div className="grid grid-cols-2 gap-4">
                             <div className="flex items-center space-x-2">
                                 <Checkbox id="uppercase" checked={includeUppercase} onCheckedChange={(checked) => setIncludeUppercase(Boolean(checked))} />
-                                <Label htmlFor="uppercase">Uppercase</Label>
+                                <Label htmlFor="uppercase">Uppercase (A-Z)</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Checkbox id="lowercase" checked={includeLowercase} onCheckedChange={(checked) => setIncludeLowercase(Boolean(checked))} />
-                                <Label htmlFor="lowercase">Lowercase</Label>
+                                <Label htmlFor="lowercase">Lowercase (a-z)</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Checkbox id="numbers" checked={includeNumbers} onCheckedChange={(checked) => setIncludeNumbers(Boolean(checked))} />
-                                <Label htmlFor="numbers">Numbers</Label>
+                                <Label htmlFor="numbers">Numbers (0-9)</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Checkbox id="symbols" checked={includeSymbols} onCheckedChange={(checked) => setIncludeSymbols(Boolean(checked))} />
-                                <Label htmlFor="symbols">Symbols</Label>
+                                <Label htmlFor="symbols">Symbols (!@#)</Label>
                             </div>
                         </div>
                         
