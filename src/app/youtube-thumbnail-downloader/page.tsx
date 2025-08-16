@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Youtube, Link, Download, BookOpen } from 'lucide-react';
+import { Youtube, Link, Download, BookOpen, ChevronDown } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
@@ -81,6 +81,14 @@ export default function YouTubeThumbnailDownloaderPage() {
             });
         }
     }
+    
+    const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+        const card = e.currentTarget.closest('.group');
+        if (card) {
+            (card as HTMLElement).style.display = 'none';
+        }
+    };
+
 
     return (
         <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -119,12 +127,7 @@ export default function YouTubeThumbnailDownloaderPage() {
                                                         src={thumb.url} 
                                                         alt={`${thumb.quality} thumbnail`} 
                                                         className="w-full h-full object-cover"
-                                                         onError={(e) => {
-                                                            const card = (e.target as HTMLElement).closest('.group');
-                                                            if (card) {
-                                                                (card as HTMLElement).style.display = 'none';
-                                                            }
-                                                        }}
+                                                         onError={handleImageError}
                                                     />
                                                 </div>
                                                 <div className="p-4">
@@ -152,7 +155,7 @@ export default function YouTubeThumbnailDownloaderPage() {
                 {youtubeGuide && (
                    <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild>
+                             <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
                                     <span>
                                         <BookOpen className="mr-2 h-5 w-5 inline-block" />
