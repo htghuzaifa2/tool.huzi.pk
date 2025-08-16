@@ -51,24 +51,24 @@
   }
 
   .theme-blue {
-    --background: 222 47% 11%;
+    --background: 224 71% 4%; /* Darker, richer blue */
     --foreground: 210 40% 98%;
-    --card: 222 47% 14%;
+    --card: 224 71% 9%;
     --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
+    --popover: 224 71% 4%;
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 217 33% 17%;
+    --primary: 217 91% 60%; /* Bright Neon Blue */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 224 71% 9%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
+    --muted: 224 71% 14%;
     --muted-foreground: 215 20% 65%;
-    --accent: 217 91% 60%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 198 93% 60%; /* Lighter, complementary cyan */
+    --accent-foreground: 224 71% 4%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
+    --border: 224 71% 14%;
+    --input: 224 71% 14%;
     --ring: 217 91% 60%;
   }
 
@@ -141,7 +141,7 @@
 }
 
 .theme-blue body {
-  background: linear-gradient(-45deg, hsl(222, 47%, 11%), hsl(222, 39%, 18%), hsl(222, 47%, 11%));
+  background: linear-gradient(-45deg, hsl(224, 71%, 4%), hsl(224, 71%, 9%), hsl(224, 71%, 4%));
   background-size: 400% 400%;
   animation: gradient-animation 15s ease infinite;
 }
