@@ -4,11 +4,12 @@
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Upload, Download, RefreshCw, FileImage, X, Loader2, BookOpen, ChevronDown } from 'lucide-react';
+import { Upload, RefreshCw, FileImage, X, Loader2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from 'jspdf';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 export default function ImageToPdfConverterPage() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -200,13 +201,8 @@ export default function ImageToPdfConverterPage() {
                 {imageToPdfGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild>
-                                <Button variant="outline" className="w-fit">
-                                    <span>
-                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
-                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
-                                    </span>
-                                </Button>
+                            <AccordionTrigger>
+                                <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>

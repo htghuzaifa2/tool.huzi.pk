@@ -7,11 +7,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Code, Share2, BookOpen, ChevronDown } from 'lucide-react';
+import { Copy, Code, Share2 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 export default function OpenGraphGeneratorPage() {
     const [title, setTitle] = useState('');
@@ -140,13 +141,8 @@ export default function OpenGraphGeneratorPage() {
                 {openGraphGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild>
-                                <Button variant="outline" className="w-fit">
-                                    <span>
-                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
-                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
-                                    </span>
-                                </Button>
+                            <AccordionTrigger>
+                                <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>

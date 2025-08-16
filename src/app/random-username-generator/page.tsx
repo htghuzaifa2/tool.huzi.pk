@@ -8,9 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from "@/hooks/use-toast";
-import { Copy, RefreshCw, Users, Sparkles, BookOpen, ChevronDown } from 'lucide-react';
+import { Copy, Users, Sparkles } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 const adjectives = ['Cool', 'Super', 'Epic', 'Awesome', 'Happy', 'Silent', 'Swift', 'Red', 'Cosmic', 'Digital', 'Future', 'Cyber', 'Iron', 'Golden'];
 const nouns = ['Panda', 'Coder', 'Hacker', 'Ninja', 'Rider', 'Pilot', 'Gamer', 'Jester', 'Wizard', 'King', 'Queen', 'Ghost', 'Lion', 'Tiger'];
@@ -145,13 +146,8 @@ export default function RandomUsernameGeneratorPage() {
                 {usernameGeneratorGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild>
-                                <Button variant="outline" className="w-fit">
-                                    <span>
-                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
-                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
-                                    </span>
-                                </Button>
+                            <AccordionTrigger>
+                                <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>

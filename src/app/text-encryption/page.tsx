@@ -8,10 +8,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useToast } from "@/hooks/use-toast";
-import { Lock, Unlock, Key, ArrowRight, Copy, BookOpen, ChevronDown } from 'lucide-react';
+import { Lock, Unlock, Key, Copy } from 'lucide-react';
 import { z } from 'zod';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 const formSchema = z.object({
   text: z.string().min(1, "Text to process cannot be empty."),
@@ -149,13 +150,8 @@ export default function TextEncryptionPage() {
                 {textEncryptionGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild>
-                                <Button variant="outline" className="w-fit">
-                                    <span>
-                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
-                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
-                                    </span>
-                                </Button>
+                            <AccordionTrigger>
+                                <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>

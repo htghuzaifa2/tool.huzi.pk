@@ -7,10 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Pilcrow, RefreshCw, BookOpen, ChevronDown } from 'lucide-react';
+import { Copy, Pilcrow, RefreshCw } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 const loremIpsumWords = [
     'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'curabitur', 'vitae', 'diam', 'non', 'erat', 'mattis', 'placerat', 'sed', 'vel', 'urna', 'nullam', 'quis', 'ante', 'etiam', 'sit', 'amet', 'orci', 'eget', 'eros', 'faucibus', 'scelerisque', 'vivamus', 'eget', 'arcu', 'vel', 'quam', 'egestas', 'semper', 'aenean', 'posuere', 'quam', 'vel', 'leo', 'ultricies', 'nec', 'lacinia', 'risus', 'fermentum', 'donec', 'et', 'dui', 'purus', 'cras', 'eu', 'lorem', 'ac', 'risus', 'aliquam', 'euismod', 'quis', 'ac', 'nibh', 'fusce', 'ac', 'urna', 'vel', 'odio', 'tristique', 'tincidunt', 'quis', 'eu', 'enim', 'in', 'hac', 'habitasse', 'platea', 'dictumst', 'maecenas', 'ut', 'lorem', 'quis', 'ligula', 'imperdiet', 'auctor', 'sed', 'eu', 'arcu', 'morbi', 'et', 'erat', 'et', 'nibh', 'condimentum', 'interdum', 'eu', 'ac', 'ligula', 'integer', 'eu', 'lacus', 'sit', 'amet', 'augue', 'congue', 'hendrerit', 'in', 'vel', 'elit', 'phasellus', 'non', 'enim', 'quis', 'orci', 'consequat', 'consequat', 'ac', 'sit', 'amet', 'nisi', 'praesent', 'in', 'nisi', 'id', 'ante', 'molestie', 'ultrices', 'sed', 'non', 'nisi', 'quisque', 'porttitor', 'eros', 'in', 'tellus', 'semper', 'accumsan'
@@ -122,13 +123,8 @@ export default function LoremIpsumGeneratorPage() {
                 {loremIpsumGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild>
-                                <Button variant="outline" className="w-fit">
-                                    <span>
-                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
-                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 ml-2" />
-                                    </span>
-                                </Button>
+                            <AccordionTrigger>
+                                <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>
