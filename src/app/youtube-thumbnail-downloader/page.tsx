@@ -152,7 +152,7 @@ export default function YouTubeThumbnailDownloaderPage() {
                 {youtubeGuide && (
                    <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild>
+                            <AccordionTrigger>
                                 <button className="group inline-flex items-center justify-center rounded-md px-6 py-2 text-sm font-medium transition-colors h-11 border border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
                                     <span className="flex items-center gap-2">
                                         <BookOpen className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:rotate-[-12deg]" />
