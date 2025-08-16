@@ -33,6 +33,12 @@ export const tools = [
     description: "Create custom QR codes for URLs, text, WiFi, and more.",
   },
   {
+    icon: <Gift className="h-8 w-8" />,
+    href: "/random-picker-wheel",
+    title: "Random Picker Wheel",
+    description: "Add a list of options and spin a wheel to randomly choose one.",
+  },
+  {
     icon: <Combine className="h-8 w-8" />,
     href: "/paragraph-merger",
     title: "Paragraph Merger",
@@ -49,12 +55,6 @@ export const tools = [
     href: "/text-pattern-finder",
     title: "Text Pattern Finder (Regex)",
     description: "Search and highlight specific patterns or words using regular expressions.",
-  },
-  {
-    icon: <Gift className="h-8 w-8" />,
-    href: "/random-picker-wheel",
-    title: "Random Picker Wheel",
-    description: "Add a list of options and spin a wheel to randomly choose one.",
   },
   {
     icon: <BarChart className="h-8 w-8" />,
@@ -415,6 +415,19 @@ export const guides = [
       "Adjust the quality slider to your desired compression level.",
       "Click 'Compress Image' to see the result and the new file size.",
       "Click 'Download' to save the compressed image."
+    ]
+  },
+  {
+    icon: <Gift className="h-8 w-8 text-primary" />,
+    href: "/guide#random-picker-wheel",
+    title: "Random Picker Wheel Guide",
+    description: "How to randomly pick an option from a list.",
+    steps: [
+        "Go to the Random Picker Wheel page.",
+        "In the text area, enter each option on a new line.",
+        "Click the 'Spin the Wheel' button.",
+        "Watch the animation as it selects a winner.",
+        "The winning option will be displayed. You can then copy it to your clipboard."
     ]
   },
   {
