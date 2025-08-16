@@ -47,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/ip-address-finder',
     '/text-diff-highlighter',
     '/random-username-generator',
+    '/morse-code-translator',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

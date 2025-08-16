@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages } from "lucide-react";
 
 export const tools = [
   {
@@ -67,6 +67,12 @@ export const tools = [
     href: "/text-encryption",
     title: "Text Encryption Tool",
     description: "Encrypt and decrypt text using a simple Caesar cipher.",
+  },
+  {
+    icon: <Languages className="h-8 w-8" />,
+    href: "/morse-code-translator",
+    title: "Morse Code Translator",
+    description: "Convert text to Morse code and back, with sound playback.",
   },
   {
     icon: <Tags className="h-8 w-8" />,
