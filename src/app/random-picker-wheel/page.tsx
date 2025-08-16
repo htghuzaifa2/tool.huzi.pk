@@ -23,6 +23,7 @@ export default function RandomPickerWheelPage() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const { toast } = useToast();
     const pickerWheelGuide = guides.find(g => g.href.includes('random-picker-wheel'));
+    const [currentAngle, setCurrentAngle] = useState(0);
 
     const handleGuideClick = () => {
         requestAnimationFrame(() => {
@@ -47,45 +48,29 @@ export default function RandomPickerWheelPage() {
         const textRadius = outsideRadius * 0.75;
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.lineWidth = 2;
-        ctx.font = 'bold 16px Inter, sans-serif';
         
-        ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
-
         for (let i = 0; i < options.length; i++) {
             const angle = i * arc;
             ctx.fillStyle = colors[i % colors.length];
 
             ctx.beginPath();
-            ctx.moveTo(0,0);
-            ctx.arc(0, 0, outsideRadius, angle, angle + arc, false);
+            ctx.moveTo(canvas.width / 2, canvas.height / 2);
+            ctx.arc(canvas.width / 2, canvas.height / 2, outsideRadius, angle, angle + arc, false);
             ctx.closePath();
             ctx.fill();
-            ctx.stroke();
-
+            
             ctx.save();
             ctx.fillStyle = "white";
+            ctx.font = 'bold 16px Inter, sans-serif';
             ctx.translate(
-                textRadius * Math.cos(angle + arc / 2),
-                textRadius * Math.sin(angle + arc / 2)
+                canvas.width / 2 + textRadius * Math.cos(angle + arc / 2),
+                canvas.height / 2 + textRadius * Math.sin(angle + arc / 2)
             );
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
             const text = options[i];
             ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
             ctx.restore();
         }
-        
-        // Pointer
-        ctx.fillStyle = '#333';
-        ctx.beginPath();
-        ctx.moveTo(outsideRadius - 5, -4);
-        ctx.lineTo(outsideRadius + 15, 0);
-        ctx.lineTo(outsideRadius - 5, 4);
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
 
     }, [options]);
 
@@ -113,51 +98,39 @@ export default function RandomPickerWheelPage() {
         if (isSpinning || options.length < 2) return;
         
         setIsSpinning(true);
-        const canvas = canvasRef.current;
-        if (!canvas) return;
         
-        const spinAngleStart = Math.random() * 10 + 10;
-        let spinTime = 0;
-        const spinTimeTotal = Math.random() * 4000 + 5000;
-        let currentAngle = parseFloat(canvas.dataset.rotation || '0');
-
-        const easeOut = (t: number, b: number, c: number, d: number) => {
-            const ts = (t /= d) * t;
-            const tc = ts * t;
-            return b + c * (tc + -3 * ts + 3 * t);
-        };
+        // 1. Determine the winner beforehand for true randomness
+        const winnerIndex = Math.floor(Math.random() * options.length);
+        const winner = options[winnerIndex];
+        const arcSize = 360 / options.length;
         
-        const rotateWheel = () => {
-            spinTime += 20;
-            if (spinTime >= spinTimeTotal) {
-                const arcSize = 360 / options.length;
-                const finalAngle = currentAngle % 360;
-                const winningSegment = Math.floor((360 - finalAngle) / arcSize);
-                const winner = options[winningSegment];
-                
-                toast({
-                    title: "We have a winner!",
-                    description: `Congratulations to: ${winner}`,
-                });
-                
-                confetti({
-                    particleCount: 150,
-                    spread: 90,
-                    origin: { y: 0.6 }
-                });
-
-                canvas.dataset.rotation = String(currentAngle);
-                setIsSpinning(false);
-                return;
-            }
-
-            const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-            currentAngle += spinAngle;
-            canvas.style.transform = `rotate(${currentAngle}deg)`;
-            requestAnimationFrame(rotateWheel);
-        };
+        // 2. Calculate the exact angle to stop at for the winner
+        // Add some random offset within the segment for variability
+        const randomOffset = (Math.random() - 0.5) * arcSize * 0.8;
+        const stopAngle = (winnerIndex * arcSize) + (arcSize / 2) + randomOffset;
         
-        rotateWheel();
+        // 3. Calculate rotation
+        // Add multiple full rotations for visual effect
+        const totalRotations = Math.floor(Math.random() * 5) + 5; // 5 to 9 full rotations
+        const finalAngle = (totalRotations * 360) + (360 - stopAngle);
+
+        setCurrentAngle(finalAngle);
+        
+        // 4. Announce winner after animation
+        setTimeout(() => {
+            toast({
+                title: "We have a winner!",
+                description: `Congratulations to: ${winner}`,
+            });
+            
+            confetti({
+                particleCount: 150,
+                spread: 90,
+                origin: { y: 0.6 }
+            });
+
+            setIsSpinning(false);
+        }, 5000); // Corresponds to the transition duration
     };
 
 
@@ -185,7 +158,18 @@ export default function RandomPickerWheelPage() {
                             />
                         </div>
                         <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px]">
-                           <canvas ref={canvasRef} className="transition-transform duration-[5000ms] ease-out"></canvas>
+                           <div 
+                               className="absolute w-full h-full"
+                               style={{
+                                   transform: `rotate(${currentAngle}deg)`,
+                                   transition: isSpinning ? 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none',
+                               }}
+                           >
+                               <canvas ref={canvasRef}></canvas>
+                           </div>
+                            <div className="absolute w-full h-full flex items-center justify-center pointer-events-none">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-[16px] border-t-card-foreground"></div>
+                            </div>
                            <Button 
                              onClick={handleSpin}
                              disabled={isSpinning || options.length < 2}
@@ -220,7 +204,7 @@ export default function RandomPickerWheelPage() {
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
-                )}
+                </Card>
             </div>
         </div>
     );
