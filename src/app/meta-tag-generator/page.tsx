@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from 'react';
@@ -18,9 +19,9 @@ export default function MetaTagGeneratorPage() {
     const metaTagGuide = guides.find(g => g.href.includes('meta-tag-generator'));
 
     const generatedTags = `
-&lt;title&gt;${title}&lt;/title&gt;
-&lt;meta name="description" content="${description}"&gt;
-&lt;meta name="keywords" content="${keywords}"&gt;
+<title>${title}</title>
+<meta name="description" content="${description}">
+<meta name="keywords" content="${keywords}">
     `.trim();
 
     const copyToClipboard = () => {
@@ -107,9 +108,11 @@ export default function MetaTagGeneratorPage() {
                 {metaTagGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                            <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                    <span>
+                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                    </span>
                                 </Button>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">

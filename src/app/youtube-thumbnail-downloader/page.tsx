@@ -154,8 +154,9 @@ export default function YouTubeThumbnailDownloaderPage() {
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
                             <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
-                                   <BookOpen className="mr-2 h-5 w-5"/>
-                                   <span>Read The Guide</span>
+                                   <span>
+                                       <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                   </span>
                                 </Button>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">

@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useMemo } from 'react';
@@ -124,7 +125,7 @@ export default function PasswordStrengthCheckerPage() {
                         {password && (
                             <div className="space-y-4">
                                 <div className="flex items-center gap-4">
-                                    <Progress value={strength.score * 20} className={`h-3 ${getStrengthColor()}`} />
+                                    <Progress value={strength.score * 20} className={`h-3 [&>*]:${getStrengthColor()}`} />
                                     <span className="font-semibold whitespace-nowrap">{getStrengthLabel()}</span>
                                 </div>
                                 <Card className="p-4 bg-muted/50">
@@ -145,11 +146,13 @@ export default function PasswordStrengthCheckerPage() {
                  {passwordStrengthGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                            <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                    <span>
+                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                    </span>
                                 </Button>
-                            AccordionTrigger>
+                            </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>
                                     <CardHeader>

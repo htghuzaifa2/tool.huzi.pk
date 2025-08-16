@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useMemo } from 'react';
@@ -20,38 +21,39 @@ export default function HtmlTableGeneratorPage() {
     const tableGeneratorGuide = guides.find(g => g.href.includes('html-table-generator'));
 
     const generatedHtml = useMemo(() => {
-        let tableHtml = '&lt;table&gt;\n';
+        let tableHtml = '<table>\n';
 
         if (hasHeader) {
-            tableHtml += '  &lt;thead&gt;\n';
-            tableHtml += '    &lt;tr&gt;\n';
+            tableHtml += '  <thead>\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      &lt;th&gt;Header ${j}&lt;/th&gt;\n`;
+                tableHtml += `      <th>Header ${j}</th>\n`;
             }
-            tableHtml += '    &lt;/tr&gt;\n';
-            tableHtml += '  &lt;/thead&gt;\n';
+            tableHtml += '    </tr>\n';
+            tableHtml += '  </thead>\n';
         }
 
-        tableHtml += '  &lt;tbody&gt;\n';
+        tableHtml += '  <tbody>\n';
         for (let i = 1; i <= rows; i++) {
-            tableHtml += '    &lt;tr&gt;\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      &lt;td&gt;Row ${i}, Cell ${j}&lt;/td&gt;\n`;
+                tableHtml += `      <td>Row ${i}, Cell ${j}</td>\n`;
             }
-            tableHtml += '    &lt;/tr&gt;\n';
+            tableHtml += '    </tr>\n';
         }
-        tableHtml += '  &lt;/tbody&gt;\n';
+        tableHtml += '  </tbody>\n';
 
         if (hasFooter) {
-            tableHtml += '  &lt;tfoot&gt;\n';
-            tableHtml += '    &lt;tr&gt;\n';
+            tableHtml += '  <tfoot>\n';
+            tableHtml += '    <tr>\n';
             for (let j = 1; j <= cols; j++) {
-                tableHtml += `      &lt;td&gt;Footer ${j}&lt;/td&gt;\n`;
-            tableHtml += '    &lt;/tr&gt;\n';
-            tableHtml += '  &lt;/tfoot&gt;\n';
+                tableHtml += `      <td>Footer ${j}</td>\n`;
+            }
+            tableHtml += '    </tr>\n';
+            tableHtml += '  </tfoot>\n';
         }
 
-        tableHtml += '&lt;/table&gt;';
+        tableHtml += '</table>';
         return tableHtml;
     }, [rows, cols, hasHeader, hasFooter]);
 
@@ -119,7 +121,7 @@ export default function HtmlTableGeneratorPage() {
                                 </CardHeader>
                                 <CardContent>
                                     <pre className="p-4 rounded-md bg-background/70 text-sm overflow-x-auto h-64">
-                                        <code className="whitespace-pre-wrap">
+                                        <code>
                                             {generatedHtml}
                                         </code>
                                     </pre>
@@ -131,9 +133,11 @@ export default function HtmlTableGeneratorPage() {
                 {tableGeneratorGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                            <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                    <span>
+                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                    </span>
                                 </Button>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">

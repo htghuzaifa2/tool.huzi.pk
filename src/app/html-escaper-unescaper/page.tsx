@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from 'react';
@@ -118,9 +119,11 @@ export default function HtmlEscaperUnescaperPage() {
                 {htmlEscaperGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                            <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                    <span>
+                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                    </span>
                                 </Button>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">

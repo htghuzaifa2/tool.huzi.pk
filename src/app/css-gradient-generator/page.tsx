@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from 'react';
@@ -8,7 +9,7 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Code, Pipette, PlusCircle, Trash2, BookOpen } from 'lucide-react';
+import { Copy, Code, Pipette, PlusCircle, Trash2, BookOpen, ChevronDown } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
 
@@ -160,9 +161,11 @@ export default function CssGradientGeneratorPage() {
                 {gradientGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                            <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                    <span>
+                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                    </span>
                                 </Button>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">

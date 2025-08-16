@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Download, QrCode, Wifi, Contact, Palette, Settings, BookOpen } from 'lucide-react';
+import { Download, QrCode, Wifi, Contact, Palette, Settings, BookOpen, ChevronDown } from 'lucide-react';
 import QRCode from 'qrcode';
 import { useToast } from "@/hooks/use-toast";
 import { guides } from "@/lib/search-data";
@@ -185,11 +185,8 @@ export default function QRCodeGeneratorPage() {
                             </Tabs>
                             <Accordion type="single" collapsible className="w-full">
                               <AccordionItem value="item-1">
-                                <AccordionTrigger asChild>
-                                  <button className="flex w-full items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180">
-                                    <span><Palette className="mr-2 inline-block h-5 w-5" />Colors</span>
-                                    <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-                                  </button>
+                                <AccordionTrigger>
+                                    <Palette className="mr-2 inline-block h-5 w-5" />Colors
                                 </AccordionTrigger>
                                 <AccordionContent className="grid grid-cols-2 gap-4 pt-2">
                                   <div className="space-y-2">
@@ -203,11 +200,8 @@ export default function QRCodeGeneratorPage() {
                                 </AccordionContent>
                               </AccordionItem>
                               <AccordionItem value="item-2">
-                                <AccordionTrigger asChild>
-                                   <button className="flex w-full items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180">
-                                    <span><Settings className="mr-2 inline-block h-5 w-5" />Options</span>
-                                    <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-                                  </button>
+                                <AccordionTrigger>
+                                    <Settings className="mr-2 inline-block h-5 w-5" />Options
                                 </AccordionTrigger>
                                 <AccordionContent className="space-y-4 pt-2">
                                   <div className="space-y-2">
@@ -252,13 +246,13 @@ export default function QRCodeGeneratorPage() {
 
                 {qrCodeGuide && (
                     <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none">
+                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
                             <AccordionTrigger asChild>
-                              <div className="flex justify-center">
-                                <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                              <Button variant="outline" className="w-fit">
+                                    <span>
+                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                    </span>
                                 </Button>
-                              </div>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>

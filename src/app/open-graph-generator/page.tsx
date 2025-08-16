@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from 'react';
@@ -6,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Code, Share2, BookOpen } from 'lucide-react';
+import { Copy, Code, Share2, BookOpen, ChevronDown } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -23,11 +24,11 @@ export default function OpenGraphGeneratorPage() {
 
     const generateTags = () => {
         let tags = '';
-        if (title) tags += '&lt;meta property="og:title" content="${title}"&gt;\n';
-        if (type) tags += '&lt;meta property="og:type" content="${type}"&gt;\n';
-        if (imageUrl) tags += '&lt;meta property="og:image" content="${imageUrl}"&gt;\n';
-        if (url) tags += '&lt;meta property="og:url" content="${url}"&gt;\n';
-        if (description) tags += '&lt;meta property="og:description" content="${description}"&gt;';
+        if (title) tags += `<meta property="og:title" content="${title}">\n`;
+        if (type) tags += `<meta property="og:type" content="${type}">\n`;
+        if (imageUrl) tags += `<meta property="og:image" content="${imageUrl}">\n`;
+        if (url) tags += `<meta property="og:url" content="${url}">\n`;
+        if (description) tags += `<meta property="og:description" content="${description}">`;
         return tags.trim();
     };
 
@@ -139,9 +140,11 @@ export default function OpenGraphGeneratorPage() {
                 {openGraphGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                            <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                    <span>
+                                        <BookOpen className="mr-2 h-5 w-5 inline-block"/>Read The Guide
+                                    </span>
                                 </Button>
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
