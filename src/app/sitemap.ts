@@ -59,6 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/random-picker-wheel',
     '/text-pattern-finder',
     '/paragraph-merger',
+    '/qr-code-generator',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

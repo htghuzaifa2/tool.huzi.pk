@@ -84,7 +84,7 @@ export const tools = [
     icon: <QrCode className="h-8 w-8" />,
     href: "/qr-code-generator",
     title: "QR Code Generator",
-    description: "Create custom QR codes for URLs, text, and more.",
+    description: "Create custom QR codes for URLs, text, WiFi, and more.",
   },
   {
     icon: <KeyRound className="h-8 w-8" />,
@@ -425,9 +425,11 @@ export const guides = [
     description: "Create and download QR codes.",
     steps: [
       "Visit the QR Code Generator page.",
-      "Type any text or URL into the input field.",
-      "The QR code will generate automatically as you type.",
-      "Click the 'Download QR Code' button to save the image to your device."
+      "Select the type of QR code you want: Text, WiFi, or vCard.",
+      "Fill in the required information for your chosen type.",
+      "Customize the colors, size, and error correction level in the accordion menus.",
+      "Your QR code will update live on the right.",
+      "Click 'Download PNG' or 'Download SVG' to save the image."
     ]
   },
   {
