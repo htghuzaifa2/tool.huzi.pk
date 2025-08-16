@@ -58,6 +58,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/word-density-analyzer',
     '/random-picker-wheel',
     '/text-pattern-finder',
+    '/paragraph-merger',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
