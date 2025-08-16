@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users } from "lucide-react";
 
 export const tools = [
   {
@@ -55,6 +55,12 @@ export const tools = [
     href: "/password-strength-checker",
     title: "Password Strength Checker",
     description: "Test the strength of your password and get suggestions to make it more secure.",
+  },
+   {
+    icon: <Users className="h-8 w-8" />,
+    href: "/random-username-generator",
+    title: "Random Username Generator",
+    description: "Generate creative usernames from keywords and random words.",
   },
   {
     icon: <Lock className="h-8 w-8" />,
@@ -376,6 +382,19 @@ export const guides = [
         "As you type, a strength meter will show how secure your password is.",
         "Review the checklist below the meter to see which criteria your password meets (e.g., length, uppercase letters).",
         "Improve your password until it reaches the 'Very Strong' level."
+    ]
+  },
+  {
+    icon: <Users className="h-8 w-8 text-primary" />,
+    href: "/guide#random-username-generator",
+    title: "Username Generator Guide",
+    description: "How to create random usernames.",
+    steps: [
+      "Go to the Random Username Generator page.",
+      "Enter an optional keyword to base the usernames on.",
+      "Use the switches to include numbers or random words.",
+      "Click 'Generate Usernames' to get a list of suggestions.",
+      "Click the copy icon next to any username to copy it."
     ]
   },
   {

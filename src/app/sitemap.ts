@@ -46,6 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/base-converter',
     '/ip-address-finder',
     '/text-diff-highlighter',
+    '/random-username-generator',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
