@@ -219,7 +219,7 @@ export default function ImageCompressorPage() {
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none">
                              <div className="flex justify-center">
-                                <AccordionTrigger asChild>
+                                <AccordionTrigger>
                                     <Button 
                                         size="lg"
                                         className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40"
