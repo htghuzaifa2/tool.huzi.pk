@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/keyboard-event-tester',
     '/image-converter',
     '/image-to-pdf-converter',
+    '/image-compressor',
     '/notepad',
     '/rich-text-editor',
     '/word-counter',

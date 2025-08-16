@@ -32,6 +32,25 @@ export default function GuidePage() {
        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+  
+  // Add a new guide for the image compressor
+  if (!allGuides.find(g => g.href.includes('image-compressor'))) {
+      allGuides.push({
+        icon: <Minimize className="h-8 w-8 text-primary" />,
+        href: "/guide#image-compressor",
+        title: "Image Compressor Guide",
+        description: "How to compress images.",
+        steps: [
+          "Go to the Image Compressor page.",
+          "Upload an image file (JPG, PNG, or WebP).",
+          "Adjust the quality slider to your desired compression level.",
+          "Click 'Compress Image' to see the result and the new file size.",
+          "Click 'Download' to save the compressed image."
+        ]
+      });
+      allGuides.sort((a,b) => a.title.localeCompare(b.title));
+  }
+
 
   return (
     <div className="container mx-auto py-10">

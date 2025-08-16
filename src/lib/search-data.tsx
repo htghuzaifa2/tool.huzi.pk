@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize } from "lucide-react";
 
 export const tools = [
   {
@@ -241,6 +241,12 @@ export const tools = [
     href: "/image-converter",
     title: "Image Converter",
     description: "Easily convert image files between PNG, JPG, and WEBP formats.",
+  },
+  {
+    icon: <Minimize className="h-8 w-8" />,
+    href: "/image-compressor",
+    title: "Image Compressor",
+    description: "Compress JPG, PNG, and WEBP images to reduce file size.",
   },
   {
     icon: <FileImage className="h-8 w-8" />,
@@ -711,6 +717,19 @@ export const guides = [
       "Once uploaded, choose your desired output format (PNG, JPG, or WEBP).",
       "Click the 'Convert Image' button.",
       "A preview of the converted image will appear. Click 'Download' to save it."
+    ]
+  },
+  {
+    icon: <Minimize className="h-8 w-8 text-primary" />,
+    href: "/guide#image-compressor",
+    title: "Image Compressor Guide",
+    description: "How to compress images.",
+    steps: [
+      "Go to the Image Compressor page.",
+      "Upload an image file (JPG, PNG, or WebP).",
+      "Adjust the quality slider to your desired compression level.",
+      "Click 'Compress Image' to see the result and the new file size.",
+      "Click 'Download' to save the compressed image."
     ]
   },
    {
