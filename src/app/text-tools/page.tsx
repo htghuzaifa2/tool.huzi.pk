@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useMemo } from "react"
@@ -64,120 +65,121 @@ export default function TextToolsPage() {
   return (
     <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        &lt;div className="text-center mb-8"&gt;
-            &lt;div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4"&gt;
-                &lt;CaseSensitive className="w-8 h-8" /&gt;
-            &lt;/div&gt;
-          &lt;h1 className="text-4xl md:text-5xl font-bold font-headline"&gt;Text Manipulation Tools&lt;/h1&gt;
-          &lt;p className="text-muted-foreground mt-2"&gt;
+        <div className="text-center mb-8">
+            <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                <CaseSensitive className="w-8 h-8" />
+            </div>
+          <h1 className="text-4xl md:text-5xl font-bold font-headline">Text Manipulation Tools</h1>
+          <p className="text-muted-foreground mt-2">
             A versatile set of tools to convert, count, and analyze your text.
-          &lt;/p&gt;
-        &lt;/div&gt;
+          </p>
+        </div>
 
-        &lt;Tabs defaultValue="case-converter" className="w-full"&gt;
-          &lt;TabsList className="grid w-full grid-cols-2"&gt;
-            &lt;TabsTrigger value="case-converter"&gt;Case Converter&lt;/TabsTrigger&gt;
-            &lt;TabsTrigger value="counter"&gt;Counter&lt;/TabsTrigger&gt;
-          &lt;/TabsList&gt;
+        <Tabs defaultValue="case-converter" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="case-converter">Case Converter</TabsTrigger>
+            <TabsTrigger value="counter">Counter</TabsTrigger>
+          </TabsList>
           
-          &lt;TabsContent value="case-converter"&gt;
-            &lt;Card&gt;
-               &lt;CardHeader&gt;
-                    &lt;CardTitle&gt;Case Converter&lt;/CardTitle&gt;
-                    &lt;CardDescription&gt;Convert your text to various case formats.&lt;/CardDescription&gt;
-                &lt;/CardHeader&gt;
-              &lt;CardContent className="space-y-4"&gt;
-                &lt;Textarea
+          <TabsContent value="case-converter">
+            <Card>
+               <CardHeader>
+                    <CardTitle>Case Converter</CardTitle>
+                    <CardDescription>Convert your text to various case formats.</CardDescription>
+                </CardHeader>
+              <CardContent className="space-y-4">
+                <Textarea
                   placeholder="Enter text to convert..."
                   value={text}
-                  onChange={(e) =&gt; setText(e.target.value)}
+                  onChange={(e) => setText(e.target.value)}
                   className="min-h-[250px] text-base"
-                /&gt;
-                &lt;div className="flex flex-wrap gap-2 justify-between items-center"&gt;
-                    &lt;div className="flex flex-wrap gap-2"&gt;
-                        &lt;Button onClick={() =&gt; setText(text.toUpperCase())}&gt;Uppercase&lt;/Button&gt;
-                        &lt;Button onClick={() =&gt; setText(text.toLowerCase())}&gt;Lowercase&lt;/Button&gt;
-                        &lt;Button onClick={() =&gt; setText(toTitleCase(text))}&gt;Title Case&lt;/Button&gt;
-                        &lt;Button onClick={() =&gt; setText(toSentenceCase(text))}&gt;Sentence Case&lt;/Button&gt;
-                        &lt;Button onClick={() =&gt; setText(invertCase(text))}&gt;Invert Case&lt;/Button&gt;
-                    &lt;/div&gt;
-                    &lt;Button variant="ghost" size="icon" onClick={copyToClipboard}&gt;&lt;Copy className="h-5 w-5"/&gt;&lt;/Button&gt;
-                &lt;/div&gt;
-              &lt;/CardContent&gt;
-            &lt;/Card&gt;
-          &lt;/TabsContent&gt;
+                />
+                <div className="flex flex-wrap gap-2 justify-between items-center">
+                    <div className="flex flex-wrap gap-2">
+                        <Button onClick={() => setText(text.toUpperCase())}>Uppercase</Button>
+                        <Button onClick={() => setText(text.toLowerCase())}>Lowercase</Button>
+                        <Button onClick={() => setText(toTitleCase(text))}>Title Case</Button>
+                        <Button onClick={() => setText(toSentenceCase(text))}>Sentence Case</Button>
+                        <Button onClick={() => setText(invertCase(text))}>Invert Case</Button>
+                    </div>
+                    <Button variant="ghost" size="icon" onClick={copyToClipboard}><Copy className="h-5 w-5"/></Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-          &lt;TabsContent value="counter"&gt;
-             &lt;Card&gt;
-              &lt;CardHeader&gt;
-                &lt;CardTitle&gt;Text Counter&lt;/CardTitle&gt;
-                 &lt;CardDescription&gt;Analyze your text for word, character, and line counts.&lt;/CardDescription&gt;
-              &lt;/CardHeader&gt;
-              &lt;CardContent className="space-y-4"&gt;
-                &lt;Textarea
+          <TabsContent value="counter">
+             <Card>
+              <CardHeader>
+                <CardTitle>Text Counter</CardTitle>
+                 <CardDescription>Analyze your text for word, character, and line counts.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Textarea
                   placeholder="Enter text to analyze..."
                   value={text}
-                  onChange={(e) =&gt; setText(e.target.value)}
+                  onChange={(e) => setText(e.target.value)}
                   className="min-h-[250px] text-base"
-                /&gt;
-                &lt;div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center"&gt;
-                    &lt;Card&gt;
-                        &lt;CardHeader&gt;
-                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.words}&lt;/CardTitle&gt;
-                            &lt;p className="text-muted-foreground"&gt;Words&lt;/p&gt;
-                        &lt;/CardHeader&gt;
-                    &lt;/Card&gt;
-                     &lt;Card&gt;
-                        &lt;CardHeader&gt;
-                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.characters}&lt;/CardTitle&gt;
-                            &lt;p className="text-muted-foreground"&gt;Characters&lt;/p&gt;
-                        &lt;/CardHeader&gt;
-                    &lt;/Card&gt;
-                     &lt;Card&gt;
-                        &lt;CardHeader&gt;
-                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.sentences}&lt;/CardTitle&gt;
-                            &lt;p className="text-muted-foreground"&gt;Sentences&lt;/p&gt;
-                        &lt;/CardHeader&gt;
-                    &lt;/Card&gt;
-                    &lt;Card&gt;
-                        &lt;CardHeader&gt;
-                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.paragraphs}&lt;/CardTitle&gt;
-                            &lt;p className="text-muted-foreground"&gt;Paragraphs&lt;/p&gt;
-                        &lt;/CardHeader&gt;
-                    &lt;/Card&gt;
-                &lt;/div&gt;
-              &lt;/CardContent&gt;
-            &lt;/Card&gt;
-          &lt;/TabsContent&gt;
-        &lt;/Tabs&gt;
+                />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.words}</CardTitle>
+                            <p className="text-muted-foreground">Words</p>
+                        </CardHeader>
+                    </Card>
+                     <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.characters}</CardTitle>
+                            <p className="text-muted-foreground">Characters</p>
+                        </CardHeader>
+                    </Card>
+                     <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.sentences}</CardTitle>
+                            <p className="text-muted-foreground">Sentences</p>
+                        </CardHeader>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.paragraphs}</CardTitle>
+                            <p className="text-muted-foreground">Paragraphs</p>
+                        </CardHeader>
+                    </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
 
         {textToolsGuide && (
-            &lt;Accordion type="single" collapsible className="w-full"&gt;
-                &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
-                    &lt;AccordionTrigger&gt;
-                        &lt;Button variant="outline" className="w-fit"&gt;
-                            &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
-                        &lt;/Button&gt;
-                    &lt;/AccordionTrigger&gt;
-                    &lt;AccordionContent className="pt-6 w-full"&gt;
-                        &lt;Card&gt;
-                            &lt;CardHeader&gt;
-                                &lt;CardTitle className="font-headline"&gt;{textToolsGuide.title}&lt;/CardTitle&gt;
-                                &lt;CardDescription&gt;{textToolsGuide.description}&lt;/CardDescription&gt;
-                            &lt;/CardHeader&gt;
-                            &lt;CardContent&gt;
-                                &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
-                                    {textToolsGuide.steps.map((step, stepIndex) =&gt; (
-                                        &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="guide" className="border-none flex flex-col items-center">
+                    <AccordionTrigger asChild>
+                        <Button variant="outline" className="w-fit">
+                            <BookOpen className="mr-2 h-5 w-5"/>
+                            <span>Read The Guide</span>
+                        </Button>
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-6 w-full">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="font-headline">{textToolsGuide.title}</CardTitle>
+                                <CardDescription>{textToolsGuide.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                    {textToolsGuide.steps.map((step, stepIndex) => (
+                                        <li key={stepIndex}>{step}</li>
                                     ))}
-                                &lt;/ol&gt;
-                            &lt;/CardContent&gt;
-                        &lt;/Card&gt;
-                    &lt;/AccordionContent&gt;
-                &lt;/AccordionItem&gt;
-            &lt;/Accordion&gt;
+                                </ol>
+                            </CardContent>
+                        </Card>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
         )}
-      &lt;/div&gt;
-    &lt;/div&gt;
+      </div>
+    </div>
   )
 }

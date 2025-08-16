@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useMemo, ReactNode } from 'react';
@@ -21,7 +22,7 @@ export default function TextPatternFinderPage() {
     const highlightedText = useMemo<ReactNode[] | null>(() => {
         if (!pattern) {
             setError(null);
-            return [&lt;span key="full-text"&gt;{text}&lt;/span&gt;];
+            return [<span key="full-text">{text}</span>];
         }
 
         try {
@@ -30,13 +31,13 @@ export default function TextPatternFinderPage() {
 
             if (!flags.includes('g')) {
                  const match = text.match(regex);
-                 if (!match) return [&lt;span key="full-text"&gt;{text}&lt;/span&gt;];
+                 if (!match) return [<span key="full-text">{text}</span>];
                  
                  const index = match.index || 0;
                  return [
-                    &lt;span key="start"&gt;{text.substring(0, index)}&lt;/span&gt;,
-                    &lt;span key="match" className="bg-primary/20 text-primary-foreground rounded px-1"&gt;{match[0]}&lt;/span&gt;,
-                    &lt;span key="end"&gt;{text.substring(index + match[0].length)}&lt;/span&gt;
+                    <span key="start">{text.substring(0, index)}</span>,
+                    <span key="match" className="bg-primary/20 text-primary-foreground rounded px-1">{match[0]}</span>,
+                    <span key="end">{text.substring(index + match[0].length)}</span>
                  ];
             }
 
@@ -47,25 +48,25 @@ export default function TextPatternFinderPage() {
             while ((match = regex.exec(text)) !== null) {
                 if (match.index > lastIndex) {
                     parts.push(
-                        &lt;span key={`text-${lastIndex}`}&gt;
+                        <span key={`text-${lastIndex}`}>
                             {text.substring(lastIndex, match.index)}
-                        &lt;/span&gt;
+                        </span>
                     );
                 }
                 parts.push(
-                    &lt;span key={`match-${match.index}`} className="bg-primary/20 text-primary-foreground rounded px-1"&gt;
+                    <span key={`match-${match.index}`} className="bg-primary/20 text-primary-foreground rounded px-1">
                         {match[0]}
-                    &lt;/span&gt;
+                    </span>
                 );
                 lastIndex = regex.lastIndex;
                  if (!regex.global) break; // Prevent infinite loops
             }
 
-            if (lastIndex &lt; text.length) {
+            if (lastIndex < text.length) {
                 parts.push(
-                    &lt;span key={`text-${lastIndex}`}&gt;
+                    <span key={`text-${lastIndex}`}>
                         {text.substring(lastIndex)}
-                    &lt;/span&gt;
+                    </span>
                 );
             }
 
@@ -73,104 +74,105 @@ export default function TextPatternFinderPage() {
 
         } catch (e: any) {
             setError(e.message);
-            return [&lt;span key="full-text"&gt;{text}&lt;/span&gt;];
+            return [<span key="full-text">{text}</span>];
         }
     }, [pattern, flags, text]);
 
     return (
-        &lt;div className="container mx-auto py-10"&gt;
-            &lt;div className="max-w-4xl mx-auto space-y-8"&gt;
-                &lt;Card&gt;
-                    &lt;CardHeader className="text-center"&gt;
-                        &lt;div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4"&gt;
-                            &lt;FileSearch className="w-8 h-8" /&gt;
-                        &lt;/div&gt;
-                        &lt;CardTitle className="text-4xl font-bold font-headline"&gt;Text Pattern Finder (Regex)&lt;/CardTitle&gt;
-                        &lt;CardDescription&gt;Search and highlight specific patterns or words using regular expressions.&lt;/CardDescription&gt;
-                    &lt;/CardHeader&gt;
-                    &lt;CardContent className="space-y-6"&gt;
-                        &lt;div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4"&gt;
-                            &lt;div className="space-y-2"&gt;
-                                &lt;Label htmlFor="pattern"&gt;Regular Expression Pattern&lt;/Label&gt;
-                                &lt;Input
+        <div className="container mx-auto py-10">
+            <div className="max-w-4xl mx-auto space-y-8">
+                <Card>
+                    <CardHeader className="text-center">
+                        <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                            <FileSearch className="w-8 h-8" />
+                        </div>
+                        <CardTitle className="text-4xl font-bold font-headline">Text Pattern Finder (Regex)</CardTitle>
+                        <CardDescription>Search and highlight specific patterns or words using regular expressions.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="pattern">Regular Expression Pattern</Label>
+                                <Input
                                     id="pattern"
                                     value={pattern}
-                                    onChange={(e) =&gt; setPattern(e.target.value)}
+                                    onChange={(e) => setPattern(e.target.value)}
                                     placeholder="e.g., \\d+"
                                     className="font-mono"
-                                /&gt;
-                            &lt;/div&gt;
-                             &lt;div className="space-y-2"&gt;
-                                &lt;Label htmlFor="flags"&gt;Flags&lt;/Label&gt;
-                                &lt;Input
+                                />
+                            </div>
+                             <div className="space-y-2">
+                                <Label htmlFor="flags">Flags</Label>
+                                <Input
                                     id="flags"
                                     value={flags}
-                                    onChange={(e) =&gt; setFlags(e.target.value.replace(/[^gimuy]/g, ''))}
+                                    onChange={(e) => setFlags(e.target.value.replace(/[^gimuy]/g, ''))}
                                     placeholder="e.g., gi"
                                     className="font-mono w-24"
-                                /&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
+                                />
+                            </div>
+                        </div>
 
-                        &lt;div className="space-y-2"&gt;
-                            &lt;Label htmlFor="text-input"&gt;Your Text&lt;/Label&gt;
-                            &lt;Textarea
+                        <div className="space-y-2">
+                            <Label htmlFor="text-input">Your Text</Label>
+                            <Textarea
                                 id="text-input"
                                 value={text}
-                                onChange={(e) =&gt; setText(e.target.value)}
+                                onChange={(e) => setText(e.target.value)}
                                 className="min-h-[200px] font-mono"
                                 placeholder="Paste the text you want to search here..."
-                            /&gt;
-                        &lt;/div&gt;
+                            />
+                        </div>
 
-                        &lt;div className="space-y-2"&gt;
-                             &lt;Label&gt;Result&lt;/Label&gt;
-                             &lt;Card className="min-h-[200px] bg-muted"&gt;
-                                &lt;CardContent className="p-4"&gt;
-                                     &lt;pre className="whitespace-pre-wrap font-mono text-sm"&gt;
-                                        &lt;code&gt;{highlightedText}&lt;/code&gt;
-                                    &lt;/pre&gt;
-                                &lt;/CardContent&gt;
-                            &lt;/Card&gt;
-                        &lt;/div&gt;
+                        <div className="space-y-2">
+                             <Label>Result</Label>
+                             <Card className="min-h-[200px] bg-muted">
+                                <CardContent className="p-4">
+                                     <pre className="whitespace-pre-wrap font-mono text-sm">
+                                        <code>{highlightedText}</code>
+                                    </pre>
+                                </CardContent>
+                            </Card>
+                        </div>
 
                          {error && (
-                            &lt;Alert variant="destructive"&gt;
-                                &lt;AlertTriangle className="h-4 w-4" /&gt;
-                                &lt;AlertTitle&gt;Invalid Regular Expression&lt;/AlertTitle&gt;
-                                &lt;AlertDescription&gt;{error}&lt;/AlertDescription&gt;
-                            &lt;/Alert&gt;
+                            <Alert variant="destructive">
+                                <AlertTriangle className="h-4 w-4" />
+                                <AlertTitle>Invalid Regular Expression</AlertTitle>
+                                <AlertDescription>{error}</AlertDescription>
+                            </Alert>
                         )}
-                    &lt;/CardContent&gt;
-                &lt;/Card&gt;
+                    </CardContent>
+                </Card>
 
                 {textPatternGuide && (
-                    &lt;Accordion type="single" collapsible className="w-full"&gt;
-                        &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
-                            &lt;AccordionTrigger&gt;
-                                &lt;Button variant="outline" className="w-fit"&gt;
-                                    &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
-                                &lt;/Button&gt;
-                            &lt;/AccordionTrigger&gt;
-                            &lt;AccordionContent className="pt-6 w-full"&gt;
-                                &lt;Card&gt;
-                                    &lt;CardHeader&gt;
-                                        &lt;CardTitle className="font-headline"&gt;{textPatternGuide.title}&lt;/CardTitle&gt;
-                                        &lt;CardDescription&gt;{textPatternGuide.description}&lt;/CardDescription&gt;
-                                    &lt;/CardHeader&gt;
-                                    &lt;CardContent&gt;
-                                        &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
-                                            {textPatternGuide.steps.map((step, stepIndex) =&gt; (
-                                                &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
+                            <AccordionTrigger asChild>
+                                <Button variant="outline" className="w-fit">
+                                    <BookOpen className="mr-2 h-5 w-5"/>
+                                    <span>Read The Guide</span>
+                                </Button>
+                            </AccordionTrigger>
+                            <AccordionContent className="pt-6 w-full">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle className="font-headline">{textPatternGuide.title}</CardTitle>
+                                        <CardDescription>{textPatternGuide.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                            {textPatternGuide.steps.map((step, stepIndex) => (
+                                                <li key={stepIndex}>{step}</li>
                                             ))}
-                                        &lt;/ol&gt;
-                                    &lt;/CardContent&gt;
-                                &lt;/Card&gt;
-                            &lt;/AccordionContent&gt;
-                        &lt;/AccordionItem&gt;
-                    &lt;/Accordion&gt;
+                                        </ol>
+                                    </CardContent>
+                                </Card>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
                 )}
-            &lt;/div&gt;
-        &lt;/div&gt;
+            </div>
+        </div>
     );
 }

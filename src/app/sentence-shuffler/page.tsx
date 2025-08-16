@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from 'react';
@@ -133,30 +134,31 @@ export default function SentenceShufflerPage() {
                 {sentenceShufflerGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                           <AccordionTrigger asChild>
                                 <Button variant="outline" className="w-fit">
-                                    <BookOpen className="mr-2 h-5 w-5"/>Read The Guide
+                                    <BookOpen className="mr-2 h-5 w-5"/>
+                                    <span>Read The Guide</span>
                                 </Button>
-                            AccordionTrigger>
+                            </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
-                                &lt;Card&gt;
-                                    &lt;CardHeader&gt;
-                                        &lt;CardTitle className="font-headline"&gt;{sentenceShufflerGuide.title}&lt;/CardTitle&gt;
-                                        &lt;CardDescription&gt;{sentenceShufflerGuide.description}&lt;/CardDescription&gt;
-                                    &lt;/CardHeader&gt;
-                                    &lt;CardContent&gt;
-                                        &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
-                                            {sentenceShufflerGuide.steps.map((step, stepIndex) =&gt; (
-                                                &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle className="font-headline">{sentenceShufflerGuide.title}</CardTitle>
+                                        <CardDescription>{sentenceShufflerGuide.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                            {sentenceShufflerGuide.steps.map((step, stepIndex) => (
+                                                <li key={stepIndex}>{step}</li>
                                             ))}
-                                        &lt;/ol&gt;
-                                    &lt;/CardContent&gt;
-                                &lt;/Card&gt;
-                            &lt;/AccordionContent&gt;
-                        &lt;/AccordionItem&gt;
-                    &lt;/Accordion&gt;
+                                        </ol>
+                                    </CardContent>
+                                </Card>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
                 )}
-            &lt;/div&gt;
-        &lt;/div&gt;
+            </div>
+        </div>
     );
 }

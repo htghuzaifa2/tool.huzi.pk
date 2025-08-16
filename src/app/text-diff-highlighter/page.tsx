@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useMemo, ReactNode } from 'react';
@@ -14,9 +15,16 @@ export default function TextDiffHighlighterPage() {
     const [changedText, setChangedText] = useState('This is the updated text.\nIt has two lines and some changes.');
     const textDiffGuide = guides.find(g => g.href.includes('text-diff-highlighter'));
 
-    const differences = useMemo(() => {
-        return diffChars(originalText, changedText);
+    const highlightedText = useMemo(() => {
+        const differences = diffChars(originalText, changedText);
+        return differences.map((part, index) => {
+            const style = {
+                backgroundColor: part.added ? 'rgba(0, 255, 0, 0.2)' : part.removed ? 'rgba(255, 0, 0, 0.2)' : 'transparent'
+            };
+            return <span key={index} style={style}>{part.value}</span>;
+        });
     }, [originalText, changedText]);
+
 
     return (
         <div className="container mx-auto py-10">
@@ -53,54 +61,55 @@ export default function TextDiffHighlighterPage() {
 
                         <div className="space-y-2">
                             <label className="font-medium text-center block">Highlighted Differences</label>
-                            &lt;Card className="min-h-[250px] bg-muted"&gt;
-                                &lt;CardContent className="p-4"&gt;
-                                     &lt;pre className="whitespace-pre-wrap font-mono text-sm"&gt;
-                                        &lt;code&gt;{highlightedText}&lt;/code&gt;
-                                    &lt;/pre&gt;
-                                &lt;/CardContent&gt;
-                            &lt;/Card&gt;
-                             &lt;div className="flex justify-center items-center gap-6 mt-4 text-sm"&gt;
-                                &lt;div className="flex items-center gap-2"&gt;
-                                    &lt;span className="w-4 h-4 rounded-sm bg-green-500/20"&gt;&lt;/span&gt;
-                                    &lt;span&gt;Added&lt;/span&gt;
-                                &lt;/div&gt;
-                                &lt;div className="flex items-center gap-2"&gt;
-                                    &lt;span className="w-4 h-4 rounded-sm bg-red-500/20"&gt;&lt;/span&gt;
-                                    &lt;span&gt;Removed&lt;/span&gt;
-                                &lt;/div&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/CardContent&gt;
-                &lt;/Card&gt;
+                            <Card className="min-h-[250px] bg-muted">
+                                <CardContent className="p-4">
+                                     <pre className="whitespace-pre-wrap font-mono text-sm">
+                                        <code>{highlightedText}</code>
+                                    </pre>
+                                </CardContent>
+                            </Card>
+                             <div className="flex justify-center items-center gap-6 mt-4 text-sm">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-4 h-4 rounded-sm bg-green-500/20"></span>
+                                    <span>Added</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-4 h-4 rounded-sm bg-red-500/20"></span>
+                                    <span>Removed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
 
                 {textDiffGuide && (
-                    &lt;Accordion type="single" collapsible className="w-full"&gt;
-                        &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
-                            &lt;AccordionTrigger&gt;
-                                &lt;Button variant="outline" className="w-fit"&gt;
-                                    &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
-                                &lt;/Button&gt;
-                            &lt;/AccordionTrigger&gt;
-                            &lt;AccordionContent className="pt-6 w-full"&gt;
-                                &lt;Card&gt;
-                                    &lt;CardHeader&gt;
-                                        &lt;CardTitle className="font-headline"&gt;{textDiffGuide.title}&lt;/CardTitle&gt;
-                                        &lt;CardDescription&gt;{textDiffGuide.description}&lt;/CardDescription&gt;
-                                    &lt;/CardHeader&gt;
-                                    &lt;CardContent&gt;
-                                        &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
-                                            {textDiffGuide.steps.map((step, stepIndex) =&gt; (
-                                                &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
+                            <AccordionTrigger asChild>
+                                <Button variant="outline" className="w-fit">
+                                    <BookOpen className="mr-2 h-5 w-5"/>
+                                    <span>Read The Guide</span>
+                                </Button>
+                            </AccordionTrigger>
+                            <AccordionContent className="pt-6 w-full">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle className="font-headline">{textDiffGuide.title}</CardTitle>
+                                        <CardDescription>{textDiffGuide.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                            {textDiffGuide.steps.map((step, stepIndex) => (
+                                                <li key={stepIndex}>{step}</li>
                                             ))}
-                                        &lt;/ol&gt;
-                                    &lt;/CardContent&gt;
-                                &lt;/Card&gt;
-                            &lt;/AccordionContent&gt;
-                        &lt;/AccordionItem&gt;
-                    &lt;/Accordion&gt;
+                                        </ol>
+                                    </CardContent>
+                                </Card>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
                 )}
-            &lt;/div&gt;
-        &lt;/div&gt;
+            </div>
+        </div>
     );
 }

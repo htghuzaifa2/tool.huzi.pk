@@ -1,7 +1,8 @@
+
 "use client"
 
 import { useState, useMemo } from "react"
-import { Textarea from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Type, BookOpen } from "lucide-react";
 import { Button } from '@/components/ui/button';
@@ -22,79 +23,80 @@ export default function WordCounterPage() {
   }, [text]);
 
   return (
-    &lt;div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8"&gt;
-      &lt;div className="max-w-4xl mx-auto space-y-8"&gt;
-        &lt;Card&gt;
-            &lt;CardHeader className="text-center"&gt;
-                &lt;div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4"&gt;
-                    &lt;Type className="w-8 h-8" /&gt;
-                &lt;/div&gt;
-                &lt;CardTitle className="text-4xl font-bold font-headline"&gt;Word &amp; Character Counter&lt;/CardTitle&gt;
-                &lt;CardDescription&gt;Instantly count words, characters, sentences, and paragraphs in your text.&lt;/CardDescription&gt;
-            &lt;/CardHeader&gt;
-            &lt;CardContent className="space-y-6"&gt;
-                &lt;Textarea
+    <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <Card>
+            <CardHeader className="text-center">
+                <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <Type className="w-8 h-8" />
+                </div>
+                <CardTitle className="text-4xl font-bold font-headline">Word &amp; Character Counter</CardTitle>
+                <CardDescription>Instantly count words, characters, sentences, and paragraphs in your text.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <Textarea
                   placeholder="Start typing or paste your text here to see the magic happen..."
                   value={text}
-                  onChange={(e) =&gt; setText(e.target.value)}
+                  onChange={(e) => setText(e.target.value)}
                   className="min-h-[300px] text-base font-mono bg-muted/50"
-                /&gt;
-                &lt;div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center"&gt;
-                    &lt;Card&gt;
-                        &lt;CardHeader&gt;
-                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.words}&lt;/CardTitle&gt;
-                            &lt;p className="text-muted-foreground"&gt;Words&lt;/p&gt;
-                        &lt;/CardHeader&gt;
-                    &lt;/Card&gt;
-                     &lt;Card&gt;
-                        &lt;CardHeader&gt;
-                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.characters}&lt;/CardTitle&gt;
-                            &lt;p className="text-muted-foreground"&gt;Characters&lt;/p&gt;
-                        &lt;/CardHeader&gt;
-                    &lt;/Card&gt;
-                     &lt;Card&gt;
-                        &lt;CardHeader&gt;
-                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.sentences}&lt;/CardTitle&gt;
-                            &lt;p className="text-muted-foreground"&gt;Sentences&lt;/p&gt;
-                        &lt;/CardHeader&gt;
-                    &lt;/Card&gt;
-                     &lt;Card&gt;
-                        &lt;CardHeader&gt;
-                            &lt;CardTitle className="text-4xl font-bold"&gt;{stats.paragraphs}&lt;/CardTitle&gt;
-                            &lt;p className="text-muted-foreground"&gt;Paragraphs&lt;/p&gt;
-                        &lt;/CardHeader&gt;
-                    &lt;/Card&gt;
-                &lt;/div&gt;
-            &lt;/CardContent&gt;
-        &lt;/Card&gt;
+                />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.words}</CardTitle>
+                            <p className="text-muted-foreground">Words</p>
+                        </CardHeader>
+                    </Card>
+                     <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.characters}</CardTitle>
+                            <p className="text-muted-foreground">Characters</p>
+                        </CardHeader>
+                    </Card>
+                     <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.sentences}</CardTitle>
+                            <p className="text-muted-foreground">Sentences</p>
+                        </CardHeader>
+                    </Card>
+                     <Card>
+                        <CardHeader>
+                            <CardTitle className="text-4xl font-bold">{stats.paragraphs}</CardTitle>
+                            <p className="text-muted-foreground">Paragraphs</p>
+                        </CardHeader>
+                    </Card>
+                </div>
+            </CardContent>
+        </Card>
 
         {wordCounterGuide && (
-            &lt;Accordion type="single" collapsible className="w-full"&gt;
-                &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
-                    &lt;AccordionTrigger&gt;
-                        &lt;Button variant="outline" className="w-fit"&gt;
-                            &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
-                        &lt;/Button&gt;
-                    &lt;/AccordionTrigger&gt;
-                    &lt;AccordionContent className="pt-6 w-full"&gt;
-                        &lt;Card&gt;
-                            &lt;CardHeader&gt;
-                                &lt;CardTitle className="font-headline"&gt;{wordCounterGuide.title}&lt;/CardTitle&gt;
-                                &lt;CardDescription&gt;{wordCounterGuide.description}&lt;/CardDescription&gt;
-                            &lt;/CardHeader&gt;
-                            &lt;CardContent&gt;
-                                &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
-                                    {wordCounterGuide.steps.map((step, stepIndex) =&gt; (
-                                        &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="guide" className="border-none flex flex-col items-center">
+                    <AccordionTrigger asChild>
+                        <Button variant="outline" className="w-fit">
+                            <BookOpen className="mr-2 h-5 w-5"/>
+                            <span>Read The Guide</span>
+                        </Button>
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-6 w-full">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="font-headline">{wordCounterGuide.title}</CardTitle>
+                                <CardDescription>{wordCounterGuide.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                    {wordCounterGuide.steps.map((step, stepIndex) => (
+                                        <li key={stepIndex}>{step}</li>
                                     ))}
-                                &lt;/ol&gt;
-                            &lt;/CardContent&gt;
-                        &lt;/Card&gt;
-                    &lt;/AccordionContent&gt;
-                &lt;/AccordionItem&gt;
-            &lt;/Accordion&gt;
+                                </ol>
+                            </CardContent>
+                        </Card>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
         )}
-      &lt;/div&gt;
-    &lt;/div&gt;
+      </div>
+    </div>
   )
 }

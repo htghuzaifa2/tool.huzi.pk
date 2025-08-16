@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -82,93 +83,94 @@ export default function UnitConverterPage() {
   }
 
   return (
-    &lt;div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8"&gt;
-      &lt;div className="max-w-2xl mx-auto space-y-8"&gt;
-        &lt;div className="text-center mb-8"&gt;
-           &lt;div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4"&gt;
-                &lt;Ruler className="w-8 h-8" /&gt;
-            &lt;/div&gt;
-          &lt;h1 className="text-4xl font-bold font-headline"&gt;Unit Converter&lt;/h1&gt;
-          &lt;p className="text-muted-foreground mt-2"&gt;
+    <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto space-y-8">
+        <div className="text-center mb-8">
+           <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                <Ruler className="w-8 h-8" />
+            </div>
+          <h1 className="text-4xl font-bold font-headline">Unit Converter</h1>
+          <p className="text-muted-foreground mt-2">
             Quickly convert between different units of measurement.
-          &lt;/p&gt;
-        &lt;/div&gt;
+          </p>
+        </div>
 
-        &lt;Card&gt;
-          &lt;CardContent className="pt-6 space-y-6"&gt;
-            &lt;div className="w-full"&gt;
-              &lt;label className="text-sm font-medium"&gt;Category&lt;/label&gt;
-              &lt;Select onValueChange={(v) =&gt; setCategory(v as Category)} defaultValue={category}&gt;
-                &lt;SelectTrigger&gt;&lt;SelectValue /&gt;&lt;/SelectTrigger&gt;
-                &lt;SelectContent&gt;
-                  &lt;SelectItem value="length"&gt;Length&lt;/SelectItem&gt;
-                  &lt;SelectItem value="mass"&gt;Mass&lt;/SelectItem&gt;
-                  &lt;SelectItem value="temperature"&gt;Temperature&lt;/SelectItem&gt;
-                &lt;/SelectContent&gt;
-              &lt;/Select&gt;
-            &lt;/div&gt;
+        <Card>
+          <CardContent className="pt-6 space-y-6">
+            <div className="w-full">
+              <label className="text-sm font-medium">Category</label>
+              <Select onValueChange={(v) => setCategory(v as Category)} defaultValue={category}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="length">Length</SelectItem>
+                  <SelectItem value="mass">Mass</SelectItem>
+                  <SelectItem value="temperature">Temperature</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             
-            &lt;div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-2"&gt;
-              &lt;div className="w-full space-y-2"&gt;
-                 &lt;label className="text-sm font-medium"&gt;From&lt;/label&gt;
-                 &lt;Input type="text" value={inputValue} onChange={(e) =&gt; handleInputChange(e.target.value)} className="text-lg" /&gt;
-                 &lt;Select value={fromUnit} onValueChange={setFromUnit}&gt;
-                    &lt;SelectTrigger&gt;&lt;SelectValue/&gt;&lt;/SelectTrigger&gt;
-                    &lt;SelectContent&gt;
-                      {Object.entries(units[category]).map(([key, name]) =&gt; (
-                        &lt;SelectItem key={key} value={key}&gt;{name}&lt;/SelectItem&gt;
+            <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-2">
+              <div className="w-full space-y-2">
+                 <label className="text-sm font-medium">From</label>
+                 <Input type="text" value={inputValue} onChange={(e) => handleInputChange(e.target.value)} className="text-lg" />
+                 <Select value={fromUnit} onValueChange={setFromUnit}>
+                    <SelectTrigger><SelectValue/></SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(units[category]).map(([key, name]) => (
+                        <SelectItem key={key} value={key}>{name}</SelectItem>
                       ))}
-                    &lt;/SelectContent&gt;
-                  &lt;/Select&gt;
-              &lt;/div&gt;
+                    </SelectContent>
+                  </Select>
+              </div>
 
-              &lt;div className="pt-8"&gt;
-                &lt;ArrowRightLeft className="h-6 w-6 text-muted-foreground" /&gt;
-              &lt;/div&gt;
+              <div className="pt-8">
+                <ArrowRightLeft className="h-6 w-6 text-muted-foreground" />
+              </div>
 
-              &lt;div className="w-full space-y-2"&gt;
-                &lt;label className="text-sm font-medium"&gt;To&lt;/label&gt;
-                &lt;Input type="text" value={result} readOnly className="text-lg font-bold bg-muted" /&gt;
-                &lt;Select value={toUnit} onValueChange={setToUnit}&gt;
-                    &lt;SelectTrigger&gt;&lt;SelectValue/&gt;&lt;/SelectTrigger&gt;
-                    &lt;SelectContent&gt;
-                      {Object.entries(units[category]).map(([key, name]) =&gt; (
-                        &lt;SelectItem key={key} value={key}&gt;{name}&lt;/SelectItem&gt;
+              <div className="w-full space-y-2">
+                <label className="text-sm font-medium">To</label>
+                <Input type="text" value={result} readOnly className="text-lg font-bold bg-muted" />
+                <Select value={toUnit} onValueChange={setToUnit}>
+                    <SelectTrigger><SelectValue/></SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(units[category]).map(([key, name]) => (
+                        <SelectItem key={key} value={key}>{name}</SelectItem>
                       ))}
-                    &lt;/SelectContent&gt;
-                  &lt;/Select&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/CardContent&gt;
-        &lt;/Card&gt;
+                    </SelectContent>
+                  </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {unitConverterGuide && (
-            &lt;Accordion type="single" collapsible className="w-full"&gt;
-                &lt;AccordionItem value="guide" className="border-none flex flex-col items-center"&gt;
-                    &lt;AccordionTrigger&gt;
-                        &lt;Button variant="outline" className="w-fit"&gt;
-                            &lt;BookOpen className="mr-2 h-5 w-5"/&gt;Read The Guide
-                        &lt;/Button&gt;
-                    &lt;/AccordionTrigger&gt;
-                    &lt;AccordionContent className="pt-6 w-full"&gt;
-                        &lt;Card&gt;
-                            &lt;CardHeader&gt;
-                                &lt;CardTitle className="font-headline"&gt;{unitConverterGuide.title}&lt;/CardTitle&gt;
-                                &lt;CardDescription&gt;{unitConverterGuide.description}&lt;/CardDescription&gt;
-                            &lt;/CardHeader&gt;
-                            &lt;CardContent&gt;
-                                &lt;ol className="list-decimal list-inside space-y-2 text-muted-foreground"&gt;
-                                    {unitConverterGuide.steps.map((step, stepIndex) =&gt; (
-                                        &lt;li key={stepIndex}&gt;{step}&lt;/li&gt;
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="guide" className="border-none flex flex-col items-center">
+                    <AccordionTrigger asChild>
+                        <Button variant="outline" className="w-fit">
+                            <BookOpen className="mr-2 h-5 w-5"/>
+                            <span>Read The Guide</span>
+                        </Button>
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-6 w-full">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="font-headline">{unitConverterGuide.title}</CardTitle>
+                                <CardDescription>{unitConverterGuide.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                                    {unitConverterGuide.steps.map((step, stepIndex) => (
+                                        <li key={stepIndex}>{step}</li>
                                     ))}
-                                &lt;/ol&gt;
-                            &lt;/CardContent&gt;
-                        &lt;/Card&gt;
-                    &lt;/AccordionContent&gt;
-                &lt;/AccordionItem&gt;
-            &lt;/Accordion&gt;
+                                </ol>
+                            </CardContent>
+                        </Card>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
         )}
-      &lt;/div&gt;
-    &lt;/div&gt;
+      </div>
+    </div>
   )
 }
