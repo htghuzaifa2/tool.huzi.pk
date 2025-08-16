@@ -1,4 +1,3 @@
-
 import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -48,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/text-diff-highlighter',
     '/random-username-generator',
     '/morse-code-translator',
+    '/anagram-finder',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

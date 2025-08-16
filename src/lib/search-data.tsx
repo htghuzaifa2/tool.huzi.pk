@@ -1,5 +1,4 @@
-
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle } from "lucide-react";
 
 export const tools = [
   {
@@ -73,6 +72,12 @@ export const tools = [
     href: "/morse-code-translator",
     title: "Morse Code Translator",
     description: "Convert text to Morse code and back, with sound playback.",
+  },
+  {
+    icon: <Shuffle className="h-8 w-8" />,
+    href: "/anagram-finder",
+    title: "Anagram Finder",
+    description: "Find all possible letter combinations (permutations) for a given word.",
   },
   {
     icon: <Tags className="h-8 w-8" />,
