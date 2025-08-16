@@ -1,9 +1,8 @@
-
 "use client"
 
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Upload, Download, RefreshCw, Image as ImageIcon, Loader2, BookOpen } from 'lucide-react';
@@ -217,11 +216,12 @@ export default function ImageCompressorPage() {
                 
                 {imageCompressorGuide && (
                     <Accordion type="single" collapsible className="w-full">
-                       <AccordionItem value="guide" className="border-none">
-                            <AccordionTrigger>
-                               <div className="flex justify-center w-full">
+                       <AccordionItem value="guide" className="border-none flex flex-col items-center">
+                            <AccordionTrigger asChild>
+                               <div className="flex justify-center">
                                     <Button
                                     size="lg"
+                                    variant="ghost"
                                     className="relative inline-flex items-center justify-center overflow-hidden rounded-lg p-0.5 font-medium text-foreground group bg-gradient-to-br from-primary via-accent to-destructive group-hover:from-primary/90 group-hover:via-accent/90 group-hover:to-destructive/90 focus:ring-4 focus:outline-none focus:ring-primary/50 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-primary/40"
                                     >
                                     <span className="relative flex items-center px-6 py-3 transition-all ease-in duration-200 bg-background rounded-md group-hover:bg-opacity-0">
