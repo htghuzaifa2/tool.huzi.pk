@@ -30,7 +30,7 @@ export default function TextToolsPage() {
   }, [text]);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold font-headline">Text Manipulation Tools</h1>

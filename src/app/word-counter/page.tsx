@@ -19,7 +19,7 @@ export default function WordCounterPage() {
   }, [text]);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <Card>
             <CardHeader className="text-center">

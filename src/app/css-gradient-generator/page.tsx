@@ -67,7 +67,7 @@ export default function CssGradientGeneratorPage() {
     };
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
             <Card>
                 <CardHeader className="text-center">
                      <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">

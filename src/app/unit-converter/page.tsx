@@ -68,7 +68,7 @@ export default function UnitConverterPage() {
   }, [inputValue, fromUnit, toUnit, category]);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold font-headline">Unit Converter</h1>
