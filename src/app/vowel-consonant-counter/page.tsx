@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Voicemail } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
-import { FancyAccordionButton } from "@/components/ui/fancy-accordion-button";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 export default function VowelConsonantCounterPage() {
   const [text, setText] = useState("The quick brown fox jumps over the lazy dog.")

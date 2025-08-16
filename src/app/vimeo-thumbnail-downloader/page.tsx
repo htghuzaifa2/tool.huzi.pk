@@ -148,13 +148,8 @@ export default function VimeoThumbnailDownloaderPage() {
                                     </div>
                                     <div className="p-4">
                                         <CardTitle className="text-lg">{thumbnail.quality}</CardTitle>
-                                        <CardDescription>{thumbnail.width} x {thumbnail.height}</CardDescription>
-                                    </div>
-                                </CardHeader>
-                                <CardContent className="mt-auto p-4">
-                                    <Button className="w-full" onClick={() => handleDownload(thumbnail.url)}>
-                                        <Download className="mr-2 h-4 w-4" /> Download
-                                    </Button>
+
+                                    </CardDescription>
                                 </CardContent>
                             </Card>
                         </CardFooter>

@@ -189,7 +189,6 @@ export default function QRCodeGeneratorPage() {
                                             <SelectItem value="WEP">WEP</SelectItem>
                                             <SelectItem value="nopass">None</SelectItem>
                                         </SelectContent>
-                                    </Select>
                                   </div>
                                 </TabsContent>
                                 <TabsContent value="vcard" className="pt-4 space-y-4">

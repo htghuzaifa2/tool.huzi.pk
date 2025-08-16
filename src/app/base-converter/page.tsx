@@ -10,7 +10,7 @@ import { ArrowRightLeft, Binary } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
-import { FancyAccordionButton } from "@/components/ui/fancy-accordion-button";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 type Base = '2' | '8' | '10' | '16';
 const baseOptions: { value: Base; label: string }[] = [

@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Type } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
-import { FancyAccordionButton } from "@/components/ui/fancy-accordion-button";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 export default function WordCounterPage() {
   const [text, setText] = useState("")

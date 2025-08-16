@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { ArrowRightLeft, Ruler } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
-import { FancyAccordionButton } from "@/components/ui/fancy-accordion-button";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 type Category = "length" | "mass" | "temperature";
 

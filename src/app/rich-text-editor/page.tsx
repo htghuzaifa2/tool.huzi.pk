@@ -6,7 +6,7 @@ import { RichTextEditor } from "@/components/rich-text-editor";
 import { Pilcrow } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
-import { FancyAccordionButton } from "@/components/ui/fancy-accordion-button";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 export default function RichTextEditorPage() {
   const richTextEditorGuide = guides.find(g => g.href.includes('rich-text-editor'));

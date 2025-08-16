@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast"
 import { Copy, CaseSensitive } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
-import { FancyAccordionButton } from "@/components/ui/fancy-accordion-button";
+import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 const toTitleCase = (str: string) => {
   return str.replace(
