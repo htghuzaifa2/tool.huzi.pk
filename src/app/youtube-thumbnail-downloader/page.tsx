@@ -5,11 +5,10 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Youtube, Link, Download } from 'lucide-react';
+import { Youtube, Link, Download, BookOpen, ChevronDown } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
-import { GetStartedButton } from '@/components/ui/get-started-button';
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
 type Thumbnail = {
@@ -96,6 +95,15 @@ export default function YouTubeThumbnailDownloaderPage() {
         }
     };
 
+    const handleGuideClick = () => {
+        // Wait for the accordion to open/close before scrolling
+        setTimeout(() => {
+            const guideElement = document.getElementById('guide-section');
+            if (guideElement) {
+                guideElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100);
+    };
 
     return (
         <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -161,8 +169,8 @@ export default function YouTubeThumbnailDownloaderPage() {
 
                 {youtubeGuide && (
                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                        <AccordionItem value="guide" id="guide-section" className="border-none flex flex-col items-center">
+                            <AccordionTrigger onClick={handleGuideClick}>
                                <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
