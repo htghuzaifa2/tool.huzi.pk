@@ -14,12 +14,12 @@ import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import confetti from 'canvas-confetti';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-// Modern, neon-inspired color palettes for each theme
+// Final, refined, modern color palettes
 const themeColors = {
-    light: ['#007BFF', '#FF8C00', '#3399FF', '#FFA500', '#66B2FF', '#FFD700'],
-    dark: ['#00BFFF', '#FF4500', '#1E90FF', '#FFA500', '#00FFFF', '#FF6347'],
-    blue: ['#00BFFF', '#FF4500', '#1E90FF', '#FFA500', '#00FFFF', '#FF6347'],
-    orange: ['#00BFFF', '#1E90FF', '#00FFFF', '#4682B4', '#5F9EA0', '#00CED1'],
+    light: ['#2563eb', '#f97316', '#16a34a', '#db2777', '#6d28d9', '#0891b2'],
+    dark: ['#38bdf8', '#fb923c', '#4ade80', '#f472b6', '#a78bfa', '#22d3ee'],
+    blue: ['#60a5fa', '#facc15', '#4ade80', '#fb7185', '#c084fc', '#67e8f9'],
+    orange: ['#0ea5e9', '#22c55e', '#8b5cf6', '#06b6d4', '#ec4899', '#f59e0b'],
 };
 
 const getCurrentThemeColors = () => {
@@ -36,10 +36,11 @@ export default function RandomPickerWheelPage() {
     const [options, setOptions] = useState<string[]>(['Prize 1', 'Better Luck Next Time', '2x Bonus', 'Another Spin', 'Grand Prize', 'Small Reward']);
     const [isSpinning, setIsSpinning] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const { toast } = useToast();
+    const { toast, dismiss } = useToast();
     const pickerWheelGuide = guides.find(g => g.href.includes('random-picker-wheel'));
     const [currentAngle, setCurrentAngle] = useState(0);
     const [colors, setColors] = useState(themeColors.dark);
+    const [lastToastId, setLastToastId] = useState<string | null>(null);
 
     const handleGuideClick = () => {
         requestAnimationFrame(() => {
@@ -76,18 +77,18 @@ export default function RandomPickerWheelPage() {
             ctx.closePath();
             ctx.fill();
 
-            // Add a border to each segment for better definition
+            // Add a subtle border to each segment for better definition
             ctx.strokeStyle = 'hsl(var(--background))';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 3;
             ctx.stroke();
             
             ctx.save();
-            // High-contrast text with a shadow for readability on all colors
-            ctx.fillStyle = "#FFF";
-            ctx.shadowColor = "rgba(0,0,0,0.6)";
-            ctx.shadowBlur = 4;
-            ctx.shadowOffsetX = 2;
-            ctx.shadowOffsetY = 2;
+            // High-contrast text with a shadow for readability
+            ctx.fillStyle = "#FFFFFF";
+            ctx.shadowColor = "rgba(0,0,0,0.5)";
+            ctx.shadowBlur = 3;
+            ctx.shadowOffsetX = 1;
+            ctx.shadowOffsetY = 1;
             ctx.font = 'bold 16px Inter, sans-serif';
             ctx.translate(
                 center + textRadius * Math.cos(angle + arc / 2),
@@ -138,6 +139,10 @@ export default function RandomPickerWheelPage() {
             toast({ title: "Option cannot be empty.", variant: "destructive" });
             return;
         }
+        if (options.length >= 100) {
+            toast({ title: "Maximum options reached.", variant: "destructive" });
+            return;
+        }
         setOptions([...options, newOption.trim()]);
         setNewOption('');
     }
@@ -149,6 +154,9 @@ export default function RandomPickerWheelPage() {
     const handleSpin = () => {
         if (isSpinning || options.length < 2) return;
         
+        if (lastToastId) {
+            dismiss(lastToastId);
+        }
         setIsSpinning(true);
         
         const winnerIndex = Math.floor(Math.random() * options.length);
@@ -164,10 +172,12 @@ export default function RandomPickerWheelPage() {
         setCurrentAngle(prev => prev + finalAngle);
         
         setTimeout(() => {
-            toast({
+            const { id } = toast({
                 title: "We have a winner!",
                 description: `Congratulations to: ${winner}`,
+                duration: Infinity, // Keep toast open until dismissed
             });
+            setLastToastId(id);
             
             confetti({
                 particleCount: 150,
