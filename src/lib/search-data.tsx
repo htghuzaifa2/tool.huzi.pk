@@ -1,12 +1,18 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge, Split } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge, Split, ListChecks } from "lucide-react";
 
 export const tools = [
   {
     icon: <Gift className="h-8 w-8" />,
     href: "/random-picker-wheel",
     title: "Random Picker Wheel",
-    description: "Add a list of options and spin a wheel to randomly choose one.",
+    description: "Spin a virtual wheel to randomly select a winner from a list of options.",
+  },
+  {
+    icon: <ListChecks className="h-8 w-8" />,
+    href: "/random-item-picker",
+    title: "Random Item Picker",
+    description: "Enter a list of items and let the tool randomly pick one for you.",
   },
   {
     icon: <FileText className="h-8 w-8" />,
@@ -366,6 +372,32 @@ export const tools = [
 
 export const guides = [
   {
+    icon: <Gift className="h-8 w-8 text-primary" />,
+    href: "/guide#random-picker-wheel",
+    title: "Random Picker Wheel Guide",
+    description: "How to randomly pick an option using a spinning wheel.",
+    steps: [
+        "Go to the Random Picker Wheel page.",
+        "In the text area, enter each option on a new line.",
+        "The wheel on the right will update with your options.",
+        "Click the 'Spin the Wheel' button to start the animation.",
+        "The wheel will spin and land on a random winner, which will be announced in a notification. A confetti celebration will also trigger."
+    ]
+  },
+  {
+    icon: <ListChecks className="h-8 w-8 text-primary" />,
+    href: "/guide#random-item-picker",
+    title: "Random Item Picker Guide",
+    description: "How to randomly pick an item from a list.",
+    steps: [
+        "Go to the Random Item Picker page.",
+        "In the text area, enter each item on a new line.",
+        "Click the 'Pick a Random Item' button.",
+        "Watch the animation as it highlights different items.",
+        "The winning item will be displayed. You can then copy it to your clipboard."
+    ]
+  },
+  {
     icon: <FileText className="h-8 w-8 text-primary" />,
     href: "/guide#resume-builder",
     title: "Resume Builder Guide",
@@ -415,19 +447,6 @@ export const guides = [
       "Adjust the quality slider to your desired compression level.",
       "Click 'Compress Image' to see the result and the new file size.",
       "Click 'Download' to save the compressed image."
-    ]
-  },
-  {
-    icon: <Gift className="h-8 w-8 text-primary" />,
-    href: "/guide#random-picker-wheel",
-    title: "Random Picker Wheel Guide",
-    description: "How to randomly pick an option from a list.",
-    steps: [
-        "Go to the Random Picker Wheel page.",
-        "In the text area, enter each option on a new line.",
-        "Click the 'Spin the Wheel' button.",
-        "Watch the animation as it selects a winner.",
-        "The winning option will be displayed. You can then copy it to your clipboard."
     ]
   },
   {

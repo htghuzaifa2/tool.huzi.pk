@@ -1,85 +1,152 @@
 
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
-import { Gift, Play, Copy } from 'lucide-react';
+import { Gift, Play, RotateCw } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
+import confetti from 'canvas-confetti';
+
+const colors = [
+  "#FFC107", "#FF5722", "#E91E63", "#9C27B0", "#3F51B5", 
+  "#2196F3", "#00BCD4", "#4CAF50", "#CDDC39", "#FF9800"
+];
 
 export default function RandomPickerWheelPage() {
     const [optionsText, setOptionsText] = useState('Apple\nBanana\nOrange\nGrape\nStrawberry\nMango');
     const [options, setOptions] = useState<string[]>([]);
     const [isSpinning, setIsSpinning] = useState(false);
-    const [winner, setWinner] = useState<string | null>(null);
-    const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
     const { toast } = useToast();
     const pickerWheelGuide = guides.find(g => g.href.includes('random-picker-wheel'));
 
     const handleGuideClick = () => {
-        // The content is not immediately available, so we wait for the next render tick.
         requestAnimationFrame(() => {
             const guideElement = document.getElementById('guide-section');
             if (guideElement) {
-                const yOffset = -80; // a little space from the top
+                const yOffset = -80;
                 const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({top: y, behavior: 'smooth'});
+                window.scrollTo({ top: y, behavior: 'smooth' });
             }
         });
     };
+
+    const drawWheel = useCallback(() => {
+        const canvas = canvasRef.current;
+        if (!canvas || !options.length) return;
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        
+        const arc = Math.PI / (options.length / 2);
+        const startAngle = 0;
+        const outsideRadius = 200;
+        const textRadius = 160;
+        const insideRadius = 50;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 2;
+        ctx.font = 'bold 16px Arial';
+        
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+
+        for (let i = 0; i < options.length; i++) {
+            const angle = startAngle + i * arc;
+            ctx.fillStyle = colors[i % colors.length];
+
+            ctx.beginPath();
+            ctx.arc(0, 0, outsideRadius, angle, angle + arc, false);
+            ctx.arc(0, 0, insideRadius, angle + arc, angle, true);
+            ctx.stroke();
+            ctx.fill();
+
+            ctx.save();
+            ctx.fillStyle = "white";
+            ctx.translate(
+                textRadius * Math.cos(angle + arc / 2),
+                textRadius * Math.sin(angle + arc / 2)
+            );
+            ctx.rotate(angle + arc / 2 + Math.PI / 2);
+            const text = options[i];
+            ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+            ctx.restore();
+        }
+        ctx.restore();
+
+        // Draw pointer
+        ctx.fillStyle = '#333';
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 + outsideRadius + 5, canvas.height / 2);
+        ctx.lineTo(canvas.width / 2 + outsideRadius - 20, canvas.height / 2 - 10);
+        ctx.lineTo(canvas.width / 2 + outsideRadius - 20, canvas.height / 2 + 10);
+        ctx.fill();
+
+    }, [options]);
 
     useEffect(() => {
         const parsedOptions = optionsText.split('\n').map(o => o.trim()).filter(Boolean);
         setOptions(parsedOptions);
-        setWinner(null);
     }, [optionsText]);
 
+    useEffect(() => {
+        drawWheel();
+    }, [drawWheel]);
+
     const handleSpin = () => {
-        if (options.length < 2) {
-            toast({
-                title: 'Not Enough Options',
-                description: 'Please provide at least two options to spin the wheel.',
-                variant: 'destructive',
-            });
-            return;
-        }
-
+        if (isSpinning || options.length < 2) return;
+        
         setIsSpinning(true);
-        setWinner(null);
-        setHighlightedIndex(0);
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        
+        let angle = 0;
+        const spinAngleStart = Math.random() * 10 + 10; // Random start velocity
+        let spinTime = 0;
+        const spinTimeTotal = Math.random() * 3000 + 4000; // Random duration
 
-        const spinDuration = 3000; // 3 seconds
-        const intervalTime = 75; // ms
-        const totalSpins = spinDuration / intervalTime;
-        let spinCount = 0;
+        const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+        
+        const rotateWheel = () => {
+            spinTime += 20;
+            if (spinTime >= spinTimeTotal) {
+                // finished
+                const degrees = (angle * 180) / Math.PI;
+                const arcd = (Math.PI / (options.length / 2)) * 180 / Math.PI;
+                const index = Math.floor(((360 - degrees % 360) % 360) / arcd);
+                const winner = options[index];
+                
+                toast({
+                    title: "We have a winner!",
+                    description: `Congratulations to: ${winner}`,
+                });
+                
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
 
-        const spinInterval = setInterval(() => {
-            spinCount++;
-            setHighlightedIndex(prev => (prev! + 1) % options.length);
-
-            if (spinCount >= totalSpins) {
-                clearInterval(spinInterval);
-                const winnerIndex = Math.floor(Math.random() * options.length);
-                setHighlightedIndex(winnerIndex);
-                setWinner(options[winnerIndex]);
                 setIsSpinning(false);
+                return;
             }
-        }, intervalTime);
+
+            const spinAngle = spinAngleStart - easeOut(spinTime / spinTimeTotal) * spinAngleStart;
+            angle += (spinAngle * Math.PI) / 180;
+            canvas.style.transform = `rotate(${angle}rad)`;
+            requestAnimationFrame(rotateWheel);
+        };
+        
+        rotateWheel();
     };
 
-    const copyToClipboard = () => {
-        if (!winner) return;
-        navigator.clipboard.writeText(winner);
-        toast({
-            title: "Copied!",
-            description: `Winner "${winner}" copied to clipboard.`,
-        });
-    };
 
     return (
         <div className="container mx-auto py-10">
@@ -90,9 +157,9 @@ export default function RandomPickerWheelPage() {
                             <Gift className="w-8 h-8" />
                         </div>
                         <CardTitle className="text-4xl font-bold font-headline">Random Picker Wheel</CardTitle>
-                        <CardDescription>Add a list of options and spin the wheel to pick a winner!</CardDescription>
+                        <CardDescription>Add a list of options, spin the wheel, and let fate decide a winner!</CardDescription>
                     </CardHeader>
-                    <CardContent className="grid md:grid-cols-2 gap-8 items-start">
+                    <CardContent className="grid md:grid-cols-2 gap-8 items-center">
                         <div className="space-y-4">
                             <Label htmlFor="options-input">Enter options (one per line)</Label>
                             <Textarea
@@ -107,38 +174,8 @@ export default function RandomPickerWheelPage() {
                                 <Play className="mr-2" /> {isSpinning ? 'Spinning...' : 'Spin the Wheel'}
                             </Button>
                         </div>
-                        <div className="space-y-4">
-                            <Card className="min-h-[300px] bg-muted overflow-hidden">
-                                <CardHeader>
-                                    <CardTitle className="text-center font-headline">The Wheel</CardTitle>
-                                </CardHeader>
-                                <CardContent className="relative flex items-center justify-center h-full">
-                                    <div className="space-y-2 w-full max-h-60 overflow-y-auto p-2">
-                                        {options.map((option, index) => (
-                                            <div 
-                                                key={index}
-                                                className={`p-3 text-center rounded-md transition-all duration-100 ${highlightedIndex === index ? 'bg-primary text-primary-foreground scale-105 shadow-lg' : 'bg-background'}`}
-                                            >
-                                                {option}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            {winner && (
-                                <Card className="border-green-500 bg-green-500/10 text-center">
-                                    <CardHeader>
-                                        <CardTitle className="text-2xl font-headline text-green-700 dark:text-green-300">Winner!</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p className="text-4xl font-bold">{winner}</p>
-                                        <Button variant="ghost" size="sm" onClick={copyToClipboard} className="mt-4 mx-auto">
-                                            <Copy className="mr-2 h-4 w-4" /> Copy Winner
-                                        </Button>
-                                    </CardContent>
-                                </Card>
-                            )}
+                        <div className="flex items-center justify-center h-[450px]">
+                           <canvas ref={canvasRef} width="450" height="450" className="transition-transform duration-[4000ms] ease-out"></canvas>
                         </div>
                     </CardContent>
                 </Card>

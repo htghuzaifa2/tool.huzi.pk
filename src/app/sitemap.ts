@@ -60,6 +60,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/punctuation-remover',
     '/number-sorter',
     '/word-density-analyzer',
+    '/random-item-picker',
     '/random-picker-wheel',
     '/text-pattern-finder',
     '/paragraph-merger',
