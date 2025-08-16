@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import { SearchDialog } from "./search-dialog"
+import { useState } from "react"
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -16,6 +17,12 @@ const navLinks = [
 ]
 
 export function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setIsMobileMenuOpen(false);
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -56,7 +63,7 @@ export function Header() {
           <SearchDialog />
           <ThemeSwitcher />
           
-          <Sheet>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
@@ -68,7 +75,7 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="pr-0">
-              <Link href="/" className="flex items-center space-x-2">
+              <Link href="/" className="flex items-center space-x-2" onClick={handleLinkClick}>
                   <Box className="h-6 w-6 text-primary" />
                   <span className="font-bold">tool.huzi.pk</span>
               </Link>
@@ -82,6 +89,7 @@ export function Header() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-foreground"
+                            onClick={handleLinkClick}
                           >
                             {link.label}
                           </a>
@@ -90,6 +98,7 @@ export function Header() {
                             key={link.href}
                             href={link.href}
                             className="text-foreground"
+                            onClick={handleLinkClick}
                           >
                             {link.label}
                           </Link>
