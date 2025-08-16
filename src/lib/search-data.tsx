@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser } from "lucide-react";
 
 export const tools = [
   {
@@ -19,6 +19,12 @@ export const tools = [
     href: "/vowel-consonant-counter",
     title: "Vowel & Consonant Counter",
     description: "Count the number of vowels and consonants in any text.",
+  },
+  {
+    icon: <Eraser className="h-8 w-8" />,
+    href: "/punctuation-remover",
+    title: "Punctuation Remover",
+    description: "Remove all punctuation marks from text with one click.",
   },
   {
     icon: <Ruler className="h-8 w-8" />,

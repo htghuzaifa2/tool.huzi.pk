@@ -53,6 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sentence-shuffler',
     '/json-validator',
     '/vowel-consonant-counter',
+    '/punctuation-remover',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
