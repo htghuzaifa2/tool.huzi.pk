@@ -14,20 +14,23 @@ import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import confetti from 'canvas-confetti';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-// Final, refined, modern color palettes
+// Final, Modern, High-Contrast Color Palettes
 const themeColors = {
-    light: ['#2563eb', '#f97316', '#16a34a', '#db2777', '#6d28d9', '#0891b2'],
-    dark: ['#38bdf8', '#fb923c', '#4ade80', '#f472b6', '#a78bfa', '#22d3ee'],
-    blue: ['#60a5fa', '#facc15', '#4ade80', '#fb7185', '#c084fc', '#67e8f9'],
-    orange: ['#0ea5e9', '#22c55e', '#8b5cf6', '#06b6d4', '#ec4899', '#f59e0b'],
+    // Synthwave/Neon palette for dark backgrounds
+    dark: ['#ff00ff', '#00ffff', '#9d00ff', '#ff005d', '#00ff8a', '#ff9e00'],
+    blue: ['#ff00ff', '#00ffff', '#9d00ff', '#ff005d', '#00ff8a', '#ff9e00'],
+    // Vibrant Pop for light backgrounds
+    light: ['#e6007e', '#007bff', '#7f00e6', '#00c497', '#e65c00', '#2d00e6'],
+    // Cosmic Flame for orange theme (contrast with blues/purples)
+    orange: ['#007bff', '#6f00ff', '#00e5ff', '#ff00a2', '#00ff9d', '#b400ff'],
 };
 
 const getCurrentThemeColors = () => {
     if (typeof window === 'undefined') return themeColors.dark;
-    const body = document.documentElement;
-    if (body.classList.contains('theme-blue')) return themeColors.blue;
-    if (body.classList.contains('theme-orange')) return themeColors.orange;
-    if (body.classList.contains('light')) return themeColors.light;
+    const root = document.documentElement;
+    if (root.classList.contains('theme-blue')) return themeColors.blue;
+    if (root.classList.contains('theme-orange')) return themeColors.orange;
+    if (root.classList.contains('light')) return themeColors.light;
     return themeColors.dark;
 }
 
@@ -61,9 +64,9 @@ export default function RandomPickerWheelPage() {
         if (!ctx) return;
         
         const arc = Math.PI * 2 / options.length;
-        const outsideRadius = canvas.width / 2 - 10;
-        const textRadius = outsideRadius * 0.7;
         const center = canvas.width / 2;
+        const outsideRadius = center - 10;
+        const textRadius = outsideRadius * 0.75;
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
@@ -77,18 +80,14 @@ export default function RandomPickerWheelPage() {
             ctx.closePath();
             ctx.fill();
 
-            // Add a subtle border to each segment for better definition
             ctx.strokeStyle = 'hsl(var(--background))';
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2;
             ctx.stroke();
             
             ctx.save();
-            // High-contrast text with a shadow for readability
-            ctx.fillStyle = "#FFFFFF";
-            ctx.shadowColor = "rgba(0,0,0,0.5)";
-            ctx.shadowBlur = 3;
-            ctx.shadowOffsetX = 1;
-            ctx.shadowOffsetY = 1;
+            ctx.fillStyle = "#FFF";
+            ctx.strokeStyle = "rgba(0,0,0,0.6)"; // Outline for text
+            ctx.lineWidth = 2;
             ctx.font = 'bold 16px Inter, sans-serif';
             ctx.translate(
                 center + textRadius * Math.cos(angle + arc / 2),
@@ -96,6 +95,7 @@ export default function RandomPickerWheelPage() {
             );
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
             const text = options[i];
+            ctx.strokeText(text, -ctx.measureText(text).width / 2, 0);
             ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
             ctx.restore();
         }
@@ -159,23 +159,28 @@ export default function RandomPickerWheelPage() {
         }
         setIsSpinning(true);
         
+        // 1. Determine winner beforehand for true randomness
         const winnerIndex = Math.floor(Math.random() * options.length);
         const winner = options[winnerIndex];
         const arcSize = 360 / options.length;
         
-        const randomOffset = (Math.random() - 0.5) * arcSize * 0.8;
-        const stopAngle = (winnerIndex * arcSize) + (arcSize / 2) - 90 + randomOffset;
+        // 2. Calculate the exact angle to stop at the pointer
+        // The pointer is at the top (270 degrees or -90). We want the middle of the segment there.
+        const winnerAngle = (winnerIndex * arcSize) + (arcSize / 2);
+        const stopAngle = 270 - winnerAngle;
         
-        const totalRotations = Math.floor(Math.random() * 5) + 8;
-        const finalAngle = (totalRotations * 360) + (360 - stopAngle);
+        // 3. Add random rotations for visual variety
+        const randomRotations = Math.floor(Math.random() * 5) + 8; // 8 to 12 full spins
+        const finalAngle = (randomRotations * 360) + stopAngle;
 
-        setCurrentAngle(prev => prev + finalAngle);
+        // Use functional update to ensure we're adding to the latest angle state
+        setCurrentAngle(prevAngle => prevAngle + finalAngle);
         
         setTimeout(() => {
             const { id } = toast({
                 title: "We have a winner!",
-                description: `Congratulations to: ${winner}`,
-                duration: Infinity, // Keep toast open until dismissed
+                description: `Congratulations: ${winner}`,
+                duration: Infinity,
             });
             setLastToastId(id);
             
@@ -186,7 +191,7 @@ export default function RandomPickerWheelPage() {
             });
 
             setIsSpinning(false);
-        }, 6000);
+        }, 6000); // This duration must match the CSS transition duration
     };
 
     return (
@@ -198,7 +203,7 @@ export default function RandomPickerWheelPage() {
                             <Gift className="w-8 h-8" />
                         </div>
                         <CardTitle className="text-4xl font-bold font-headline">Random Picker Wheel</CardTitle>
-                        <CardDescription>Add a list of options, spin the wheel, and let fate decide a winner!</CardDescription>
+                        <CardDescription>Add options, spin the wheel, and let fate decide a winner!</CardDescription>
                     </CardHeader>
                     <CardContent className="grid md:grid-cols-2 gap-8 items-start">
                         <div className="space-y-4">
@@ -291,3 +296,4 @@ export default function RandomPickerWheelPage() {
         </div>
     );
 }
+
