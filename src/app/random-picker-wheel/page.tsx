@@ -195,7 +195,7 @@ export default function RandomPickerWheelPage() {
                                     <Button onClick={handleAddOption} disabled={isSpinning}><Plus className="h-4 w-4" /></Button>
                                 </div>
                             </div>
-                            <ScrollArea className="h-72 w-full rounded-md border p-4">
+                            <div className="h-72 w-full rounded-md border p-4">
                                 <div className="space-y-2">
                                     {options.length > 0 ? options.map((option, index) => (
                                         <div key={index} className="flex items-center justify-between bg-muted p-2 rounded-md">
@@ -208,7 +208,7 @@ export default function RandomPickerWheelPage() {
                                         <p className="text-muted-foreground text-center">Add some options to get started!</p>
                                     )}
                                 </div>
-                            </ScrollArea>
+                            </div>
                              <Button onClick={handleSpin} disabled={isSpinning || options.length < 2} size="lg" className="w-full">
                                 <Play className="mr-2" /> {isSpinning ? 'Spinning...' : 'Spin The Wheel'}
                             </Button>
