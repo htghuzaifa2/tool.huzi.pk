@@ -7,7 +7,7 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Upload, Download, RefreshCw, Image as ImageIcon, Loader2, BookOpen } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionHeader } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
 
 
