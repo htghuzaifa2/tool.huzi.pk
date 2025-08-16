@@ -1,3 +1,4 @@
+
 import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -50,6 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/anagram-finder',
     '/roman-numeral-converter',
     '/sentence-shuffler',
+    '/json-validator',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),

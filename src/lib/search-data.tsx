@@ -1,4 +1,5 @@
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll } from "lucide-react";
+
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces } from "lucide-react";
 
 export const tools = [
   {
@@ -90,6 +91,12 @@ export const tools = [
     href: "/sentence-shuffler",
     title: "Sentence Shuffler",
     description: "Randomly shuffle sentences in a paragraph while keeping punctuation intact.",
+  },
+  {
+    icon: <Braces className="h-8 w-8" />,
+    href: "/json-validator",
+    title: "JSON Validator",
+    description: "Check if JSON data is valid and highlight errors directly in the browser.",
   },
   {
     icon: <Tags className="h-8 w-8" />,
@@ -398,7 +405,7 @@ export const guides = [
     icon: <ShieldCheck className="h-8 w-8 text-primary" />,
     href: "/guide#password-strength-checker",
     title: "Password Strength Checker Guide",
-    description: "Learn how to test your password's security.",
+    description: "How to test your password's security.",
     steps: [
         "Navigate to the Password Strength Checker page.",
         "Type your password into the input field.",
