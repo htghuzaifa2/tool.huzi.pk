@@ -6,7 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Download, FileText, Palette, Type, TextQuote } from 'lucide-react';
+import { Download, FileText, Palette, Type, TextQuote, Mail, Phone, MapPin, AlignVerticalSpaceAround } from 'lucide-react';
 import { ResumeForm, resumeSchema, type ResumeData } from '@/components/resume/form';
 import { ResumeTemplate } from '@/components/resume/template';
 import jsPDF from 'jspdf';
@@ -16,6 +16,8 @@ import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { cn } from '@/lib/utils';
 
 const defaultValues: ResumeData = {
     fullName: 'John Doe',
@@ -55,14 +57,20 @@ const defaultValues: ResumeData = {
     skills: 'React, TypeScript, Node.js, GraphQL, PostgreSQL, Docker, AWS',
 };
 
-export type TemplateName = "professional" | "modern" | "minimalist";
+export type TemplateName = "professional" | "modern" | "minimalist" | "classic";
 export type FontFamily = "sans" | "serif" | "mono";
 
 export default function ResumeBuilderPage() {
     const [template, setTemplate] = useState<TemplateName>("professional");
     const [accentColor, setAccentColor] = useState("#3F51B5");
     const [fontSize, setFontSize] = useState(10);
+    const [lineHeight, setLineHeight] = useState(1.5);
     const [fontFamily, setFontFamily] = useState<FontFamily>("sans");
+    
+    // Visibility toggles
+    const [showEmail, setShowEmail] = useState(true);
+    const [showPhone, setShowPhone] = useState(true);
+    const [showAddress, setShowAddress] = useState(true);
 
     const methods = useForm<ResumeData>({
         resolver: zodResolver(resumeSchema),
@@ -134,14 +142,31 @@ export default function ResumeBuilderPage() {
                             <CardContent className="space-y-6">
                                 <div>
                                     <Label>Template</Label>
-                                    <div className="grid grid-cols-3 gap-2 mt-2">
-                                        {(["professional", "modern", "minimalist"] as TemplateName[]).map(t => (
-                                             <button key={t} onClick={() => setTemplate(t)} className={`border-2 rounded-lg p-1 ${template === t ? 'border-primary ring-2 ring-primary' : 'border-border'}`}>
-                                                 <div className="bg-muted h-16 w-full rounded-md flex items-center justify-center">
+                                    <div className="grid grid-cols-2 gap-4 mt-2">
+                                        {(["professional", "modern", "minimalist", "classic"] as TemplateName[]).map(t => (
+                                             <button key={t} onClick={() => setTemplate(t)} className={cn('border-2 rounded-lg p-2 transition-all', template === t ? 'border-primary ring-2 ring-primary' : 'border-border hover:border-primary/50')}>
+                                                 <div className="bg-muted h-24 w-full rounded-md flex items-center justify-center">
                                                      <p className="text-sm font-semibold capitalize">{t}</p>
                                                  </div>
                                              </button>
                                         ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <Label>Contact Information</Label>
+                                    <div className="grid grid-cols-3 gap-4 mt-2">
+                                        <div className="flex items-center space-x-2">
+                                            <Switch id="showEmail" checked={showEmail} onCheckedChange={setShowEmail} />
+                                            <Label htmlFor="showEmail" className="flex items-center gap-1"><Mail className="w-4 h-4" /> Email</Label>
+                                        </div>
+                                         <div className="flex items-center space-x-2">
+                                            <Switch id="showPhone" checked={showPhone} onCheckedChange={setShowPhone} />
+                                            <Label htmlFor="showPhone" className="flex items-center gap-1"><Phone className="w-4 h-4" /> Phone</Label>
+                                        </div>
+                                         <div className="flex items-center space-x-2">
+                                            <Switch id="showAddress" checked={showAddress} onCheckedChange={setShowAddress} />
+                                            <Label htmlFor="showAddress" className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Address</Label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
@@ -166,9 +191,15 @@ export default function ResumeBuilderPage() {
                                         </Select>
                                     </div>
                                 </div>
-                                <div>
-                                    <Label htmlFor="font-size">Font Size ({fontSize}pt)</Label>
-                                    <Slider id="font-size" min={8} max={12} step={0.5} value={[fontSize]} onValueChange={(v) => setFontSize(v[0])} className="mt-2" />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <Label htmlFor="font-size">Font Size ({fontSize}pt)</Label>
+                                        <Slider id="font-size" min={8} max={12} step={0.5} value={[fontSize]} onValueChange={(v) => setFontSize(v[0])} className="mt-2" />
+                                    </div>
+                                     <div>
+                                        <Label htmlFor="line-height">Line Spacing ({lineHeight.toFixed(1)})</Label>
+                                        <Slider id="line-height" min={1.2} max={1.8} step={0.1} value={[lineHeight]} onValueChange={(v) => setLineHeight(v[0])} className="mt-2" />
+                                    </div>
                                 </div>
                             </CardContent>
                         </Card>
@@ -186,6 +217,10 @@ export default function ResumeBuilderPage() {
                                     accentColor={accentColor}
                                     fontSize={fontSize}
                                     fontFamily={fontFamily}
+                                    lineHeight={lineHeight}
+                                    showEmail={showEmail}
+                                    showPhone={showPhone}
+                                    showAddress={showAddress}
                                   />
                                 </div>
                             </div>

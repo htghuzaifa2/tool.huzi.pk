@@ -7,12 +7,17 @@ import type { TemplateName, FontFamily } from '@/app/resume-builder/page';
 import { ProfessionalTemplate } from './professional-template';
 import { ModernTemplate } from './modern-template';
 import { MinimalistTemplate } from './minimalist-template';
+import { ClassicTemplate } from './classic-template';
 
 interface ResumeTemplateProps {
     template: TemplateName;
     accentColor: string;
     fontSize: number;
     fontFamily: FontFamily;
+    lineHeight: number;
+    showEmail: boolean;
+    showPhone: boolean;
+    showAddress: boolean;
 }
 
 export function ResumeTemplate({ template, ...customization }: ResumeTemplateProps) {
@@ -33,6 +38,8 @@ export function ResumeTemplate({ template, ...customization }: ResumeTemplatePro
                 return <ModernTemplate {...commonProps} />;
             case 'minimalist':
                 return <MinimalistTemplate {...commonProps} />;
+            case 'classic':
+                return <ClassicTemplate {...commonProps} />;
             case 'professional':
             default:
                 return <ProfessionalTemplate {...commonProps} />;
@@ -42,8 +49,11 @@ export function ResumeTemplate({ template, ...customization }: ResumeTemplatePro
     return (
         <div 
             id="resume-preview" 
-            className={`w-[816px] h-[1056px] bg-background text-foreground p-8 ${fontClasses[customization.fontFamily]}`}
-            style={{ fontSize: `${customization.fontSize}pt` }}
+            className={`w-[816px] h-[1056px] bg-background text-foreground p-10 ${fontClasses[customization.fontFamily]}`}
+            style={{ 
+                fontSize: `${customization.fontSize}pt`,
+                lineHeight: customization.lineHeight,
+            }}
         >
             {renderTemplate()}
         </div>

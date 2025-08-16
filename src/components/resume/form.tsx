@@ -21,16 +21,16 @@ export const resumeSchema = z.object({
         id: z.string(),
         jobTitle: z.string().min(1, 'Job title is required'),
         company: z.string().min(1, 'Company is required'),
-        startDate: z.string(),
-        endDate: z.string(),
-        description: z.string(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+        description: z.string().optional(),
     })).optional(),
     education: z.array(z.object({
         id: z.string(),
         degree: z.string().min(1, 'Degree is required'),
         institution: z.string().min(1, 'Institution is required'),
-        startDate: z.string(),
-        endDate: z.string(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
         description: z.string().optional(),
     })).optional(),
     skills: z.string().optional(),
@@ -140,4 +140,3 @@ export function ResumeForm() {
         </div>
     );
 }
-
