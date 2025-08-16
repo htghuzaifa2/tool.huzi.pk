@@ -11,6 +11,27 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Copy, Code, Layers } from 'lucide-react';
 
+// Memoized utility to convert hex to rgba
+const hexToRgba = (hex: string, opacity: number): string => {
+    let r = 0, g = 0, b = 0;
+    // 3 digits
+    if (hex.length === 4) {
+        r = parseInt(hex[1] + hex[1], 16);
+        g = parseInt(hex[2] + hex[2], 16);
+        b = parseInt(hex[3] + hex[3], 16);
+    } 
+    // 6 digits
+    else if (hex.length === 7) {
+        r = parseInt(hex.slice(1, 3), 16);
+        g = parseInt(hex.slice(3, 5), 16);
+        b = parseInt(hex.slice(5, 7), 16);
+    } else {
+      return `rgba(0, 0, 0, ${opacity})`;
+    }
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+};
+
+
 export default function BoxShadowGeneratorPage() {
     const [horizontalOffset, setHorizontalOffset] = useState(10);
     const [verticalOffset, setVerticalOffset] = useState(10);
@@ -21,22 +42,7 @@ export default function BoxShadowGeneratorPage() {
     const [isInset, setIsInset] = useState(false);
     const { toast } = useToast();
 
-    const hexToRgba = (hex: string, opacity: number) => {
-        let r = 0, g = 0, b = 0;
-        if (hex.length === 4) {
-            r = parseInt(hex[1] + hex[1], 16);
-            g = parseInt(hex[2] + hex[2], 16);
-            b = parseInt(hex[3] + hex[3], 16);
-        } else if (hex.length === 7) {
-            r = parseInt(hex.slice(1, 3), 16);
-            g = parseInt(hex.slice(3, 5), 16);
-            b = parseInt(hex.slice(5, 7), 16);
-        }
-        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-    };
-
-    const shadowColorRgba = hexToRgba(shadowColor, shadowOpacity);
-    const boxShadowStyle = `${isInset ? 'inset ' : ''}${horizontalOffset}px ${verticalOffset}px ${blurRadius}px ${spreadRadius}px ${shadowColorRgba}`;
+    const boxShadowStyle = `${isInset ? 'inset ' : ''}${horizontalOffset}px ${verticalOffset}px ${blurRadius}px ${spreadRadius}px ${hexToRgba(shadowColor, shadowOpacity)}`;
 
     const copyToClipboard = () => {
         const codeToCopy = `box-shadow: ${boxShadowStyle};`;

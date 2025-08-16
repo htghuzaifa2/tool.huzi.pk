@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useToast } from '@/hooks/use-toast';
 
 export default function BmiCalculatorPage() {
     const [unit, setUnit] = useState<'metric' | 'imperial'>('metric');
@@ -21,42 +22,37 @@ export default function BmiCalculatorPage() {
 
     const [bmi, setBmi] = useState<number | null>(null);
     const [bmiCategory, setBmiCategory] = useState('');
-    const [error, setError] = useState('');
+    const { toast } = useToast();
 
     const calculateBmi = () => {
-        setError('');
         setBmi(null);
         setBmiCategory('');
 
-        let height = 0;
-        let weight = 0;
+        let heightMeters = 0;
+        let weightKilos = 0;
 
         if (unit === 'metric') {
             const h = parseFloat(heightCm);
             const w = parseFloat(weightKg);
-            if (h > 0 && w > 0) {
-                height = h / 100; // convert cm to meters
-                weight = w;
-            } else {
-                setError('Please enter valid height and weight.');
+            if (isNaN(h) || h <= 0 || isNaN(w) || w <= 0) {
+                toast({ title: 'Invalid Input', description: 'Please enter positive numbers for height and weight.', variant: 'destructive'});
                 return;
             }
+            heightMeters = h / 100;
+            weightKilos = w;
         } else { // Imperial
             const ft = parseFloat(heightFt);
             const inch = parseFloat(heightIn) || 0;
             const lbs = parseFloat(weightLbs);
-            if (ft > 0 && lbs > 0) {
-                height = (ft * 12) + inch;
-                weight = lbs;
-            } else {
-                setError('Please enter valid height and weight.');
+            if (isNaN(ft) || ft <= 0 || isNaN(inch) || inch < 0 || isNaN(lbs) || lbs <= 0) {
+                toast({ title: 'Invalid Input', description: 'Please enter a positive number for feet and pounds.', variant: 'destructive'});
                 return;
             }
+            heightMeters = ((ft * 12) + inch) * 0.0254;
+            weightKilos = lbs * 0.453592;
         }
 
-        const bmiValue = unit === 'metric' 
-            ? weight / (height * height) 
-            : (weight / (height * height)) * 703;
+        const bmiValue = weightKilos / (heightMeters * heightMeters);
 
         setBmi(bmiValue);
         setBmiCategory(getBmiCategory(bmiValue));
@@ -79,6 +75,13 @@ export default function BmiCalculatorPage() {
         }
     }
 
+    const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>, value: string) => {
+      // Allow only non-negative numbers
+      if (/^\d*\.?\d*$/.test(value)) {
+        setter(value);
+      }
+    }
+
 
     return (
         <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -95,21 +98,19 @@ export default function BmiCalculatorPage() {
                                 <TabsTrigger value="imperial">Imperial</TabsTrigger>
                             </TabsList>
                             <TabsContent value="metric" className="space-y-4 pt-4">
-                                <Input type="number" placeholder="Height (cm)" value={heightCm} onChange={e => setHeightCm(e.target.value)} />
-                                <Input type="number" placeholder="Weight (kg)" value={weightKg} onChange={e => setWeightKg(e.target.value)} />
+                                <Input type="number" placeholder="Height (cm)" value={heightCm} onChange={e => handleInputChange(setHeightCm, e.target.value)} />
+                                <Input type="number" placeholder="Weight (kg)" value={weightKg} onChange={e => handleInputChange(setWeightKg, e.target.value)} />
                             </TabsContent>
                             <TabsContent value="imperial" className="space-y-4 pt-4">
                                <div className="flex gap-4">
-                                 <Input type="number" placeholder="Height (ft)" value={heightFt} onChange={e => setHeightFt(e.target.value)} />
-                                 <Input type="number" placeholder="Height (in)" value={heightIn} onChange={e => setHeightIn(e.target.value)} />
+                                 <Input type="number" placeholder="Height (ft)" value={heightFt} onChange={e => handleInputChange(setHeightFt, e.target.value)} />
+                                 <Input type="number" placeholder="Height (in)" value={heightIn} onChange={e => handleInputChange(setHeightIn, e.target.value)} />
                                </div>
-                                <Input type="number" placeholder="Weight (lbs)" value={weightLbs} onChange={e => setWeightLbs(e.target.value)} />
+                                <Input type="number" placeholder="Weight (lbs)" value={weightLbs} onChange={e => handleInputChange(setWeightLbs, e.target.value)} />
                             </TabsContent>
                         </Tabs>
 
                         <Button onClick={calculateBmi} size="lg" className="w-full">Calculate BMI</Button>
-
-                        {error && <p className="text-red-500 text-center">{error}</p>}
                         
                         {bmi !== null && (
                             <Card className="text-center p-6 bg-muted">

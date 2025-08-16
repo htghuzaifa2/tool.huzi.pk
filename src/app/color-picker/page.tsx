@@ -21,9 +21,7 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
 }
 
 function rgbToHsl(r: number, g: number, b: number): { h: number; s: number; l: number } {
-    r /= 255;
-    g /= 255;
-    b /= 255;
+    r /= 255; g /= 255; b /= 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
     let h = 0, s = 0, l = (max + min) / 2;
 
@@ -40,6 +38,24 @@ function rgbToHsl(r: number, g: number, b: number): { h: number; s: number; l: n
     return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
 }
 
+function rgbToCmyk(r: number, g: number, b: number): { c: number; m: number; y: number; k: number } {
+    if (r === 0 && g === 0 && b === 0) return { c: 0, m: 0, y: 0, k: 100 };
+    const r_ = r / 255, g_ = g / 255, b_ = b / 255;
+    const k = 1 - Math.max(r_, g_, b_);
+    const c = (1 - r_ - k) / (1 - k);
+    const m = (1 - g_ - k) / (1 - k);
+    const y = (1 - b_ - k) / (1 - k);
+    return { c: Math.round(c * 100), m: Math.round(m * 100), y: Math.round(y * 100), k: Math.round(k * 100) };
+}
+
+function rgbToHwb(r: number, g: number, b: number): { h: number; w: number; b: number } {
+    r /= 255; g /= 255; b /= 255;
+    const { h } = rgbToHsl(r * 255, g * 255, b * 255);
+    const w = Math.min(r, g, b);
+    const bl = 1 - Math.max(r, g, b);
+    return { h, w: Math.round(w * 100), b: Math.round(bl * 100) };
+}
+
 
 export default function ColorPickerPage() {
     const [color, setColor] = useState('#3F51B5');
@@ -47,9 +63,13 @@ export default function ColorPickerPage() {
     
     const rgb = hexToRgb(color);
     const hsl = rgb ? rgbToHsl(rgb.r, rgb.g, rgb.b) : null;
+    const cmyk = rgb ? rgbToCmyk(rgb.r, rgb.g, rgb.b) : null;
+    const hwb = rgb ? rgbToHwb(rgb.r, rgb.g, rgb.b) : null;
 
     const rgbString = rgb ? `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` : 'N/A';
     const hslString = hsl ? `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)` : 'N/A';
+    const cmykString = cmyk ? `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)` : 'N/A';
+    const hwbString = hwb ? `hwb(${hwb.h}, ${hwb.w}%, ${hwb.b}%)` : 'N/A';
 
     const copyToClipboard = (text: string, format: string) => {
         navigator.clipboard.writeText(text);
@@ -89,9 +109,9 @@ export default function ColorPickerPage() {
                                 <CardContent className="p-4 flex justify-between items-center">
                                     <div>
                                         <p className="font-semibold">HEX</p>
-                                        <p className="font-mono text-muted-foreground">{color}</p>
+                                        <p className="font-mono text-muted-foreground">{color.toUpperCase()}</p>
                                     </div>
-                                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard(color, 'HEX')}>
+                                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard(color.toUpperCase(), 'HEX')}>
                                         <Copy className="h-5 w-5" />
                                     </Button>
                                 </CardContent>
@@ -114,6 +134,28 @@ export default function ColorPickerPage() {
                                         <p className="font-mono text-muted-foreground">{hslString}</p>
                                     </div>
                                     <Button variant="ghost" size="icon" onClick={() => copyToClipboard(hslString, 'HSL')}>
+                                        <Copy className="h-5 w-5" />
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                             <Card>
+                                <CardContent className="p-4 flex justify-between items-center">
+                                    <div>
+                                        <p className="font-semibold">CMYK</p>
+                                        <p className="font-mono text-muted-foreground">{cmykString}</p>
+                                    </div>
+                                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard(cmykString, 'CMYK')}>
+                                        <Copy className="h-5 w-5" />
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                             <Card>
+                                <CardContent className="p-4 flex justify-between items-center">
+                                    <div>
+                                        <p className="font-semibold">HWB</p>
+                                        <p className="font-mono text-muted-foreground">{hwbString}</p>
+                                    </div>
+                                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard(hwbString, 'HWB')}>
                                         <Copy className="h-5 w-5" />
                                     </Button>
                                 </CardContent>

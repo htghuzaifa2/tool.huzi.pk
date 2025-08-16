@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRightLeft, Banknote } from "lucide-react";
+import { ArrowRightLeft, Banknote, AlertTriangle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 // NOTE: The rates below are static and for demonstration purposes only.
 // For a production application, you would fetch these rates from a live API 
@@ -43,7 +44,7 @@ export default function CurrencyConverterPage() {
 
   useEffect(() => {
     const value = parseFloat(amount);
-    if (isNaN(value)) {
+    if (isNaN(value) || value < 0) {
       setResult(null);
       return;
     }
@@ -64,7 +65,7 @@ export default function CurrencyConverterPage() {
   };
   
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Allow only numbers and a single decimal point
+    // Allow only positive numbers and a single decimal point
     const value = e.target.value;
     if (/^\d*\.?\d*$/.test(value)) {
       setAmount(value);
@@ -83,6 +84,13 @@ export default function CurrencyConverterPage() {
                 <CardDescription>Quickly convert between major world currencies.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
+                <Alert variant="destructive" className="bg-yellow-50/80 border-yellow-200 text-yellow-800 [&>svg]:text-yellow-600">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertDescription>
+                    The exchange rates used are static and for demonstration only. Do not use for real financial transactions.
+                  </AlertDescription>
+                </Alert>
+
                 <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-2">
                     <div className="w-full space-y-2">
                         <label className="text-sm font-medium">From</label>
@@ -125,7 +133,6 @@ export default function CurrencyConverterPage() {
                 {result && (
                   <div className="text-center text-muted-foreground pt-4">
                       <p className="font-bold text-lg text-foreground">{`${amount} ${fromCurrency} = ${result} ${toCurrency}`}</p>
-                      <p className="text-xs mt-1">Rates are for informational purposes only.</p>
                   </div>
                 )}
             </CardContent>
