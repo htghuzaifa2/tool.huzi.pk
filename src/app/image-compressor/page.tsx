@@ -217,15 +217,18 @@ export default function ImageCompressorPage() {
                 {imageCompressorGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" className="border-none">
-                            <AccordionTrigger className="flex justify-center hover:no-underline [&>svg]:hidden p-0">
-                                  <Button
+                             <AccordionHeader className="flex justify-center">
+                                <AccordionTrigger asChild>
+                                    <Button
                                     size="lg"
-                                    className="w-auto bg-transparent text-foreground hover:bg-transparent"
-                                  >
-                                    <BookOpen className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
+                                    variant="ghost"
+                                    className="w-auto"
+                                    >
+                                    <BookOpen className="mr-2 h-5 w-5" />
                                     Read The Guide
-                                </Button>
-                            </AccordionTrigger>
+                                    </Button>
+                                </AccordionTrigger>
+                            </AccordionHeader>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>
                                     <CardHeader>
