@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
 import { Copy, CodeXml, ArrowRightLeft } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 
 // Using a div element's textContent to decode entities
 const decodeHtml = (html: string): string => {

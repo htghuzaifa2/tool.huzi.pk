@@ -160,9 +160,9 @@ export const tools = [
   },
   {
     icon: <CodeXml className="h-8 w-8" />,
-    href: "/html-entity-decoder",
-    title: "HTML Entity Decoder",
-    description: "Convert HTML entities back to normal text instantly.",
+    href: "/html-escaper-unescaper",
+    title: "HTML Escaper / Unescaper",
+    description: "Encode and decode special HTML characters for safe web display.",
   },
   {
     icon: <Layers className="h-8 w-8" />,
@@ -541,14 +541,15 @@ export const guides = [
   },
   {
     icon: <CodeXml className="h-8 w-8 text-primary" />,
-    href: "/guide#html-entity-decoder",
-    title: "HTML Entity Decoder Guide",
-    description: "How to decode HTML entities.",
+    href: "/guide#html-escaper-unescaper",
+    title: "HTML Escaper/Unescaper Guide",
+    description: "How to encode and decode HTML entities.",
     steps: [
-      "Navigate to the HTML Entity Decoder page.",
-      "Paste your text containing HTML entities (e.g., `&lt;p&gt;`) into the left text area.",
-      "The decoded text (e.g., `<p>`) will instantly appear in the right text area.",
-      "Click the copy button above the decoded text to copy it to your clipboard."
+      "Navigate to the HTML Escaper / Unescaper page.",
+      "Paste your text into the input field.",
+      "Click 'Encode' to convert special characters like '<' to '&lt;'.",
+      "Click 'Decode' to convert entities like '&lt;' back to '<'.",
+      "Click the copy button above the output to copy it to your clipboard."
     ]
   },
   {
