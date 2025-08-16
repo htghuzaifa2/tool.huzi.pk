@@ -22,7 +22,7 @@ export function ClickTracker() {
 
     const handleClick = () => {
       clickCount++;
-      if (clickCount >= 39) {
+      if (clickCount >= 55) {
         window.open('https://huzi.pk', '_blank');
         clickCount = 0;
       }
