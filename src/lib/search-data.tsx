@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge, Split } from "lucide-react";
 
 export const tools = [
   {
@@ -7,6 +7,12 @@ export const tools = [
     href: "/pdf-merger",
     title: "PDF Merger",
     description: "Combine multiple PDF files into one single document.",
+  },
+  {
+    icon: <Split className="h-8 w-8" />,
+    href: "/pdf-splitter",
+    title: "PDF Splitter",
+    description: "Split a single PDF into multiple smaller documents by page range.",
   },
   {
     icon: <Minimize className="h-8 w-8" />,
@@ -364,6 +370,19 @@ export const guides = [
       "Once uploaded, you can drag the files in the list to reorder them.",
       "Click the 'Merge PDFs' button to combine them.",
       "Your browser will automatically download the single, merged PDF file."
+    ]
+  },
+  {
+    icon: <Split className="h-8 w-8 text-primary" />,
+    href: "/guide#pdf-splitter",
+    title: "PDF Splitter Guide",
+    description: "How to split a PDF into multiple files.",
+    steps: [
+      "Go to the PDF Splitter page.",
+      "Upload your PDF file.",
+      "In the 'Page ranges' input, specify which pages you want to extract. For example, '1-3' will create one PDF with pages 1, 2, and 3. '1, 3-5' will create two PDFs: one with page 1, and another with pages 3, 4, and 5.",
+      "Click the 'Split & Download ZIP' button.",
+      "A ZIP file containing your new, smaller PDFs will be downloaded."
     ]
   },
   {

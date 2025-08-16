@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const toolUrls: MetadataRoute.Sitemap = [
     '/pdf-merger',
+    '/pdf-splitter',
     '/text-tools',
     '/unit-converter',
     '/currency-converter',
