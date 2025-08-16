@@ -3,6 +3,12 @@ import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, I
 
 export const tools = [
   {
+    icon: <FileText className="h-8 w-8" />,
+    href: "/resume-builder",
+    title: "Resume Builder",
+    description: "Create and customize professional resumes with a live preview.",
+  },
+  {
     icon: <Merge className="h-8 w-8" />,
     href: "/pdf-merger",
     title: "PDF Merger",
@@ -287,7 +293,7 @@ export const tools = [
   {
     icon: <Type className="h-8 w-8" />,
     href: "/word-counter",
-    title: "Word Counter",
+    title: "Word & Character Counter",
     description: "Count words, characters, sentences, and paragraphs in your text.",
   },
   {
@@ -359,6 +365,19 @@ export const tools = [
 ];
 
 export const guides = [
+  {
+    icon: <FileText className="h-8 w-8 text-primary" />,
+    href: "/guide#resume-builder",
+    title: "Resume Builder Guide",
+    description: "How to create your professional resume.",
+    steps: [
+      "Navigate to the Resume Builder page.",
+      "Fill in your personal and professional details in the form on the left.",
+      "Use the 'Add Experience' and 'Add Education' buttons to add multiple entries.",
+      "As you type, the resume preview on the right will update in real-time.",
+      "Once you are satisfied with your resume, click the 'Download as PDF' button."
+    ]
+  },
   {
     icon: <Merge className="h-8 w-8 text-primary" />,
     href: "/guide#pdf-merger",
