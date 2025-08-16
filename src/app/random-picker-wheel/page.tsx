@@ -6,17 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from "@/hooks/use-toast";
-import { Gift, Play, RotateCw } from 'lucide-react';
+import { Gift, Play } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import confetti from 'canvas-confetti';
 
-const colors = [
-  "#FFC107", "#FF5722", "#E91E63", "#9C27B0", "#3F51B5", 
-  "#2196F3", "#00BCD4", "#4CAF50", "#CDDC39", "#FF9800"
-];
+const colors = ["#3F51B5", "#7952B3", "#5C6BC0", "#9575CD", "#7E8CCB", "#B3A2D8"];
+
 
 export default function RandomPickerWheelPage() {
     const [optionsText, setOptionsText] = useState('Apple\nBanana\nOrange\nGrape\nStrawberry\nMango');
@@ -44,29 +42,29 @@ export default function RandomPickerWheelPage() {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
         
-        const arc = Math.PI / (options.length / 2);
-        const startAngle = 0;
-        const outsideRadius = 200;
-        const textRadius = 160;
-        const insideRadius = 50;
+        const arc = Math.PI * 2 / options.length;
+        const outsideRadius = canvas.width / 2 - 10;
+        const textRadius = outsideRadius * 0.75;
+        const insideRadius = 40;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = '#333';
+        ctx.strokeStyle = '#FFFFFF';
         ctx.lineWidth = 2;
-        ctx.font = 'bold 16px Arial';
+        ctx.font = 'bold 16px Inter, sans-serif';
         
         ctx.save();
         ctx.translate(canvas.width / 2, canvas.height / 2);
 
         for (let i = 0; i < options.length; i++) {
-            const angle = startAngle + i * arc;
+            const angle = i * arc;
             ctx.fillStyle = colors[i % colors.length];
 
             ctx.beginPath();
+            ctx.moveTo(0,0);
             ctx.arc(0, 0, outsideRadius, angle, angle + arc, false);
-            ctx.arc(0, 0, insideRadius, angle + arc, angle, true);
-            ctx.stroke();
+            ctx.closePath();
             ctx.fill();
+            ctx.stroke();
 
             ctx.save();
             ctx.fillStyle = "white";
@@ -79,15 +77,16 @@ export default function RandomPickerWheelPage() {
             ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
             ctx.restore();
         }
-        ctx.restore();
-
-        // Draw pointer
+        
+        // Pointer
         ctx.fillStyle = '#333';
         ctx.beginPath();
-        ctx.moveTo(canvas.width / 2 + outsideRadius + 5, canvas.height / 2);
-        ctx.lineTo(canvas.width / 2 + outsideRadius - 20, canvas.height / 2 - 10);
-        ctx.lineTo(canvas.width / 2 + outsideRadius - 20, canvas.height / 2 + 10);
+        ctx.moveTo(outsideRadius - 5, -4);
+        ctx.lineTo(outsideRadius + 15, 0);
+        ctx.lineTo(outsideRadius - 5, 4);
+        ctx.closePath();
         ctx.fill();
+        ctx.restore();
 
     }, [options]);
 
@@ -97,7 +96,18 @@ export default function RandomPickerWheelPage() {
     }, [optionsText]);
 
     useEffect(() => {
-        drawWheel();
+        const resizeCanvas = () => {
+          const canvas = canvasRef.current;
+          if (canvas) {
+            const size = Math.min(canvas.parentElement!.clientWidth * 0.9, 450);
+            canvas.width = size;
+            canvas.height = size;
+            drawWheel();
+          }
+        };
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        return () => window.removeEventListener('resize', resizeCanvas);
     }, [drawWheel]);
 
     const handleSpin = () => {
@@ -107,21 +117,24 @@ export default function RandomPickerWheelPage() {
         const canvas = canvasRef.current;
         if (!canvas) return;
         
-        let angle = 0;
-        const spinAngleStart = Math.random() * 10 + 10; // Random start velocity
+        const spinAngleStart = Math.random() * 10 + 10;
         let spinTime = 0;
-        const spinTimeTotal = Math.random() * 3000 + 4000; // Random duration
+        const spinTimeTotal = Math.random() * 4000 + 5000;
+        let currentAngle = parseFloat(canvas.dataset.rotation || '0');
 
-        const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+        const easeOut = (t: number, b: number, c: number, d: number) => {
+            const ts = (t /= d) * t;
+            const tc = ts * t;
+            return b + c * (tc + -3 * ts + 3 * t);
+        };
         
         const rotateWheel = () => {
             spinTime += 20;
             if (spinTime >= spinTimeTotal) {
-                // finished
-                const degrees = (angle * 180) / Math.PI;
-                const arcd = (Math.PI / (options.length / 2)) * 180 / Math.PI;
-                const index = Math.floor(((360 - degrees % 360) % 360) / arcd);
-                const winner = options[index];
+                const arcSize = 360 / options.length;
+                const finalAngle = currentAngle % 360;
+                const winningSegment = Math.floor((360 - finalAngle) / arcSize);
+                const winner = options[winningSegment];
                 
                 toast({
                     title: "We have a winner!",
@@ -134,13 +147,14 @@ export default function RandomPickerWheelPage() {
                     origin: { y: 0.6 }
                 });
 
+                canvas.dataset.rotation = String(currentAngle);
                 setIsSpinning(false);
                 return;
             }
 
-            const spinAngle = spinAngleStart - easeOut(spinTime / spinTimeTotal) * spinAngleStart;
-            angle += (spinAngle * Math.PI) / 180;
-            canvas.style.transform = `rotate(${angle}rad)`;
+            const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+            currentAngle += spinAngle;
+            canvas.style.transform = `rotate(${currentAngle}deg)`;
             requestAnimationFrame(rotateWheel);
         };
         
@@ -160,7 +174,7 @@ export default function RandomPickerWheelPage() {
                         <CardDescription>Add a list of options, spin the wheel, and let fate decide a winner!</CardDescription>
                     </CardHeader>
                     <CardContent className="grid md:grid-cols-2 gap-8 items-center">
-                        <div className="space-y-4">
+                        <div className="space-y-4 md:order-last">
                             <Label htmlFor="options-input">Enter options (one per line)</Label>
                             <Textarea
                                 id="options-input"
@@ -170,12 +184,16 @@ export default function RandomPickerWheelPage() {
                                 className="min-h-[250px] font-mono"
                                 disabled={isSpinning}
                             />
-                             <Button onClick={handleSpin} disabled={isSpinning || options.length < 2} className="w-full" size="lg">
-                                <Play className="mr-2" /> {isSpinning ? 'Spinning...' : 'Spin the Wheel'}
-                            </Button>
                         </div>
-                        <div className="flex items-center justify-center h-[450px]">
-                           <canvas ref={canvasRef} width="450" height="450" className="transition-transform duration-[4000ms] ease-out"></canvas>
+                        <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px]">
+                           <div style={{transform: `rotate(0deg)`}} ref={canvasRef} className="transition-transform duration-[5000ms] ease-out"></div>
+                           <Button 
+                             onClick={handleSpin}
+                             disabled={isSpinning || options.length < 2}
+                             className="absolute z-10 w-24 h-24 rounded-full border-4 border-background text-lg font-bold shadow-lg"
+                           >
+                             SPIN
+                           </Button>
                         </div>
                     </CardContent>
                 </Card>
