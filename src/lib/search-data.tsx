@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail } from "lucide-react";
 
 export const tools = [
   {
@@ -13,6 +13,12 @@ export const tools = [
     href: "/text-diff-highlighter",
     title: "Text Diff Highlighter",
     description: "Compare two blocks of text and highlight the differences.",
+  },
+  {
+    icon: <Voicemail className="h-8 w-8" />,
+    href: "/vowel-consonant-counter",
+    title: "Vowel & Consonant Counter",
+    description: "Count the number of vowels and consonants in any text.",
   },
   {
     icon: <Ruler className="h-8 w-8" />,
