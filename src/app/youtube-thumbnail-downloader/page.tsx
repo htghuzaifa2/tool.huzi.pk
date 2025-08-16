@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Youtube, Link, Download, BookOpen, ChevronDown } from 'lucide-react';
+import { Youtube, Link, Download } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
@@ -96,13 +96,15 @@ export default function YouTubeThumbnailDownloaderPage() {
     };
 
     const handleGuideClick = () => {
-        // Wait for the accordion to open/close before scrolling
-        setTimeout(() => {
+        // The content is not immediately available, so we wait for the next render tick.
+        requestAnimationFrame(() => {
             const guideElement = document.getElementById('guide-section');
             if (guideElement) {
-                guideElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const yOffset = -80; // a little space from the top
+                const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({top: y, behavior: 'smooth'});
             }
-        }, 100);
+        });
     };
 
     return (

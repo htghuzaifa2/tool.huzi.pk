@@ -44,6 +44,18 @@ export default function HtmlEscaperUnescaperPage() {
     const { toast } = useToast();
     const htmlEscaperGuide = guides.find(g => g.href.includes('html-escaper-unescaper'));
 
+    const handleGuideClick = () => {
+        // The content is not immediately available, so we wait for the next render tick.
+        requestAnimationFrame(() => {
+            const guideElement = document.getElementById('guide-section');
+            if (guideElement) {
+                const yOffset = -80; // a little space from the top
+                const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }
+        });
+    };
+
     const handleEncode = () => {
         setOutput(encodeHtml(input));
         toast({ title: 'Success', description: 'Text has been HTML-encoded.' });
@@ -119,8 +131,8 @@ export default function HtmlEscaperUnescaperPage() {
 
                 {htmlEscaperGuide && (
                     <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger>
+                        <AccordionItem value="guide" id="guide-section" className="border-none flex flex-col items-center">
+                            <AccordionTrigger onClick={handleGuideClick}>
                                 <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
