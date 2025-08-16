@@ -35,7 +35,7 @@ const Stopwatch = () => {
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [isRunning]);
+    }, [isRunning, time]);
 
     const handleStartPause = () => setIsRunning(!isRunning);
     const handleReset = () => {
