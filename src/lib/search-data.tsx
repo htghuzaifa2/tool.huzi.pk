@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows } from "lucide-react";
 
 export const tools = [
   {
@@ -7,6 +7,12 @@ export const tools = [
     href: "/text-tools",
     title: "Text Tools",
     description: "Manipulate text with tools for case conversion and more.",
+  },
+  {
+    icon: <GitCompareArrows className="h-8 w-8" />,
+    href: "/text-diff-highlighter",
+    title: "Text Diff Highlighter",
+    description: "Compare two blocks of text and highlight the differences.",
   },
   {
     icon: <Ruler className="h-8 w-8" />,

@@ -45,6 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/local-storage-editor',
     '/base-converter',
     '/ip-address-finder',
+    '/text-diff-highlighter',
   ].map((url) => ({
     url: `${baseUrl}${url}`,
     lastModified: new Date(),
