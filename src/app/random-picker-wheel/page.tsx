@@ -99,23 +99,18 @@ export default function RandomPickerWheelPage() {
         
         setIsSpinning(true);
         
-        // 1. Determine the winner beforehand for true randomness
         const winnerIndex = Math.floor(Math.random() * options.length);
         const winner = options[winnerIndex];
         const arcSize = 360 / options.length;
         
-        // 2. Calculate where the wheel should stop
-        // Add a small random offset inside the winning slice for variety
         const randomOffset = (Math.random() - 0.5) * arcSize * 0.8;
         const stopAngle = (winnerIndex * arcSize) + (arcSize / 2) + randomOffset;
         
-        // 3. Add multiple rotations for a good spinning effect
-        const totalRotations = Math.floor(Math.random() * 5) + 5; // 5 to 9 full spins
+        const totalRotations = Math.floor(Math.random() * 5) + 5;
         const finalAngle = (totalRotations * 360) + (360 - stopAngle);
 
         setCurrentAngle(prev => prev + finalAngle);
         
-        // 4. Announce winner after animation
         setTimeout(() => {
             toast({
                 title: "We have a winner!",
@@ -129,7 +124,7 @@ export default function RandomPickerWheelPage() {
             });
 
             setIsSpinning(false);
-        }, 5000); // 5s to match CSS transition
+        }, 5000);
     };
 
     return (
@@ -156,14 +151,14 @@ export default function RandomPickerWheelPage() {
                             />
                         </div>
                         <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px]">
-                            <style jsx>{`
-                                .spinning-wheel {
-                                    transform: rotate(${currentAngle}deg);
-                                    transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
-                                }
-                            `}</style>
-                           <div className={`absolute w-full h-full ${isSpinning ? 'spinning-wheel' : ''}`}>
-                               <canvas ref={canvasRef}></canvas>
+                           <div className="absolute w-full h-full">
+                               <canvas 
+                                 ref={canvasRef}
+                                 style={{
+                                     transform: `rotate(${currentAngle}deg)`,
+                                     transition: isSpinning ? 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none',
+                                 }}
+                               ></canvas>
                            </div>
                             <div className="absolute w-full h-full flex items-center justify-center pointer-events-none">
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-[16px] border-t-card-foreground"></div>
@@ -202,7 +197,7 @@ export default function RandomPickerWheelPage() {
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
-                </Card>
+                )}
             </div>
         </div>
     );
