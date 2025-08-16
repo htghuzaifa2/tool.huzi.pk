@@ -14,7 +14,7 @@ import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import confetti from 'canvas-confetti';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-// New, more professional color palettes for the wheel
+// Professional color palettes that match the website's themes
 const themeColors = {
     light: ['#5E5CE6', '#7879F1', '#4831D4', '#6C63FF', '#3D3B94', '#939DFF'],
     dark: ['#63E6BE', '#A6F6E2', '#42D9A7', '#25B88A', '#74E8C0', '#1A9E72'],
@@ -33,7 +33,7 @@ const getCurrentThemeColors = () => {
 
 export default function RandomPickerWheelPage() {
     const [newOption, setNewOption] = useState('');
-    const [options, setOptions] = useState<string[]>(['Apple', 'Banana', 'Orange', 'Grape', 'Strawberry', 'Mango']);
+    const [options, setOptions] = useState<string[]>(['Prize 1', 'Better Luck Next Time', '2x Bonus', 'Another Spin', 'Grand Prize', 'Small Reward']);
     const [isSpinning, setIsSpinning] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const { toast } = useToast();
@@ -76,13 +76,17 @@ export default function RandomPickerWheelPage() {
             ctx.closePath();
             ctx.fill();
 
-            // Add a subtle border to each segment for better definition
             ctx.strokeStyle = 'hsl(var(--background))';
             ctx.lineWidth = 2;
             ctx.stroke();
             
             ctx.save();
-            ctx.fillStyle = "hsl(var(--card-foreground))";
+            // High-contrast text with a shadow for readability on all colors
+            ctx.fillStyle = "#FFF";
+            ctx.shadowColor = "rgba(0,0,0,0.5)";
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 1;
+            ctx.shadowOffsetY = 1;
             ctx.font = 'bold 16px Inter, sans-serif';
             ctx.translate(
                 center + textRadius * Math.cos(angle + arc / 2),
@@ -276,5 +280,3 @@ export default function RandomPickerWheelPage() {
         </div>
     );
 }
-
-    
