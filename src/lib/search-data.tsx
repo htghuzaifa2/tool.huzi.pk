@@ -1,5 +1,5 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift } from "lucide-react";
 
 export const tools = [
   {
@@ -115,6 +115,12 @@ export const tools = [
     href: "/sentence-shuffler",
     title: "Sentence Shuffler",
     description: "Randomly shuffle sentences in a paragraph while keeping punctuation intact.",
+  },
+   {
+    icon: <Gift className="h-8 w-8" />,
+    href: "/random-picker-wheel",
+    title: "Random Picker Wheel",
+    description: "Add a list of options and spin a wheel to randomly choose one.",
   },
   {
     icon: <Braces className="h-8 w-8" />,
@@ -462,6 +468,19 @@ export const guides = [
       "Set a 'shift key' (a number between 1 and 25).",
       "Click 'Encrypt' to scramble the text or 'Decrypt' to unscramble it.",
       "The result will appear in the output box, ready to be copied."
+    ]
+  },
+  {
+    icon: <Gift className="h-8 w-8 text-primary" />,
+    href: "/guide#random-picker-wheel",
+    title: "Random Picker Wheel Guide",
+    description: "How to randomly select an item from a list.",
+    steps: [
+        "Go to the Random Picker Wheel page.",
+        "Enter your items in the text area, with each item on a new line.",
+        "Click the 'Spin the Wheel' button.",
+        "Watch as the options are highlighted, then see the winner revealed.",
+        "You can copy the winner's name using the copy button."
     ]
   },
    {
