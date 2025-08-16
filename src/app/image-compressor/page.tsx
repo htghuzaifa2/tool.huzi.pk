@@ -216,17 +216,19 @@ export default function ImageCompressorPage() {
                 
                 {imageCompressorGuide && (
                     <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" className="border-none flex flex-col items-center">
-                            <AccordionTrigger asChild>
-                                <Button
-                                size="lg"
-                                variant="ghost"
-                                className="w-auto"
-                                >
-                                <BookOpen className="mr-2 h-5 w-5" />
-                                Read The Guide
-                                </Button>
-                            </AccordionTrigger>
+                        <AccordionItem value="guide" className="border-none">
+                            <div className="flex justify-center">
+                                <AccordionTrigger asChild>
+                                    <Button
+                                        size="lg"
+                                        variant="ghost"
+                                        className="w-auto"
+                                    >
+                                        <BookOpen className="mr-2 h-5 w-5" />
+                                        Read The Guide
+                                    </Button>
+                                </AccordionTrigger>
+                            </div>
                             <AccordionContent className="pt-6 w-full">
                                 <Card>
                                     <CardHeader>
