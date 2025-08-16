@@ -15,10 +15,10 @@ import confetti from 'canvas-confetti';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 const themeColors = {
-    light: ['#3F51B5', '#7952B3', '#5C6BC0', '#9575CD', '#7E8CCB', '#B3A2D8'],
-    dark: ['#9FA8DA', '#B39DDB', '#7986CB', '#D1C4E9', '#AAB3E2', '#DCD3F0'],
-    blue: ['#64B5F6', '#4DD0E1', '#90CAF9', '#80DEEA', '#A5D6F7', '#B2EBF2'],
-    orange: ['#FFB74D', '#FF8A65', '#FFCC80', '#FFAB91', '#FDD8B1', '#FFCBBF'],
+    light: ['#5C6BC0', '#7986CB', '#9FA8DA', '#3F51B5', '#A5D6A7', '#81C784'],
+    dark: ['#90A4AE', '#B0BEC5', '#78909C', '#607D8B', '#546E7A', '#CFD8DC'],
+    blue: ['#42A5F5', '#64B5F6', '#90CAF9', '#1E88E5', '#2196F3', '#BBDEFB'],
+    orange: ['#FFA726', '#FFB74D', '#FFCC80', '#FB8C00', '#F57C00', '#FFE0B2'],
 };
 
 const getCurrentThemeColors = () => {
@@ -213,7 +213,7 @@ export default function RandomPickerWheelPage() {
                                 <Play className="mr-2" /> {isSpinning ? 'Spinning...' : 'Spin The Wheel'}
                             </Button>
                         </div>
-                        <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px]">
+                        <div className="relative flex items-center justify-center w-full min-h-[300px] md:min-h-[450px] overflow-hidden">
                             {/* Pointer */}
                             <div 
                                 className="absolute top-0 left-1/2 -translate-x-1/2 z-10" 
