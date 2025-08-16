@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides as allGuides } from "@/lib/search-data";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowUp } from "lucide-react";
+import { ArrowRight, ArrowUp, Minimize } from "lucide-react";
 
 const ITEMS_PER_PAGE = 25;
 
@@ -32,25 +32,6 @@ export default function GuidePage() {
        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-  
-  // Add a new guide for the image compressor
-  if (!allGuides.find(g => g.href.includes('image-compressor'))) {
-      allGuides.push({
-        icon: <Minimize className="h-8 w-8 text-primary" />,
-        href: "/guide#image-compressor",
-        title: "Image Compressor Guide",
-        description: "How to compress images.",
-        steps: [
-          "Go to the Image Compressor page.",
-          "Upload an image file (JPG, PNG, or WebP).",
-          "Adjust the quality slider to your desired compression level.",
-          "Click 'Compress Image' to see the result and the new file size.",
-          "Click 'Download' to save the compressed image."
-        ]
-      });
-      allGuides.sort((a,b) => a.title.localeCompare(b.title));
-  }
-
 
   return (
     <div className="container mx-auto py-10">
