@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { ArrowRightLeft } from "lucide-react"
+import { ArrowRightLeft, Ruler } from "lucide-react"
 
 type Category = "length" | "mass" | "temperature";
 
@@ -43,6 +43,7 @@ export default function UnitConverterPage() {
     const unitKeys = Object.keys(currentUnits);
     setFromUnit(unitKeys[0]);
     setToUnit(unitKeys[1]);
+    setInputValue("1");
   }, [category]);
 
   useEffect(() => {
@@ -67,12 +68,10 @@ export default function UnitConverterPage() {
       output = valueInBase / conversionFactors[toUnit];
     }
     
-    // Use toLocaleString for better number formatting
-    setResult(Number(output.toFixed(4)).toLocaleString(undefined, { maximumFractionDigits: 4 }));
+    setResult(Number(output.toFixed(5)).toString());
   }, [inputValue, fromUnit, toUnit, category]);
 
   const handleInputChange = (value: string) => {
-    // Allow negative numbers and a single decimal point for temperature
     const regex = category === 'temperature' ? /^-?\d*\.?\d*$/ : /^\d*\.?\d*$/;
     if (regex.test(value)) {
       setInputValue(value);
@@ -83,6 +82,9 @@ export default function UnitConverterPage() {
     <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
+           <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                <Ruler className="w-8 h-8" />
+            </div>
           <h1 className="text-4xl font-bold font-headline">Unit Converter</h1>
           <p className="text-muted-foreground mt-2">
             Quickly convert between different units of measurement.

@@ -43,7 +43,6 @@ export default function BaseConverterPage() {
         }
 
         try {
-            // Use BigInt for arbitrary-precision arithmetic, crucial for large numbers in different bases.
             const decimalValue = BigInt((fromBase === '2' ? '0b' : fromBase === '8' ? '0o' : fromBase === '16' ? '0x' : '') + inputValue);
             const convertedValue = decimalValue.toString(parseInt(toBase)).toUpperCase();
             setResult(convertedValue);
@@ -60,7 +59,6 @@ export default function BaseConverterPage() {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.toLowerCase();
-        // Allow empty input to clear the field
         if (value === '' || baseValidationRegex[fromBase].test(value)) {
             setInputValue(value);
         }
@@ -83,7 +81,6 @@ export default function BaseConverterPage() {
 
     const handleFromBaseChange = (v: string) => {
       setFromBase(v as Base);
-      // Reset input if the current value is invalid for the new base
       if (!baseValidationRegex[v as Base].test(inputValue)) {
         setInputValue('');
       }

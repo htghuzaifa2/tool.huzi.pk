@@ -21,8 +21,14 @@ export default function DailymotionThumbnailDownloaderPage() {
     const [isLoading, setIsLoading] = useState(false);
     const { toast } = useToast();
 
+    const getVideoId = (url: string) => {
+        const match = url.match(/dailymotion.com\/(video|embed\/video|swf)\/([a-zA-Z0-9]+)/);
+        return match ? match[2] : null;
+    }
+
     const handleGetThumbnail = async () => {
-        if (!videoUrl) {
+        const videoId = getVideoId(videoUrl);
+        if (!videoId) {
             toast({
                 title: "Invalid URL",
                 description: "Please enter a valid Dailymotion video URL.",
@@ -35,35 +41,22 @@ export default function DailymotionThumbnailDownloaderPage() {
         setThumbnail(null);
 
         try {
-            // Dailymotion doesn't have a direct public API endpoint, so we use a CORS proxy.
-            // Note: This relies on a free, public CORS proxy which may have rate limits.
-            const oembedUrl = `https://www.dailymotion.com/services/oembed?url=${encodeURIComponent(videoUrl)}`;
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(oembedUrl)}`;
-            
-            const response = await fetch(proxyUrl);
-            
+            const thumbnailUrl = `https://www.dailymotion.com/thumbnail/video/${videoId}`;
+            // Check if image exists
+            const response = await fetch(thumbnailUrl);
             if (!response.ok) {
-                 throw new Error(`Could not fetch data from Dailymotion. Please check the URL.`);
+                 throw new Error(`Thumbnail not found. The video may be private or deleted.`);
             }
-            
-            const corsData = await response.json();
-            const data = JSON.parse(corsData.contents);
-            
-            if (data.thumbnail_url) {
-                setThumbnail({
-                    quality: 'High Quality',
-                    url: data.thumbnail_url.replace(/\\/g, ''),
-                    width: data.width,
-                    height: data.height,
-                });
-            } else {
-                 throw new Error(`Thumbnail not found for this Dailymotion video.`);
-            }
+
+            setThumbnail({
+                quality: 'High Quality',
+                url: thumbnailUrl,
+            });
 
         } catch (err: any) {
             toast({
                 title: "Error",
-                description: err.message || `Failed to fetch thumbnail. The URL may be incorrect or the video private.`,
+                description: err.message || `Failed to fetch thumbnail.`,
                 variant: "destructive",
             });
         } finally {
@@ -73,9 +66,7 @@ export default function DailymotionThumbnailDownloaderPage() {
     
     const handleDownload = async (url: string) => {
         try {
-            // Use the same CORS proxy for downloading the image blob to avoid tainted canvas issues.
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-            const response = await fetch(proxyUrl);
+            const response = await fetch(url);
             if (!response.ok) throw new Error('Could not fetch image for download.');
             
             const blob = await response.blob();
@@ -132,10 +123,9 @@ export default function DailymotionThumbnailDownloaderPage() {
                                     </div>
                                     <div className="p-4">
                                         <CardTitle className="text-lg">{thumbnail.quality}</CardTitle>
-                                        <CardDescription>{thumbnail.width} x {thumbnail.height}</CardDescription>
                                     </div>
                                 </CardHeader>
-                                <CardContent className="mt-auto">
+                                <CardContent className="mt-auto p-4">
                                     <Button className="w-full" onClick={() => handleDownload(thumbnail.url)}>
                                         <Download className="mr-2 h-4 w-4" /> Download
                                     </Button>

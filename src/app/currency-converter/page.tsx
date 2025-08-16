@@ -7,11 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRightLeft, Banknote, AlertTriangle } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-// NOTE: The rates below are static and for demonstration purposes only.
-// For a production application, you would fetch these rates from a live API 
-// (e.g., European Central Bank, Open Exchange Rates) to get the latest data.
 const currencyData = {
     "USD": { "name": "United States Dollar", "rate": 1 },
     "EUR": { "name": "Euro", "rate": 0.93 },
@@ -52,7 +49,6 @@ export default function CurrencyConverterPage() {
     const rateFrom = currencyData[fromCurrency].rate;
     const rateTo = currencyData[toCurrency].rate;
     
-    // Convert amount to USD first, then to the target currency
     const amountInUsd = value / rateFrom;
     const convertedAmount = amountInUsd * rateTo;
 
@@ -65,7 +61,6 @@ export default function CurrencyConverterPage() {
   };
   
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Allow only positive numbers and a single decimal point
     const value = e.target.value;
     if (/^\d*\.?\d*$/.test(value)) {
       setAmount(value);
@@ -84,8 +79,9 @@ export default function CurrencyConverterPage() {
                 <CardDescription>Quickly convert between major world currencies.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-                <Alert variant="destructive" className="bg-yellow-50/80 border-yellow-200 text-yellow-800 [&>svg]:text-yellow-600">
+                <Alert variant="default" className="bg-yellow-50/80 border-yellow-200 text-yellow-900 dark:bg-yellow-900/20 dark:border-yellow-800/60 dark:text-yellow-200 [&>svg]:text-yellow-600 dark:[&>svg]:text-yellow-300">
                   <AlertTriangle className="h-4 w-4" />
+                  <AlertTitle className="font-semibold">Disclaimer</AlertTitle>
                   <AlertDescription>
                     The exchange rates used are static and for demonstration only. Do not use for real financial transactions.
                   </AlertDescription>

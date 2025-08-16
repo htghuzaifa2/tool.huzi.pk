@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
-import { Copy } from "lucide-react"
+import { Copy, CaseSensitive } from "lucide-react"
 
 const toTitleCase = (str: string) => {
   return str.replace(
@@ -22,11 +22,12 @@ const toSentenceCase = (str: string) => {
 
 const invertCase = (str: string) => {
     return str.split('').map(char => {
-        if (char === char.toUpperCase()) {
+        if (char >= 'A' && char <= 'Z') {
             return char.toLowerCase();
-        } else {
+        } else if (char >= 'a' && char <= 'z') {
             return char.toUpperCase();
         }
+        return char;
     }).join('');
 };
 
@@ -38,9 +39,9 @@ export default function TextToolsPage() {
     const trimmedText = text.trim();
     const words = trimmedText ? trimmedText.split(/\s+/).length : 0;
     const characters = text.length;
-    const lines = text.split(/\r\n|\r|\n/).filter(line => line.trim() !== '').length;
+    const sentences = trimmedText ? (trimmedText.match(/[.!?]+(?:\s|$)/g) || []).length : 0;
     const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0).length;
-    return { words, characters, lines, paragraphs };
+    return { words, characters, sentences, paragraphs };
   }, [text]);
 
   const copyToClipboard = () => {
@@ -62,6 +63,9 @@ export default function TextToolsPage() {
     <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
+            <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                <CaseSensitive className="w-8 h-8" />
+            </div>
           <h1 className="text-4xl md:text-5xl font-bold font-headline">Text Manipulation Tools</h1>
           <p className="text-muted-foreground mt-2">
             A versatile set of tools to convert, count, and analyze your text.
@@ -129,8 +133,8 @@ export default function TextToolsPage() {
                     </Card>
                      <Card>
                         <CardHeader>
-                            <CardTitle className="text-4xl font-bold">{stats.lines}</CardTitle>
-                            <p className="text-muted-foreground">Lines</p>
+                            <CardTitle className="text-4xl font-bold">{stats.sentences}</CardTitle>
+                            <p className="text-muted-foreground">Sentences</p>
                         </CardHeader>
                     </Card>
                     <Card>

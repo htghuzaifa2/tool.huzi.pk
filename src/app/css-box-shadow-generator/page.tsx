@@ -11,20 +11,17 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Copy, Code, Layers } from 'lucide-react';
 
-// Memoized utility to convert hex to rgba
 const hexToRgba = (hex: string, opacity: number): string => {
     let r = 0, g = 0, b = 0;
-    // 3 digits
-    if (hex.length === 4) {
-        r = parseInt(hex[1] + hex[1], 16);
-        g = parseInt(hex[2] + hex[2], 16);
-        b = parseInt(hex[3] + hex[3], 16);
-    } 
-    // 6 digits
-    else if (hex.length === 7) {
-        r = parseInt(hex.slice(1, 3), 16);
-        g = parseInt(hex.slice(3, 5), 16);
-        b = parseInt(hex.slice(5, 7), 16);
+    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+        let c = hex.substring(1).split('');
+        if (c.length === 3) {
+            c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        const numeric = c.map(i => parseInt(i, 16));
+        r = (numeric[0] * 16) + numeric[1];
+        g = (numeric[2] * 16) + numeric[3];
+        b = (numeric[4] * 16) + numeric[5];
     } else {
       return `rgba(0, 0, 0, ${opacity})`;
     }

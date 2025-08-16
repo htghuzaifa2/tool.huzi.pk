@@ -35,22 +35,18 @@ export default function VimeoThumbnailDownloaderPage() {
         setThumbnail(null);
 
         try {
-            // Vimeo's oEmbed API has CORS issues, so we use a public proxy to fetch the data.
             const oembedUrl = `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(videoUrl)}`;
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(oembedUrl)}`;
 
-            const response = await fetch(proxyUrl);
+            const response = await fetch(oembedUrl);
             
             if (!response.ok) {
                  throw new Error(`Could not fetch data from Vimeo. Please check the URL.`);
             }
             
-            const corsData = await response.json();
-            const data = JSON.parse(corsData.contents);
+            const data = await response.json();
             
             if (data.thumbnail_url) {
-                // Try to get the highest resolution by replacing the default size in the URL
-                const highResUrl = data.thumbnail_url.replace(/_(\d+)\.jpg$/, '_1920x1080.jpg');
+                const highResUrl = data.thumbnail_url.replace(/_(\d+)\.jpg$/, '_1920.jpg');
                 setThumbnail({
                     quality: 'High Quality',
                     url: highResUrl,
@@ -74,12 +70,15 @@ export default function VimeoThumbnailDownloaderPage() {
     
     const handleDownload = async (url: string) => {
         try {
-            // Use the same CORS proxy for downloading the image blob to avoid tainted canvas issues.
+            // Using a CORS proxy to prevent potential cross-origin issues on download
             const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
             const response = await fetch(proxyUrl);
             if (!response.ok) throw new Error('Could not fetch image for download.');
             
-            const blob = await response.blob();
+            const corsData = await response.json();
+            const imageResponse = await fetch(corsData.contents);
+            const blob = await imageResponse.blob();
+
             const blobUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = blobUrl;
@@ -136,7 +135,7 @@ export default function VimeoThumbnailDownloaderPage() {
                                         <CardDescription>{thumbnail.width} x {thumbnail.height}</CardDescription>
                                     </div>
                                 </CardHeader>
-                                <CardContent className="mt-auto">
+                                <CardContent className="mt-auto p-4">
                                     <Button className="w-full" onClick={() => handleDownload(thumbnail.url)}>
                                         <Download className="mr-2 h-4 w-4" /> Download
                                     </Button>

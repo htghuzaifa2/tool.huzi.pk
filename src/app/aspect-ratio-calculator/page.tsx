@@ -9,7 +9,17 @@ import { Ratio, RefreshCw } from 'lucide-react';
 
 // Function to remove trailing zeros and the decimal point if not needed
 const formatNumber = (num: number) => {
-    return num.toFixed(2).replace(/\.00$/, '').replace(/(\.\d*?)0+$/, '$1');
+    if (num % 1 === 0) {
+        return num.toString();
+    }
+    let formatted = num.toFixed(2);
+    while (formatted.endsWith('0')) {
+        formatted = formatted.slice(0, -1);
+    }
+    if(formatted.endsWith('.')) {
+        formatted = formatted.slice(0, -1);
+    }
+    return formatted;
 };
 
 export default function AspectRatioCalculatorPage() {

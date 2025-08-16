@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, RefreshCw, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { Copy, RefreshCw, KeyRound } from 'lucide-react';
 
 export default function PasswordGeneratorPage() {
     const [password, setPassword] = useState('');
@@ -66,14 +66,14 @@ export default function PasswordGeneratorPage() {
     
     const strength = useMemo(() => {
         let score = 0;
-        if (password.length >= 8) score++;
-        if (password.length >= 12) score++;
+        if (length >= 8) score++;
+        if (length >= 12) score++;
         if (/[A-Z]/.test(password)) score++;
         if (/[a-z]/.test(password)) score++;
         if (/\d/.test(password)) score++;
         if (/[^A-Za-z0-9]/.test(password)) score++;
         return score;
-    }, [password]);
+    }, [password, length]);
 
     const getStrengthLabel = () => {
         if (strength <= 2) return 'Weak';
@@ -93,6 +93,9 @@ export default function PasswordGeneratorPage() {
             <div className="max-w-md mx-auto">
                 <Card>
                     <CardHeader className="text-center">
+                         <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                            <KeyRound className="w-8 h-8" />
+                        </div>
                         <CardTitle className="text-4xl font-bold font-headline">Password Generator</CardTitle>
                         <CardDescription>Create strong and secure passwords.</CardDescription>
                     </CardHeader>
@@ -105,12 +108,14 @@ export default function PasswordGeneratorPage() {
                                 placeholder="Your generated password"
                                 className="pr-20 text-lg font-mono"
                             />
-                            <Button variant="ghost" size="icon" className="absolute right-10 top-1/2 -translate-y-1/2" onClick={generatePassword}>
-                                <RefreshCw className="h-5 w-5" />
-                            </Button>
-                            <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2" onClick={copyToClipboard}>
-                                <Copy className="h-5 w-5" />
-                            </Button>
+                             <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center">
+                                <Button variant="ghost" size="icon" onClick={generatePassword}>
+                                    <RefreshCw className="h-5 w-5" />
+                                </Button>
+                                <Button variant="ghost" size="icon" onClick={copyToClipboard}>
+                                    <Copy className="h-5 w-5" />
+                                </Button>
+                            </div>
                         </div>
 
                          <div className="space-y-2">

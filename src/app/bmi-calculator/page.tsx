@@ -31,31 +31,41 @@ export default function BmiCalculatorPage() {
         let heightMeters = 0;
         let weightKilos = 0;
 
-        if (unit === 'metric') {
-            const h = parseFloat(heightCm);
-            const w = parseFloat(weightKg);
-            if (isNaN(h) || h <= 0 || isNaN(w) || w <= 0) {
-                toast({ title: 'Invalid Input', description: 'Please enter positive numbers for height and weight.', variant: 'destructive'});
-                return;
+        try {
+            if (unit === 'metric') {
+                const h = parseFloat(heightCm);
+                const w = parseFloat(weightKg);
+                if (isNaN(h) || h <= 0 || isNaN(w) || w <= 0) {
+                    throw new Error('Please enter positive numbers for height and weight.');
+                }
+                heightMeters = h / 100;
+                weightKilos = w;
+            } else { // Imperial
+                const ft = parseFloat(heightFt);
+                const inch = heightIn ? parseFloat(heightIn) : 0;
+                const lbs = parseFloat(weightLbs);
+                if (isNaN(ft) || ft <= 0 || isNaN(inch) || inch < 0 || isNaN(lbs) || lbs <= 0) {
+                    throw new Error('Please enter a positive number for feet and pounds.');
+                }
+                heightMeters = ((ft * 12) + inch) * 0.0254;
+                weightKilos = lbs * 0.453592;
             }
-            heightMeters = h / 100;
-            weightKilos = w;
-        } else { // Imperial
-            const ft = parseFloat(heightFt);
-            const inch = parseFloat(heightIn) || 0;
-            const lbs = parseFloat(weightLbs);
-            if (isNaN(ft) || ft <= 0 || isNaN(inch) || inch < 0 || isNaN(lbs) || lbs <= 0) {
-                toast({ title: 'Invalid Input', description: 'Please enter a positive number for feet and pounds.', variant: 'destructive'});
-                return;
+
+            if (heightMeters === 0) {
+                 throw new Error('Height cannot be zero.');
             }
-            heightMeters = ((ft * 12) + inch) * 0.0254;
-            weightKilos = lbs * 0.453592;
+
+            const bmiValue = weightKilos / (heightMeters * heightMeters);
+
+            if (!isFinite(bmiValue)) {
+                throw new Error('Calculation resulted in an invalid number. Please check your inputs.');
+            }
+
+            setBmi(bmiValue);
+            setBmiCategory(getBmiCategory(bmiValue));
+        } catch (error: any) {
+            toast({ title: 'Invalid Input', description: error.message, variant: 'destructive'});
         }
-
-        const bmiValue = weightKilos / (heightMeters * heightMeters);
-
-        setBmi(bmiValue);
-        setBmiCategory(getBmiCategory(bmiValue));
     };
 
     const getBmiCategory = (bmi: number) => {
@@ -76,7 +86,6 @@ export default function BmiCalculatorPage() {
     }
 
     const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>, value: string) => {
-      // Allow only non-negative numbers
       if (/^\d*\.?\d*$/.test(value)) {
         setter(value);
       }
