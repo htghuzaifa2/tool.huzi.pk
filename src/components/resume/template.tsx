@@ -1,0 +1,51 @@
+
+"use client"
+
+import { useFormContext } from 'react-hook-form';
+import type { ResumeData } from './form';
+import type { TemplateName, FontFamily } from '@/app/resume-builder/page';
+import { ProfessionalTemplate } from './professional-template';
+import { ModernTemplate } from './modern-template';
+import { MinimalistTemplate } from './minimalist-template';
+
+interface ResumeTemplateProps {
+    template: TemplateName;
+    accentColor: string;
+    fontSize: number;
+    fontFamily: FontFamily;
+}
+
+export function ResumeTemplate({ template, ...customization }: ResumeTemplateProps) {
+    const { watch } = useFormContext<ResumeData>();
+    const data = watch();
+
+    const fontClasses: Record<FontFamily, string> = {
+        sans: 'font-sans',
+        serif: 'font-serif',
+        mono: 'font-mono',
+    }
+
+    const commonProps = { data, ...customization };
+
+    const renderTemplate = () => {
+        switch (template) {
+            case 'modern':
+                return <ModernTemplate {...commonProps} />;
+            case 'minimalist':
+                return <MinimalistTemplate {...commonProps} />;
+            case 'professional':
+            default:
+                return <ProfessionalTemplate {...commonProps} />;
+        }
+    }
+
+    return (
+        <div 
+            id="resume-preview" 
+            className={`w-[816px] h-[1056px] bg-background text-foreground p-8 ${fontClasses[customization.fontFamily]}`}
+            style={{ fontSize: `${customization.fontSize}pt` }}
+        >
+            {renderTemplate()}
+        </div>
+    );
+}

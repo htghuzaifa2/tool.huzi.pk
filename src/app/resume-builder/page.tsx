@@ -4,16 +4,18 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Download, FileText } from 'lucide-react';
-import { ResumeForm, resumeSchema, type ResumeData } from '@/components/resume-form';
-import { ResumeTemplate } from '@/components/resume-template';
+import { Download, FileText, Palette, Type, TextQuote } from 'lucide-react';
+import { ResumeForm, resumeSchema, type ResumeData } from '@/components/resume/form';
+import { ResumeTemplate } from '@/components/resume/template';
 import jsPDF from 'jspdf';
 import { guides } from "@/lib/search-data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
+import { Label } from '@/components/ui/label';
+import { Slider } from '@/components/ui/slider';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const defaultValues: ResumeData = {
     fullName: 'John Doe',
@@ -53,7 +55,15 @@ const defaultValues: ResumeData = {
     skills: 'React, TypeScript, Node.js, GraphQL, PostgreSQL, Docker, AWS',
 };
 
+export type TemplateName = "professional" | "modern" | "minimalist";
+export type FontFamily = "sans" | "serif" | "mono";
+
 export default function ResumeBuilderPage() {
+    const [template, setTemplate] = useState<TemplateName>("professional");
+    const [accentColor, setAccentColor] = useState("#3F51B5");
+    const [fontSize, setFontSize] = useState(10);
+    const [fontFamily, setFontFamily] = useState<FontFamily>("sans");
+
     const methods = useForm<ResumeData>({
         resolver: zodResolver(resumeSchema),
         defaultValues,
@@ -88,7 +98,7 @@ export default function ResumeBuilderPage() {
             x: 0,
             y: 0,
             html2canvas: {
-                scale: 0.75, // Adjust scale to fit A4 page. 0.75 is a good starting point.
+                scale: 0.73,
                 useCORS: true,
             },
         });
@@ -102,27 +112,82 @@ export default function ResumeBuilderPage() {
                         <FileText className="w-10 h-10" />
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold font-headline">Resume Builder</h1>
-                    <p className="text-muted-foreground mt-2 text-lg">Create a professional resume in minutes.</p>
+                    <p className="text-muted-foreground mt-2 text-lg">Create and customize a professional resume in minutes.</p>
                 </div>
 
-                <div className="grid lg:grid-cols-2 gap-8 items-start">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Your Information</CardTitle>
-                            <CardDescription>Fill out the form below to build your resume.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <ResumeForm />
-                        </CardContent>
-                    </Card>
+                <div className="grid lg:grid-cols-[1fr_1.2fr] gap-8 items-start">
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Your Information</CardTitle>
+                                <CardDescription>Fill out the form to build your resume.</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ResumeForm />
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Customize Layout</CardTitle>
+                                <CardDescription>Change the look of your resume.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                <div>
+                                    <Label>Template</Label>
+                                    <div className="grid grid-cols-3 gap-2 mt-2">
+                                        {(["professional", "modern", "minimalist"] as TemplateName[]).map(t => (
+                                             <button key={t} onClick={() => setTemplate(t)} className={`border-2 rounded-lg p-1 ${template === t ? 'border-primary ring-2 ring-primary' : 'border-border'}`}>
+                                                 <div className="bg-muted h-16 w-full rounded-md flex items-center justify-center">
+                                                     <p className="text-sm font-semibold capitalize">{t}</p>
+                                                 </div>
+                                             </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                     <div>
+                                        <Label htmlFor="accent-color">Accent Color</Label>
+                                        <div className="relative mt-2">
+                                            <Palette className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <input id="accent-color" type="color" value={accentColor} onChange={(e) => setAccentColor(e.target.value)} className="w-full h-10 pl-10 pr-2 rounded-md border border-input" />
+                                        </div>
+                                    </div>
+                                     <div>
+                                        <Label>Font Family</Label>
+                                        <Select value={fontFamily} onValueChange={(v) => setFontFamily(v as FontFamily)}>
+                                            <SelectTrigger className="mt-2">
+                                                <SelectValue placeholder="Select a font" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="sans">Sans Serif</SelectItem>
+                                                <SelectItem value="serif">Serif</SelectItem>
+                                                <SelectItem value="mono">Monospace</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <Label htmlFor="font-size">Font Size ({fontSize}pt)</Label>
+                                    <Slider id="font-size" min={8} max={12} step={0.5} value={[fontSize]} onValueChange={(v) => setFontSize(v[0])} className="mt-2" />
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
 
-                    <div className="space-y-4 lg:sticky lg:top-24">
+                    <div className="space-y-4 lg:sticky lg:top-4">
                         <Button onClick={handleDownloadPdf} className="w-full" size="lg">
                             <Download className="mr-2" /> Download as PDF
                         </Button>
                         <Card className="overflow-hidden">
-                            <div id="resume-preview-container" className="h-[792px] w-full overflow-y-auto bg-background shadow-lg">
-                                <ResumeTemplate />
+                            <div className="h-[792px] w-full bg-background shadow-lg overflow-hidden">
+                                <div className="h-full w-full scale-[0.4] sm:scale-[0.6] md:scale-[0.75] lg:scale-[0.55] xl:scale-[0.7] origin-top-left">
+                                  <ResumeTemplate 
+                                    template={template}
+                                    accentColor={accentColor}
+                                    fontSize={fontSize}
+                                    fontFamily={fontFamily}
+                                  />
+                                </div>
                             </div>
                         </Card>
                     </div>

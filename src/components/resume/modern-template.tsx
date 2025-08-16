@@ -1,0 +1,93 @@
+
+"use client"
+
+import { Mail, Phone, MapPin, Linkedin, Github } from 'lucide-react';
+import type { ResumeData } from './form';
+import type { FontFamily } from '@/app/resume-builder/page';
+
+interface TemplateProps {
+    data: ResumeData;
+    accentColor: string;
+    fontSize: number;
+    fontFamily: FontFamily;
+}
+
+export function ModernTemplate({ data, accentColor }: TemplateProps) {
+    const renderDescription = (text: string) => {
+        return text.split('\n').map((line, index) => {
+            if (line.trim() === '') return null;
+            return <li key={index} className="text-muted-foreground/80 leading-snug">{line.replace(/^-/, '').trim()}</li>
+        });
+    };
+
+    return (
+        <div className="flex w-full h-full">
+            {/* Left Sidebar */}
+            <div style={{ backgroundColor: accentColor }} className="w-1/3 p-6 text-white flex flex-col">
+                <div className="text-center mb-8">
+                     <h1 className="text-4xl font-bold tracking-tight">{data.fullName || 'Your Name'}</h1>
+                     <h2 className="text-lg font-light tracking-wide mt-1">{data.jobTitle || 'Your Job Title'}</h2>
+                </div>
+
+                <div className="space-y-5">
+                    <div>
+                         <h3 className="text-sm font-bold uppercase tracking-widest border-b border-white/30 pb-1 mb-2">Contact</h3>
+                         <div className="space-y-2 text-xs">
+                             {data.email && <p className="flex items-center gap-2"><Mail className="w-3.5 h-3.5 shrink-0"/><span>{data.email}</span></p>}
+                             {data.phone && <p className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 shrink-0"/><span>{data.phone}</span></p>}
+                             {data.address && <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 shrink-0"/><span>{data.address}</span></p>}
+                         </div>
+                    </div>
+                     <div>
+                        <h3 className="text-sm font-bold uppercase tracking-widest border-b border-white/30 pb-1 mb-2">Skills</h3>
+                        <div className="flex flex-wrap gap-1.5 text-xs">
+                           {(data.skills || '').split(',').map((skill, i) => (
+                               <span key={i} className="bg-white/20 rounded-md px-2 py-0.5">{skill.trim()}</span>
+                           ))}
+                        </div>
+                    </div>
+                     <div>
+                        <h3 className="text-sm font-bold uppercase tracking-widest border-b border-white/30 pb-1 mb-2">Education</h3>
+                         <div className="space-y-3">
+                            {data.education?.map((edu) => (
+                                <div key={edu.id}>
+                                    <h4 className="text-sm font-bold">{edu.degree}</h4>
+                                    <p className="text-xs font-light">{edu.institution}</p>
+                                    <p className="text-xs font-light text-white/70">{edu.startDate} - {edu.endDate}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {/* Main Content */}
+            <div className="w-2/3 p-8">
+                {/* Summary */}
+                <div className="mb-6">
+                    <h3 style={{ color: accentColor }} className="text-lg font-bold uppercase tracking-widest mb-2">Summary</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{data.summary}</p>
+                </div>
+
+                {/* Experience */}
+                <div>
+                    <h3 style={{ color: accentColor }} className="text-lg font-bold uppercase tracking-widest mb-3">Experience</h3>
+                    <div className="space-y-4">
+                        {data.experience?.map((exp) => (
+                            <div key={exp.id}>
+                                <div className="flex justify-between items-baseline mb-0.5">
+                                    <h4 className="text-base font-bold">{exp.jobTitle}</h4>
+                                    <p className="text-xs text-muted-foreground">{exp.startDate} - {exp.endDate}</p>
+                                </div>
+                                <p className="text-sm font-semibold" style={{ color: accentColor }}>{exp.company}</p>
+                                <ul className="list-disc list-outside mt-1.5 pl-4 space-y-1 text-sm">
+                                    {renderDescription(exp.description)}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
