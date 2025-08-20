@@ -1,7 +1,14 @@
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge, Split, ListChecks } from "lucide-react";
+
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge, Split, ListChecks, BarChart2 } from "lucide-react";
 
 export const tools = [
+  {
+    icon: <BarChart2 className="h-8 w-8" />,
+    href: "/youtube-channel-analyzer",
+    title: "YouTube Channel Analyzer",
+    description: "Get in-depth statistics and analytics for any YouTube channel.",
+  },
   {
     icon: <Gift className="h-8 w-8" />,
     href: "/random-picker-wheel",
@@ -371,6 +378,19 @@ export const tools = [
 ];
 
 export const guides = [
+  {
+    icon: <BarChart2 className="h-8 w-8 text-primary" />,
+    href: "/guide#youtube-channel-analyzer",
+    title: "YouTube Channel Analyzer Guide",
+    description: "How to get analytics for a YouTube channel.",
+    steps: [
+        "Go to the YouTube Channel Analyzer page.",
+        "Paste the URL of the YouTube channel you want to analyze into the search bar.",
+        "Click the 'Analyze Channel' button.",
+        "The tool will fetch and display the channel's statistics, including subscriber count, total views, and video count.",
+        "Use the tabs to switch between the 'About' and 'Statistics' sections for more detailed information."
+    ]
+  },
   {
     icon: <Gift className="h-8 w-8 text-primary" />,
     href: "/guide#random-picker-wheel",
@@ -1003,3 +1023,5 @@ export const guides = [
     ],
   },
 ];
+
+    
