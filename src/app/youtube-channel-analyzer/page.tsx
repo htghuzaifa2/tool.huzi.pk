@@ -20,8 +20,6 @@ const StatCard = ({ icon, label, value }: { icon: React.ReactNode, label: string
     </Card>
 );
 
-const API_KEY_IS_MISSING = !process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-
 export default function YouTubeChannelAnalyzerPage() {
     const [query, setQuery] = useState('');
     const [channelData, setChannelData] = useState<YouTubeChannel | null>(null);
@@ -30,10 +28,6 @@ export default function YouTubeChannelAnalyzerPage() {
     const { toast } = useToast();
 
     const handleSearch = async () => {
-        if (API_KEY_IS_MISSING) {
-            setError("The YouTube API Key is not configured. Please follow the instructions to add your key.");
-            return;
-        }
         if (!query.trim()) {
             toast({ title: "Search query is empty", description: "Please enter a channel URL.", variant: "destructive" });
             return;
@@ -91,30 +85,6 @@ export default function YouTubeChannelAnalyzerPage() {
         </div>
     );
     
-    const ApiKeyInstructions = () => (
-        <Alert variant="destructive">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Action Required: Configure YouTube API Key</AlertTitle>
-            <AlertDescription className="space-y-2 mt-2">
-                <p>This tool requires a **free** YouTube Data API key to function. The key is free and includes a generous quota suitable for personal use.</p>
-                <p className="font-bold">Please follow these steps:</p>
-                <ol className="list-decimal list-inside space-y-1">
-                    <li>Go to the <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer" className="underline font-semibold">Google Cloud Console</a> and create a new project.</li>
-                    <li>In your new project, search for "YouTube Data API v3" and click **Enable**.</li>
-                    <li>Go to "Credentials" in the APIs & Services sidebar.</li>
-                    <li>Click "+ CREATE CREDENTIALS" and select "API key".</li>
-                    <li>Copy your new API key. **Do not restrict this key**.</li>
-                    <li>In this project, create a file named `.env` in the root directory.</li>
-                    <li>Add the following line to the `.env` file, replacing `YOUR_API_KEY` with the key you just copied:
-                        <pre className="bg-background/80 text-foreground rounded-md p-2 my-2 text-xs">
-                           NEXT_PUBLIC_YOUTUBE_API_KEY=YOUR_API_KEY
-                        </pre>
-                    </li>
-                     <li>Refresh this page.</li>
-                </ol>
-            </AlertDescription>
-        </Alert>
-    );
 
     return (
         <div className="container mx-auto py-10">
@@ -128,7 +98,6 @@ export default function YouTubeChannelAnalyzerPage() {
                         <CardDescription>Get in-depth analytics for any YouTube channel.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                         {API_KEY_IS_MISSING && <ApiKeyInstructions />}
                         <div className="flex flex-col sm:flex-row gap-2">
                             <Input
                                 placeholder="Enter YouTube channel URL..."
@@ -137,7 +106,7 @@ export default function YouTubeChannelAnalyzerPage() {
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                 className="text-base"
                             />
-                            <Button onClick={handleSearch} disabled={isLoading || API_KEY_IS_MISSING} size="lg" className="w-full sm:w-auto">
+                            <Button onClick={handleSearch} disabled={isLoading} size="lg" className="w-full sm:w-auto">
                                 <Search className="mr-2" />
                                 {isLoading ? 'Analyzing...' : 'Analyze Channel'}
                             </Button>
@@ -147,7 +116,7 @@ export default function YouTubeChannelAnalyzerPage() {
 
                 {isLoading && <LoadingSkeleton />}
                 
-                {error && !API_KEY_IS_MISSING && (
+                {error && (
                     <Alert variant="destructive">
                         <AlertTriangle className="h-4 w-4" />
                         <AlertTitle>Error</AlertTitle>
@@ -208,5 +177,3 @@ export default function YouTubeChannelAnalyzerPage() {
         </div>
     );
 }
-
-    
