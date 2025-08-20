@@ -96,7 +96,7 @@ export default function YouTubeChannelAnalyzerPage() {
             <AlertTriangle className="h-4 w-4" />
             <AlertTitle>Action Required: Configure YouTube API Key</AlertTitle>
             <AlertDescription className="space-y-2 mt-2">
-                <p>This tool requires a free YouTube Data API key to function. The key you provided does not have the correct permissions.</p>
+                <p>This tool requires a **free** YouTube Data API key to function. The key is free and includes a generous quota suitable for personal use.</p>
                 <p className="font-bold">Please follow these steps:</p>
                 <ol className="list-decimal list-inside space-y-1">
                     <li>Go to the <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer" className="underline font-semibold">Google Cloud Console</a> and create a new project.</li>
@@ -137,7 +137,7 @@ export default function YouTubeChannelAnalyzerPage() {
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                 className="text-base"
                             />
-                            <Button onClick={handleSearch} disabled={isLoading} size="lg" className="w-full sm:w-auto">
+                            <Button onClick={handleSearch} disabled={isLoading || API_KEY_IS_MISSING} size="lg" className="w-full sm:w-auto">
                                 <Search className="mr-2" />
                                 {isLoading ? 'Analyzing...' : 'Analyze Channel'}
                             </Button>
@@ -208,3 +208,5 @@ export default function YouTubeChannelAnalyzerPage() {
         </div>
     );
 }
+
+    
