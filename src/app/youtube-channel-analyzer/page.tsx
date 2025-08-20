@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from '@/hooks/use-toast';
-import { Youtube, Search, BarChart2, Video, Users, Eye, Info, Hash, Globe, Calendar, BadgeCheck, AlertTriangle, ExternalLink } from 'lucide-react';
+import { Youtube, Search, BarChart2, Video, Users, Eye, Info, Hash, Globe, Calendar, BadgeCheck, AlertTriangle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { fetchChannelAnalytics, type YouTubeChannel } from './actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -19,24 +19,6 @@ const StatCard = ({ icon, label, value }: { icon: React.ReactNode, label: string
         <p className="text-sm text-muted-foreground">{label}</p>
     </Card>
 );
-
-const ApiKeyInstructions = () => (
-    <Alert variant="destructive">
-        <AlertTriangle className="h-4 w-4" />
-        <AlertTitle>Action Required: Configure Your Free YouTube API Key</AlertTitle>
-        <AlertDescription className="space-y-2">
-            <p>This tool requires a free YouTube Data API key to work. The API has a generous free daily quota (10,000 requests) that is more than enough for personal use.</p>
-            <ol className="list-decimal list-inside text-xs space-y-1">
-                <li>Go to the <a href="https://console.cloud.google.com/apis/library/youtube.googleapis.com" target="_blank" rel="noopener noreferrer" className="font-semibold underline">Google Cloud Console <ExternalLink className="inline h-3 w-3"/></a> and enable the YouTube Data API v3.</li>
-                <li>Under the "Credentials" tab, click "Create Credentials" and select "API Key".</li>
-                <li>Copy your new API key.</li>
-                <li>In this project's file explorer, open the `.env.local` file.</li>
-                <li>Paste your key after the `=` sign for the `YOUTUBE_API_KEY` variable (e.g., `YOUTUBE_API_KEY=AIzaSy...`).</li>
-                <li>The change will apply automatically. Refresh this page to start analyzing channels.</li>
-            </ol>
-        </AlertDescription>
-    </Alert>
-)
 
 export default function YouTubeChannelAnalyzerPage() {
     const [query, setQuery] = useState('');
@@ -134,13 +116,11 @@ export default function YouTubeChannelAnalyzerPage() {
                 {isLoading && <LoadingSkeleton />}
                 
                 {error && (
-                    error.includes("API key is not configured") 
-                        ? <ApiKeyInstructions />
-                        : <Alert variant="destructive">
-                            <AlertTriangle className="h-4 w-4" />
-                            <AlertTitle>Error</AlertTitle>
-                            <AlertDescription>{error}</AlertDescription>
-                          </Alert>
+                    <Alert variant="destructive">
+                        <AlertTriangle className="h-4 w-4" />
+                        <AlertTitle>Error</AlertTitle>
+                        <AlertDescription>{error}</AlertDescription>
+                    </Alert>
                 )}
                 
                 {channelData && (
