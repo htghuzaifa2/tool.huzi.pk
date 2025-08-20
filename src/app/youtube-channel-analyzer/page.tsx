@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from '@/hooks/use-toast';
-import { Youtube, Search, BarChart2, Video, Users, Eye, Info, Hash, Globe, Calendar, BadgeCheck, AlertTriangle } from 'lucide-react';
+import { Youtube, Search, BarChart2, Video, Users, Eye, Info, Hash, Globe, Calendar, BadgeCheck, AlertTriangle, ExternalLink } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { fetchChannelAnalytics, type YouTubeChannel } from './actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -19,6 +19,24 @@ const StatCard = ({ icon, label, value }: { icon: React.ReactNode, label: string
         <p className="text-sm text-muted-foreground">{label}</p>
     </Card>
 );
+
+const ApiKeyInstructions = () => (
+    <Alert variant="destructive">
+        <AlertTriangle className="h-4 w-4" />
+        <AlertTitle>YouTube API Key Not Configured</AlertTitle>
+        <AlertDescription className="space-y-2">
+            <p>To use this tool, you need to provide your own YouTube Data API v3 key. It's free for basic use.</p>
+            <ol className="list-decimal list-inside text-xs space-y-1">
+                <li>Go to the <a href="https://console.cloud.google.com/apis/library/youtube.googleapis.com" target="_blank" rel="noopener noreferrer" className="font-semibold underline">Google Cloud Console <ExternalLink className="inline h-3 w-3"/></a> and enable the YouTube Data API v3 for a project.</li>
+                <li>Create an API Key under the "Credentials" tab.</li>
+                <li>Copy the API key.</li>
+                <li>In this project's file explorer, open the `.env.local` file.</li>
+                <li>Paste your key after the `=` sign for the `YOUTUBE_API_KEY` variable.</li>
+                <li>The change will apply automatically.</li>
+            </ol>
+        </AlertDescription>
+    </Alert>
+)
 
 export default function YouTubeChannelAnalyzerPage() {
     const [query, setQuery] = useState('');
@@ -116,11 +134,13 @@ export default function YouTubeChannelAnalyzerPage() {
                 {isLoading && <LoadingSkeleton />}
                 
                 {error && (
-                    <Alert variant="destructive">
-                        <AlertTriangle className="h-4 w-4" />
-                        <AlertTitle>Error</AlertTitle>
-                        <AlertDescription>{error}</AlertDescription>
-                    </Alert>
+                    error.includes("API key is not configured") 
+                        ? <ApiKeyInstructions />
+                        : <Alert variant="destructive">
+                            <AlertTriangle className="h-4 w-4" />
+                            <AlertTitle>Error</AlertTitle>
+                            <AlertDescription>{error}</AlertDescription>
+                          </Alert>
                 )}
                 
                 {channelData && (
@@ -176,4 +196,3 @@ export default function YouTubeChannelAnalyzerPage() {
         </div>
     );
 }
-
