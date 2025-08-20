@@ -3,7 +3,7 @@
 
 import { z } from 'zod';
 
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+const YOUTUBE_API_KEY = 'AIzaSyD-Vw0nS7S1qP-TMR-N3l3etv2SgED3qAI';
 const BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
 const channelSchema = z.object({

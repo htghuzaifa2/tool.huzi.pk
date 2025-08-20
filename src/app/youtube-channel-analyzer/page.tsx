@@ -10,6 +10,7 @@ import { Youtube, Search, BarChart2, Video, Users, Eye, Info, Hash, Globe, Calen
 import { Skeleton } from '@/components/ui/skeleton';
 import { fetchChannelAnalytics, type YouTubeChannel } from './actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const StatCard = ({ icon, label, value }: { icon: React.ReactNode, label: string, value: string | undefined }) => (
     <Card className="bg-muted/50 text-center p-4">
