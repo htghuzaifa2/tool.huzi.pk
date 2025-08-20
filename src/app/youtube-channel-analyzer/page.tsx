@@ -20,11 +20,34 @@ const StatCard = ({ icon, label, value }: { icon: React.ReactNode, label: string
     </Card>
 );
 
+const ActionRequired = () => (
+    <Alert variant="default" className="bg-yellow-50/80 border-yellow-200 text-yellow-900 dark:bg-yellow-900/20 dark:border-yellow-800/60 dark:text-yellow-200 [&>svg]:text-yellow-600 dark:[&>svg]:text-yellow-300">
+        <AlertTriangle className="h-4 w-4" />
+        <AlertTitle className="font-semibold text-lg">Action Required: Add API Key</AlertTitle>
+        <AlertDescription className="space-y-3 mt-2">
+            <p>To use this tool, you need a free YouTube Data API v3 key from Google.</p>
+            <ol className="list-decimal list-inside space-y-2">
+                <li>Go to the <a href="https://console.cloud.google.com/apis/library/youtube.googleapis.com" target="_blank" rel="noopener noreferrer" className="font-bold underline">Google Cloud Console</a> and create a new project.</li>
+                <li>Enable the <strong className="font-semibold">"YouTube Data API v3"</strong> for your project.</li>
+                <li>Go to the "Credentials" page, click "+ CREATE CREDENTIALS", and choose "API key".</li>
+                <li>Copy the generated API key.</li>
+                <li>Create a file named `.env` in the project's root directory.</li>
+                <li>Add the following line to the `.env` file, pasting your key after the equals sign:<br />
+                    <code className="bg-yellow-200/50 dark:bg-yellow-800/50 p-1 rounded-sm text-sm">YOUTUBE_API_KEY=YOUR_API_KEY_HERE</code>
+                </li>
+                 <li>Restart the application for the new key to be recognized.</li>
+            </ol>
+            <p className="text-xs">The free tier for the YouTube Data API is very generous (10,000+ requests per day) and is more than enough for personal use.</p>
+        </AlertDescription>
+    </Alert>
+);
+
 export default function YouTubeChannelAnalyzerPage() {
     const [query, setQuery] = useState('');
     const [channelData, setChannelData] = useState<YouTubeChannel | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [showInstructions, setShowInstructions] = useState(false);
     const { toast } = useToast();
 
     const handleSearch = async () => {
@@ -35,16 +58,20 @@ export default function YouTubeChannelAnalyzerPage() {
         setIsLoading(true);
         setError(null);
         setChannelData(null);
+        setShowInstructions(false);
         
         try {
             const result = await fetchChannelAnalytics(query);
             if (result.error) {
-                throw new Error(result.error);
+                if (result.error.includes("API key")) {
+                    setShowInstructions(true);
+                } else {
+                    throw new Error(result.error);
+                }
             }
-            if (!result.data) {
-                throw new Error("Channel not found or no data available.");
+            if (result.data) {
+                setChannelData(result.data);
             }
-            setChannelData(result.data);
         } catch (err: any) {
             setError(err.message || "An unexpected error occurred.");
         } finally {
@@ -113,6 +140,8 @@ export default function YouTubeChannelAnalyzerPage() {
                         </div>
                     </CardContent>
                 </Card>
+
+                {showInstructions && <ActionRequired />}
 
                 {isLoading && <LoadingSkeleton />}
                 
