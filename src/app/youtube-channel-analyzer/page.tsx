@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from '@/hooks/use-toast';
 import { Youtube, Search, BarChart2, Video, Users, Eye, Info, Hash, Globe, Calendar, BadgeCheck, AlertTriangle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
