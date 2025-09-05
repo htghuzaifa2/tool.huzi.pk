@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, LinkIcon } from 'lucide-react';
 import type { ResumeData } from './form';
 import type { FontFamily } from '@/app/resume-builder/page';
 
@@ -58,6 +58,24 @@ export function ProfessionalTemplate({ data, accentColor, showEmail, showPhone, 
                                 <ul className="list-disc list-outside mt-2 pl-5 space-y-1">
                                     {renderDescription(exp.description)}
                                 </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+            
+            {/* Projects */}
+            {data.projects && data.projects.length > 0 && (
+                <div className="mb-6">
+                    <h3 className="text-lg font-bold uppercase pb-2 mb-3" style={{ color: accentColor, borderBottomColor: accentColor, borderBottomWidth: '1px' }}>Projects</h3>
+                    <div className="space-y-4">
+                        {data.projects?.map((proj) => (
+                            <div key={proj.id}>
+                                <div className="flex items-center gap-2 mb-1">
+                                     <h4 className="text-base font-bold text-foreground">{proj.name}</h4>
+                                     {proj.url && <a href={proj.url} target="_blank" rel="noreferrer noopener" className="text-primary hover:underline"><LinkIcon className="w-4 h-4" style={{color: accentColor}} /></a>}
+                                </div>
+                                <p className="text-muted-foreground/90 text-sm leading-relaxed mt-1">{proj.description}</p>
                             </div>
                         ))}
                     </div>

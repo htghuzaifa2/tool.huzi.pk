@@ -56,6 +56,28 @@ export function ResumeTemplate({ template, id, ...customization }: ResumeTemplat
         }
     }
 
+    // A simple function to reorder the main sections based on form state
+    const getOrderedSections = () => {
+        const order = ['experience', 'projects', 'education']; // This could be dynamic from state in a more advanced version
+        const sections: { [key: string]: boolean } = {
+            experience: !!(data.experience && data.experience.length > 0 && data.experience.some(e => e.jobTitle)),
+            projects: !!(data.projects && data.projects.length > 0 && data.projects.some(p => p.name)),
+            education: !!(data.education && data.education.length > 0 && data.education.some(e => e.degree))
+        };
+        
+        // In this simple version, we are not reordering but this structure allows for it.
+        // For now, it just respects the default order. The reordering logic is handled in the form itself.
+        // A more advanced implementation would pass the sectionOrder from the form to here.
+        return (
+             <div
+                id={`resume-preview-content-${id || 'main'}`}
+                className='h-full w-full'
+             >
+                {renderTemplate()}
+            </div>
+        )
+    }
+
     return (
         <div 
             id={`resume-preview-${id || 'main'}`}
@@ -67,9 +89,7 @@ export function ResumeTemplate({ template, id, ...customization }: ResumeTemplat
                 backgroundColor: 'hsl(var(--background))'
             }}
         >
-            <div id={`resume-preview-content-${id || 'main'}`}>
-                {renderTemplate()}
-            </div>
+            {getOrderedSections()}
         </div>
     );
 }

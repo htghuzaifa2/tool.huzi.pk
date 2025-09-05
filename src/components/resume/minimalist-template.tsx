@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Link as LinkIcon } from 'lucide-react';
 import type { ResumeData } from './form';
 
 interface TemplateProps {
@@ -56,6 +56,24 @@ export function MinimalistTemplate({ data, accentColor, showEmail, showPhone, sh
                                 <ul className="list-disc list-outside mt-1.5 pl-4 space-y-1">
                                     {renderDescription(exp.description)}
                                 </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+            
+            {/* Projects */}
+            {data.projects && data.projects.length > 0 && (
+                <div className="mb-5">
+                    <h3 style={{ color: accentColor }} className="text-base font-bold uppercase tracking-widest text-center mb-3">Projects</h3>
+                    <div className="space-y-4">
+                        {data.projects?.map((proj) => (
+                            <div key={proj.id}>
+                                <div className="flex items-center gap-2 mb-0.5">
+                                     <h4 className="text-sm font-bold">{proj.name}</h4>
+                                     {proj.url && <a href={proj.url} target="_blank" rel="noreferrer noopener" className="text-primary hover:underline"><LinkIcon className="w-3 h-3" /></a>}
+                                </div>
+                                <p className="text-xs text-muted-foreground/90 leading-relaxed">{proj.description}</p>
                             </div>
                         ))}
                     </div>

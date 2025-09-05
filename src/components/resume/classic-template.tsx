@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Link as LinkIcon } from 'lucide-react';
 import type { ResumeData } from './form';
 
 interface TemplateProps {
@@ -58,6 +58,24 @@ export function ClassicTemplate({ data, accentColor, showEmail, showPhone, showA
                                 <ul className="list-disc list-outside mt-2 pl-5 space-y-1 text-sm">
                                     {renderDescription(exp.description)}
                                 </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Projects */}
+            {data.projects && data.projects.length > 0 && (
+                <div className="mb-6">
+                    <h2 style={{ color: accentColor }} className="text-xl font-bold uppercase tracking-widest text-center mb-4">Projects</h2>
+                    <div className="space-y-4">
+                        {data.projects?.map((proj) => (
+                            <div key={proj.id}>
+                                <div className="flex items-center gap-2">
+                                     <h3 className="text-base font-bold text-foreground">{proj.name}</h3>
+                                     {proj.url && <a href={proj.url} target="_blank" rel="noreferrer noopener" className="text-primary hover:underline"><LinkIcon className="w-4 h-4" style={{color: accentColor}} /></a>}
+                                </div>
+                                <p className="text-foreground/80 text-sm leading-relaxed mt-1">{proj.description}</p>
                             </div>
                         ))}
                     </div>

@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Link as LinkIcon } from 'lucide-react';
 import type { ResumeData } from './form';
 
 interface TemplateProps {
@@ -74,7 +74,7 @@ export function ModernTemplate({ data, accentColor, showEmail, showPhone, showAd
 
                 {/* Experience */}
                 {data.experience && data.experience.length > 0 && (
-                    <div>
+                    <div className="mb-6">
                         <h3 style={{ color: accentColor }} className="text-lg font-bold uppercase tracking-widest mb-3">Experience</h3>
                         <div className="space-y-4">
                             {data.experience?.map((exp) => (
@@ -87,6 +87,24 @@ export function ModernTemplate({ data, accentColor, showEmail, showPhone, showAd
                                     <ul className="list-disc list-outside mt-1.5 pl-4 space-y-1 text-sm">
                                         {renderDescription(exp.description)}
                                     </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                 {/* Projects */}
+                {data.projects && data.projects.length > 0 && (
+                    <div>
+                        <h3 style={{ color: accentColor }} className="text-lg font-bold uppercase tracking-widest mb-3">Projects</h3>
+                        <div className="space-y-4">
+                            {data.projects?.map((proj) => (
+                                <div key={proj.id}>
+                                    <div className="flex items-baseline gap-2 mb-0.5">
+                                         <h4 className="text-base font-bold">{proj.name}</h4>
+                                         {proj.url && <a href={proj.url} target="_blank" rel="noreferrer noopener" className="text-xs text-muted-foreground hover:underline">({proj.url})</a>}
+                                    </div>
+                                    <p className="text-sm text-muted-foreground/90 leading-relaxed">{proj.description}</p>
                                 </div>
                             ))}
                         </div>

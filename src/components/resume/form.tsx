@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useFormContext, useFieldArray } from 'react-hook-form';
@@ -7,8 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, Trash2 } from 'lucide-react';
+import { PlusCircle, Trash2, GripVertical, Briefcase, GraduationCap, Lightbulb } from 'lucide-react';
 import { Label } from '../ui/label';
+import { useState } from 'react';
 
 export const resumeSchema = z.object({
     fullName: z.string().min(1, 'Full name is required'),
@@ -45,23 +47,123 @@ export const resumeSchema = z.object({
 
 export type ResumeData = z.infer<typeof resumeSchema>;
 
+const Section = ({ onMoveUp, onMoveDown, canMoveUp, canMoveDown, title, icon, children }: { onMoveUp: () => void, onMoveDown: () => void, canMoveUp: boolean, canMoveDown: boolean, title: string, icon: React.ReactNode, children: React.ReactNode }) => (
+    <Card className="relative group/section">
+        <div className="absolute top-4 left-[-2.5rem] flex-col gap-1 opacity-0 group-hover/section:opacity-100 transition-opacity hidden md:flex">
+             <Button type="button" variant="ghost" size="icon" disabled={!canMoveUp} onClick={onMoveUp} className="h-6 w-6">
+                <GripVertical className="h-4 w-4 rotate-90 scale-y-150 transform -rotate-90" />
+            </Button>
+            <Button type="button" variant="ghost" size="icon" disabled={!canMoveDown} onClick={onMoveDown} className="h-6 w-6">
+                <GripVertical className="h-4 w-4 rotate-90 scale-y-150 transform rotate-90" />
+            </Button>
+        </div>
+        <CardHeader>
+            <CardTitle className="text-xl flex items-center gap-2">
+                {icon}
+                {title}
+            </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+            {children}
+        </CardContent>
+    </Card>
+);
+
 export function ResumeForm() {
-    const { register, control, formState: { errors } } = useFormContext<ResumeData>();
+    const { register, control, formState: { errors }, getValues, setValue } = useFormContext<ResumeData>();
 
-    const { fields: experienceFields, append: appendExperience, remove: removeExperience } = useFieldArray({
-        control,
-        name: "experience",
-    });
+    const { fields: experienceFields, append: appendExperience, remove: removeExperience } = useFieldArray({ control, name: "experience" });
+    const { fields: educationFields, append: appendEducation, remove: removeEducation } = useFieldArray({ control, name: "education" });
+    const { fields: projectFields, append: appendProject, remove: removeProject } = useFieldArray({ control, name: "projects" });
 
-    const { fields: educationFields, append: appendEducation, remove: removeEducation } = useFieldArray({
-        control,
-        name: "education",
-    });
+    const [sectionOrder, setSectionOrder] = useState(['experience', 'projects', 'education']);
+    
+    const moveSection = (index: number, direction: 'up' | 'down') => {
+        const newOrder = [...sectionOrder];
+        const newIndex = direction === 'up' ? index - 1 : index + 1;
+        [newOrder[index], newOrder[newIndex]] = [newOrder[newIndex], newOrder[index]]; // Swap
+        setSectionOrder(newOrder);
+    };
 
-    const { fields: projectFields, append: appendProject, remove: removeProject } = useFieldArray({
-        control,
-        name: "projects",
-    });
+    const sections: Record<string, React.ReactNode> = {
+        experience: (
+            <Section 
+                key="experience"
+                title="Work Experience" 
+                icon={<Briefcase />} 
+                onMoveUp={() => moveSection(sectionOrder.indexOf('experience'), 'up')}
+                onMoveDown={() => moveSection(sectionOrder.indexOf('experience'), 'down')}
+                canMoveUp={sectionOrder.indexOf('experience') > 0}
+                canMoveDown={sectionOrder.indexOf('experience') < sectionOrder.length - 1}
+            >
+                {experienceFields.map((field, index) => (
+                    <div key={field.id} className="p-4 border rounded-md space-y-3 relative">
+                         <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeExperience(index)}><Trash2 className="h-4 w-4 text-destructive"/></Button>
+                        <Input placeholder="Job Title" {...register(`experience.${index}.jobTitle`)} />
+                        <Input placeholder="Company" {...register(`experience.${index}.company`)} />
+                         <div className="flex gap-4">
+                            <Input placeholder="Start Date (e.g., Jan 2020)" {...register(`experience.${index}.startDate`)} />
+                            <Input placeholder="End Date (e.g., Present)" {...register(`experience.${index}.endDate`)} />
+                        </div>
+                        <Textarea placeholder="Description of your role and achievements. Use a new line for each point." {...register(`experience.${index}.description`)} className="min-h-[100px]" />
+                    </div>
+                ))}
+                <Button type="button" variant="outline" onClick={() => appendExperience({ id: Date.now().toString(), jobTitle: '', company: '', startDate: '', endDate: '', description: '' })}>
+                    <PlusCircle className="mr-2" /> Add Experience
+                </Button>
+            </Section>
+        ),
+        projects: (
+            <Section 
+                key="projects"
+                title="Projects" 
+                icon={<Lightbulb />} 
+                onMoveUp={() => moveSection(sectionOrder.indexOf('projects'), 'up')}
+                onMoveDown={() => moveSection(sectionOrder.indexOf('projects'), 'down')}
+                canMoveUp={sectionOrder.indexOf('projects') > 0}
+                canMoveDown={sectionOrder.indexOf('projects') < sectionOrder.length - 1}
+            >
+                 {projectFields.map((field, index) => (
+                    <div key={field.id} className="p-4 border rounded-md space-y-3 relative">
+                         <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeProject(index)}><Trash2 className="h-4 w-4 text-destructive"/></Button>
+                        <Input placeholder="Project Name" {...register(`projects.${index}.name`)} />
+                        <Input placeholder="Project URL (optional)" {...register(`projects.${index}.url`)} />
+                        <Textarea placeholder="Brief project description..." {...register(`projects.${index}.description`)} />
+                    </div>
+                ))}
+                <Button type="button" variant="outline" onClick={() => appendProject({ id: Date.now().toString(), name: '', url: '', description: '' })}>
+                    <PlusCircle className="mr-2" /> Add Project
+                </Button>
+            </Section>
+        ),
+        education: (
+            <Section 
+                key="education"
+                title="Education" 
+                icon={<GraduationCap />} 
+                onMoveUp={() => moveSection(sectionOrder.indexOf('education'), 'up')}
+                onMoveDown={() => moveSection(sectionOrder.indexOf('education'), 'down')}
+                canMoveUp={sectionOrder.indexOf('education') > 0}
+                canMoveDown={sectionOrder.indexOf('education') < sectionOrder.length - 1}
+            >
+                {educationFields.map((field, index) => (
+                     <div key={field.id} className="p-4 border rounded-md space-y-3 relative">
+                        <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeEducation(index)}><Trash2 className="h-4 w-4 text-destructive"/></Button>
+                        <Input placeholder="Degree or Certificate" {...register(`education.${index}.degree`)} />
+                        <Input placeholder="Institution Name" {...register(`education.${index}.institution`)} />
+                        <div className="flex gap-4">
+                            <Input placeholder="Start Date" {...register(`education.${index}.startDate`)} />
+                            <Input placeholder="End Date" {...register(`education.${index}.endDate`)} />
+                        </div>
+                         <Textarea placeholder="Optional description (e.g., relevant coursework)" {...register(`education.${index}.description`)} />
+                    </div>
+                ))}
+                 <Button type="button" variant="outline" onClick={() => appendEducation({ id: Date.now().toString(), degree: '', institution: '', startDate: '', endDate: '', description: '' })}>
+                    <PlusCircle className="mr-2" /> Add Education
+                </Button>
+            </Section>
+        )
+    };
     
     return (
         <div className="space-y-6">
@@ -106,65 +208,10 @@ export function ResumeForm() {
                 </CardContent>
             </Card>
 
-            <Card>
-                <CardHeader><CardTitle className="text-xl">Work Experience</CardTitle></CardHeader>
-                <CardContent className="space-y-4">
-                    {experienceFields.map((field, index) => (
-                        <div key={field.id} className="p-4 border rounded-md space-y-3 relative">
-                             <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeExperience(index)}><Trash2 className="h-4 w-4 text-destructive"/></Button>
-                            <Input placeholder="Job Title" {...register(`experience.${index}.jobTitle`)} />
-                            <Input placeholder="Company" {...register(`experience.${index}.company`)} />
-                             <div className="flex gap-4">
-                                <Input placeholder="Start Date (e.g., Jan 2020)" {...register(`experience.${index}.startDate`)} />
-                                <Input placeholder="End Date (e.g., Present)" {...register(`experience.${index}.endDate`)} />
-                            </div>
-                            <Textarea placeholder="Description of your role and achievements. Use a new line for each point." {...register(`experience.${index}.description`)} className="min-h-[100px]" />
-                        </div>
-                    ))}
-                    <Button type="button" variant="outline" onClick={() => appendExperience({ id: Date.now().toString(), jobTitle: '', company: '', startDate: '', endDate: '', description: '' })}>
-                        <PlusCircle className="mr-2" /> Add Experience
-                    </Button>
-                </CardContent>
-            </Card>
-
-             <Card>
-                <CardHeader><CardTitle className="text-xl">Projects</CardTitle></CardHeader>
-                <CardContent className="space-y-4">
-                    {projectFields.map((field, index) => (
-                        <div key={field.id} className="p-4 border rounded-md space-y-3 relative">
-                             <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeProject(index)}><Trash2 className="h-4 w-4 text-destructive"/></Button>
-                            <Input placeholder="Project Name" {...register(`projects.${index}.name`)} />
-                            <Input placeholder="Project URL (optional)" {...register(`projects.${index}.url`)} />
-                            <Textarea placeholder="Brief project description..." {...register(`projects.${index}.description`)} />
-                        </div>
-                    ))}
-                    <Button type="button" variant="outline" onClick={() => appendProject({ id: Date.now().toString(), name: '', url: '', description: '' })}>
-                        <PlusCircle className="mr-2" /> Add Project
-                    </Button>
-                </CardContent>
-            </Card>
+            <div className="space-y-6">
+                {sectionOrder.map(sectionKey => sections[sectionKey])}
+            </div>
             
-            <Card>
-                <CardHeader><CardTitle className="text-xl">Education</CardTitle></CardHeader>
-                <CardContent className="space-y-4">
-                    {educationFields.map((field, index) => (
-                         <div key={field.id} className="p-4 border rounded-md space-y-3 relative">
-                            <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeEducation(index)}><Trash2 className="h-4 w-4 text-destructive"/></Button>
-                            <Input placeholder="Degree or Certificate" {...register(`education.${index}.degree`)} />
-                            <Input placeholder="Institution Name" {...register(`education.${index}.institution`)} />
-                            <div className="flex gap-4">
-                                <Input placeholder="Start Date" {...register(`education.${index}.startDate`)} />
-                                <Input placeholder="End Date" {...register(`education.${index}.endDate`)} />
-                            </div>
-                             <Textarea placeholder="Optional description (e.g., relevant coursework)" {...register(`education.${index}.description`)} />
-                        </div>
-                    ))}
-                     <Button type="button" variant="outline" onClick={() => appendEducation({ id: Date.now().toString(), degree: '', institution: '', startDate: '', endDate: '', description: '' })}>
-                        <PlusCircle className="mr-2" /> Add Education
-                    </Button>
-                </CardContent>
-            </Card>
-
             <Card>
                 <CardHeader><CardTitle className="text-xl">Skills</CardTitle></CardHeader>
                 <CardContent>
