@@ -11,7 +11,7 @@ export const GetStartedButton = () => {
   return (
     <label htmlFor="get-started-toggle" className="area">
       <input type="checkbox" defaultChecked id="get-started-toggle" />
-      <button className="button">
+      <button className="get-started-button">
         <div className="wave"></div>
         <div className="wrap">
           <div className="reflex"></div>
@@ -90,3 +90,5 @@ export const GetStartedButton = () => {
         </svg>
       </button>
     </label>
+  );
+};
