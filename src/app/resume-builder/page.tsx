@@ -6,7 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Download, FileText, Palette, Type, AlignVerticalSpaceAround, Mail, Phone, MapPin, Settings, Maximize } from 'lucide-react';
+import { Download, FileText, Palette, Type, AlignVerticalSpaceAround, Mail, Phone, MapPin, Settings, Maximize, Briefcase, Columns, Wand2, Code, FileSignature, BookCopy } from 'lucide-react';
 import { ResumeForm, resumeSchema, type ResumeData } from '@/components/resume/form';
 import { ResumeTemplate, type TemplateName } from '@/components/resume/template';
 import jsPDF from 'jspdf';
@@ -65,19 +65,30 @@ const defaultValues: ResumeData = {
         url: 'https://example.com'
       }
     ],
+    publications: [
+      {
+        id: '1',
+        title: 'The Future of Web Development',
+        journal: 'Journal of Modern Technology',
+        date: '2022',
+        url: 'https://example.com/publication'
+      }
+    ],
     photoUrl: 'https://placehold.co/400x400.png'
 };
 
 
 export type FontFamily = "sans" | "serif" | "mono";
 
-const templateOptions: { name: TemplateName, label: string, description: string }[] = [
-    { name: "professional", label: "Professional", description: "A classic, single-column layout." },
-    { name: "modern", label: "Modern", description: "A two-column design with a sidebar." },
-    { name: "minimalist", label: "Minimalist", description: "Clean and focused on typography." },
-    { name: "classic", label: "Classic", description: "A timeless, centered-heading style." },
-    { name: "creative", label: "Creative", description: "A stylish layout with a sidebar photo." },
-    { name: "technical", label: "Technical", description: "A clean, monospace-font layout for developers." },
+const templateOptions: { name: TemplateName, label: string, description: string, icon: React.ReactNode }[] = [
+    { name: "professional", label: "Professional", description: "A classic, single-column layout.", icon: <Briefcase className="w-8 h-8 text-muted-foreground" /> },
+    { name: "modern", label: "Modern", description: "A two-column design with a sidebar.", icon: <Columns className="w-8 h-8 text-muted-foreground" /> },
+    { name: "creative", label: "Creative", description: "A stylish layout with a sidebar photo.", icon: <Wand2 className="w-8 h-8 text-muted-foreground" /> },
+    { name: "technical", label: "Technical", description: "A clean, monospace-font layout for developers.", icon: <Code className="w-8 h-8 text-muted-foreground" /> },
+    { name: "classic", label: "Classic", description: "A timeless, centered-heading style.", icon: <FileSignature className="w-8 h-8 text-muted-foreground" /> },
+    { name: "minimalist", label: "Minimalist", description: "Clean and focused on typography.", icon: <Type className="w-8 h-8 text-muted-foreground" /> },
+    { name: "corporate", label: "Corporate", description: "A modern and professional layout.", icon: <Briefcase className="w-8 h-8 text-muted-foreground" /> },
+    { name: "academic", label: "Academic", description: "A classic CV style for researchers.", icon: <BookCopy className="w-8 h-8 text-muted-foreground" /> },
 ];
 
 export default function ResumeBuilderPage() {
@@ -149,7 +160,7 @@ export default function ResumeBuilderPage() {
                                 {templateOptions.map(t => (
                                     <button key={t.name} onClick={() => setTemplate(t.name)} className={cn('border-2 rounded-lg p-2 text-left transition-all hover:border-primary/80 hover:scale-105', template === t.name ? 'border-primary ring-2 ring-primary' : 'border-border')}>
                                         <div className="bg-muted h-28 w-full rounded-md flex items-center justify-center mb-2">
-                                           <FileText className="w-8 h-8 text-muted-foreground" />
+                                           {t.icon}
                                         </div>
                                         <p className="text-sm font-semibold">{t.label}</p>
                                         <p className="text-xs text-muted-foreground">{t.description}</p>
@@ -330,3 +341,4 @@ export default function ResumeBuilderPage() {
         </FormProvider>
     );
 }
+

@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, Trash2, GripVertical, Briefcase, GraduationCap, Lightbulb } from 'lucide-react';
+import { PlusCircle, Trash2, GripVertical, Briefcase, GraduationCap, Lightbulb, BookCopy } from 'lucide-react';
 import { Label } from '../ui/label';
 import { useState } from 'react';
 
@@ -43,6 +43,13 @@ export const resumeSchema = z.object({
         description: z.string().optional(),
         url: z.string().optional(),
     })).optional(),
+    publications: z.array(z.object({
+        id: z.string(),
+        title: z.string().min(1, 'Publication title is required'),
+        journal: z.string().optional(),
+        date: z.string().optional(),
+        url: z.string().optional(),
+    })).optional(),
 });
 
 export type ResumeData = z.infer<typeof resumeSchema>;
@@ -75,8 +82,9 @@ export function ResumeForm() {
     const { fields: experienceFields, append: appendExperience, remove: removeExperience } = useFieldArray({ control, name: "experience" });
     const { fields: educationFields, append: appendEducation, remove: removeEducation } = useFieldArray({ control, name: "education" });
     const { fields: projectFields, append: appendProject, remove: removeProject } = useFieldArray({ control, name: "projects" });
+    const { fields: publicationFields, append: appendPublication, remove: removePublication } = useFieldArray({ control, name: "publications" });
 
-    const [sectionOrder, setSectionOrder] = useState(['experience', 'projects', 'education']);
+    const [sectionOrder, setSectionOrder] = useState(['experience', 'projects', 'education', 'publications']);
     
     const moveSection = (index: number, direction: 'up' | 'down') => {
         const newOrder = [...sectionOrder];
@@ -162,7 +170,33 @@ export function ResumeForm() {
                     <PlusCircle className="mr-2" /> Add Education
                 </Button>
             </Section>
-        )
+        ),
+         publications: (
+            <Section 
+                key="publications"
+                title="Publications" 
+                icon={<BookCopy />} 
+                onMoveUp={() => moveSection(sectionOrder.indexOf('publications'), 'up')}
+                onMoveDown={() => moveSection(sectionOrder.indexOf('publications'), 'down')}
+                canMoveUp={sectionOrder.indexOf('publications') > 0}
+                canMoveDown={sectionOrder.indexOf('publications') < sectionOrder.length - 1}
+            >
+                 {publicationFields.map((field, index) => (
+                    <div key={field.id} className="p-4 border rounded-md space-y-3 relative">
+                         <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removePublication(index)}><Trash2 className="h-4 w-4 text-destructive"/></Button>
+                        <Input placeholder="Publication Title" {...register(`publications.${index}.title`)} />
+                        <Input placeholder="Journal or Conference Name" {...register(`publications.${index}.journal`)} />
+                         <div className="flex gap-4">
+                            <Input placeholder="Publication Date (e.g., 2023)" {...register(`publications.${index}.date`)} />
+                            <Input placeholder="URL (optional)" {...register(`publications.${index}.url`)} />
+                        </div>
+                    </div>
+                ))}
+                <Button type="button" variant="outline" onClick={() => appendPublication({ id: Date.now().toString(), title: '', journal: '', date: '', url: '' })}>
+                    <PlusCircle className="mr-2" /> Add Publication
+                </Button>
+            </Section>
+        ),
     };
     
     return (
