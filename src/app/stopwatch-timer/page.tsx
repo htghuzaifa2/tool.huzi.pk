@@ -5,13 +5,13 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from '@/components/ui/input';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Timer, Play, Pause, RotateCcw, Flag, Trash2 } from 'lucide-react';
-import useSound from 'use-sound';
+import { Progress } from "@/components/ui/progress";
+import { useToast } from '@/hooks/use-toast';
 
 const formatTime = (time: number) => {
-    const milliseconds = `0${(time % 1000) / 10}`.slice(-2);
+    const milliseconds = `0${Math.floor((time % 1000) / 10)}`.slice(-2);
     const seconds = `0${Math.floor(time / 1000) % 60}`.slice(-2);
     const minutes = `0${Math.floor(time / 60000) % 60}`.slice(-2);
     return `${minutes}:${seconds}.${milliseconds}`;
@@ -21,12 +21,12 @@ const Stopwatch = () => {
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const [laps, setLaps] = useState<number[]>([]);
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<number | null>(null);
 
     useEffect(() => {
         if (isRunning) {
             const startTime = Date.now() - time;
-            timerRef.current = setInterval(() => {
+            timerRef.current = window.setInterval(() => {
                 setTime(Date.now() - startTime);
             }, 10);
         } else {
@@ -97,17 +97,20 @@ const CountdownTimer = () => {
     const [duration, setDuration] = useState(300); // 5 minutes in seconds
     const [timeLeft, setTimeLeft] = useState(duration);
     const [isRunning, setIsRunning] = useState(false);
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
-    const [playAlarm] = useSound('/alarm.mp3');
+    const timerRef = useRef<number | null>(null);
+    const { toast } = useToast();
 
     const handleTimerEnd = useCallback(() => {
-        playAlarm();
+        toast({
+            title: "Time's up!",
+            description: "Your countdown timer has finished.",
+        });
         setIsRunning(false);
-    }, [playAlarm]);
+    }, [toast]);
     
     useEffect(() => {
         if (isRunning && timeLeft > 0) {
-            timerRef.current = setInterval(() => {
+            timerRef.current = window.setInterval(() => {
                 setTimeLeft(prev => {
                     const newTime = prev - 1;
                     if (newTime <= 0) {
@@ -156,7 +159,7 @@ const CountdownTimer = () => {
                     <p className="text-6xl md:text-8xl font-mono font-bold tabular-nums">
                         {formatCountdown(timeLeft)}
                     </p>
-                    <Progress value={(timeLeft / duration) * 100} className="absolute bottom-0 h-1"/>
+                    <Progress value={duration > 0 ? (timeLeft / duration) * 100 : 0} className="absolute bottom-0 h-1"/>
                 </div>
 
                 <div className="flex justify-center gap-4">
@@ -213,13 +216,4 @@ export default function StopwatchTimerPage() {
             </div>
         </div>
     );
-}
-
-// Custom progress component for the timer
-const Progress = ({ value }: { value: number }) => {
-    return (
-        <div className="w-full bg-muted rounded-full h-1.5">
-            <div className="bg-primary h-1.5 rounded-full transition-all duration-500 ease-linear" style={{ width: `${value}%` }}></div>
-        </div>
-    )
 }

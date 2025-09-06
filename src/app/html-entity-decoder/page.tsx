@@ -20,21 +20,21 @@ const decodeHtml = (html: string): string => {
         txt.innerHTML = html;
         return txt.value;
     } catch (e) {
+        console.error(e);
         return "Invalid HTML entities provided.";
     }
 };
 
 // Simple regex-based encoding
 const encodeHtml = (str: string): string => {
-    return str.replace(/[&<>"']/g, function(m) {
-        switch (m) {
-            case '&': return '&amp;';
-            case '<': return '&lt;';
-            case '>': return '&gt;';
-            case '"': return '&quot;';
-            default: return '&#039;'; // '
-        }
-    });
+    const entityMap: { [key: string]: string } = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+    };
+    return str.replace(/[&<>"']/g, (s) => entityMap[s]);
 };
 
 

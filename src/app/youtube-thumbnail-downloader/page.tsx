@@ -26,7 +26,7 @@ export default function YouTubeThumbnailDownloaderPage() {
     const youtubeGuide = guides.find(g => g.href.includes('youtube-thumbnail-downloader'));
 
     const getYouTubeVideoId = (url: string): string | null => {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
     };
@@ -57,19 +57,16 @@ export default function YouTubeThumbnailDownloaderPage() {
     const handleDownload = async (url: string, quality: string) => {
         try {
             const response = await fetch(url);
-            if (!response.ok || response.headers.get('content-type')?.includes('text/html')) {
-                // Check if the response is a 404 image placeholder from youtube
-                // by checking the content length (it's very small, usually ~1.2kb)
-                const contentLength = response.headers.get('content-length');
-                if (contentLength && parseInt(contentLength) < 2000) {
-                     throw new Error('This thumbnail quality may not exist for this video.');
-                }
-                throw new Error('Thumbnail not found or could not be fetched.');
+            if (!response.ok) {
+                 throw new Error('Thumbnail not found or could not be fetched.');
             }
+            
             const blob = await response.blob();
-             if (blob.size < 2000) { 
+            // YouTube's placeholder for non-existent thumbnails is a small GIF.
+            if (blob.type.includes('gif') || blob.size < 2000) { 
                 throw new Error('This thumbnail quality may not exist for this video.');
             }
+
             const blobUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = blobUrl;

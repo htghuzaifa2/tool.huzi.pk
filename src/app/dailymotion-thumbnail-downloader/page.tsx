@@ -82,10 +82,17 @@ export default function DailymotionThumbnailDownloaderPage() {
     
     const handleDownload = async (url: string) => {
         try {
+            // Using a proxy to bypass CORS issues for client-side fetch
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Could not fetch image for download.');
+            if (!response.ok) {
+                 throw new Error('Could not fetch image for download. The thumbnail might not exist or the service may be down.');
+            }
             
             const blob = await response.blob();
+            if (blob.type.includes('html')) { // Error check for some services that return HTML pages on error
+                throw new Error('Received an invalid file instead of an image. The thumbnail may not exist.');
+            }
+
             const blobUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = blobUrl;

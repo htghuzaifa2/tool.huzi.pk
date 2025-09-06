@@ -52,7 +52,6 @@ export default function VimeoThumbnailDownloaderPage() {
 
         try {
             const oembedUrl = `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(videoUrl)}`;
-
             const response = await fetch(oembedUrl);
             
             if (!response.ok) {
@@ -87,9 +86,15 @@ export default function VimeoThumbnailDownloaderPage() {
     const handleDownload = async (url: string) => {
         try {
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Could not fetch image for download.');
+            if (!response.ok) {
+                throw new Error('Could not fetch image for download. The thumbnail quality may not exist.');
+            }
             
             const blob = await response.blob();
+            if (blob.type.includes('html')) {
+                throw new Error('Received an invalid file instead of an image. The thumbnail may not exist.');
+            }
+
             const blobUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = blobUrl;
