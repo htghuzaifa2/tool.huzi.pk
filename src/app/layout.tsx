@@ -9,6 +9,7 @@ import { Footer } from '@/components/footer';
 import React, { useState, useEffect } from 'react';
 import { ClickTracker } from '@/components/click-tracker';
 import { Preloader } from '@/components/preloader';
+import { useAllLinksPrefetcher } from '@/hooks/use-all-links-prefetcher';
 
 export default function RootLayout({
   children,
@@ -17,6 +18,7 @@ export default function RootLayout({
 }>) {
   const logoUrl = "https://i.postimg.cc/DwJRWXXr/tools-huzi-pk-logo.png";
   const [loading, setLoading] = useState(true);
+  useAllLinksPrefetcher();
 
   useEffect(() => {
     // This effect runs once on the client after the initial render.

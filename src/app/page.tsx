@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { tools } from "@/lib/search-data"
+import { GetStartedButton } from "@/components/ui/get-started-button"
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Link href="#tools">
-              <Button size="lg">Get Started</Button>
+              <GetStartedButton />
             </Link>
           </div>
         </div>
@@ -34,7 +35,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {tools.map((tool) => (
-              <Link href={tool.href} key={tool.href} className="group">
+              <Link href={tool.href} key={tool.href} className="group" prefetch={false}>
                 <Card className="h-full hover:border-primary transition-colors duration-300 transform hover:-translate-y-1">
                   <CardHeader>
                     <div className="mb-4 text-primary">{tool.icon}</div>
