@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Search, ArrowLeft, ArrowRight, ArrowUp } from "lucide-react"
+import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -25,14 +25,10 @@ type SearchResult = {
     description: string;
 };
 
-const ITEMS_PER_PAGE = 25; 
-
 export function SearchDialog() {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
   const [activeTab, setActiveTab] = useState("tools")
-  const [toolsPage, setToolsPage] = useState(1);
-  const [guidesPage, setGuidesPage] = useState(1);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -44,11 +40,6 @@ export function SearchDialog() {
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
   }, [])
-  
-  useEffect(() => {
-    setToolsPage(1);
-    setGuidesPage(1);
-  }, [query, activeTab]);
 
   const handleResultClick = () => {
     setOpen(false)
@@ -65,43 +56,14 @@ export function SearchDialog() {
     guide.description.toLowerCase().includes(query.toLowerCase())
   );
 
-  const renderResults = (
-    results: SearchResult[], 
-    currentPage: number,
-    setCurrentPage: (page: number) => void
-  ) => {
-      const totalPages = Math.ceil(results.length / ITEMS_PER_PAGE);
-      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-      const endIndex = startIndex + ITEMS_PER_PAGE;
-      const currentResults = results.slice(startIndex, endIndex);
-
-      const handleNextPage = () => {
-        if (currentPage < totalPages) {
-          setCurrentPage(currentPage + 1);
-        }
-      };
-
-      const handlePrevPage = () => {
-        if (currentPage > 1) {
-          setCurrentPage(currentPage - 1);
-        }
-      };
-
+  const renderResults = (results: SearchResult[]) => {
       if(query.length > 0 && results.length === 0) {
         return <div className="py-12 text-center text-muted-foreground">No results found.</div>
       }
 
       return (
-        <>
-          {currentPage > 1 && (
-              <div className="mb-4 flex justify-center">
-                  <Button onClick={handlePrevPage} variant="outline" size="sm">
-                      <ArrowUp className="mr-2 h-4 w-4" /> Load Previous
-                  </Button>
-              </div>
-          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {currentResults.map((result) => (
+            {results.map((result) => (
               <Link href={result.href} key={result.href} className="group" onClick={handleResultClick}>
                 <Card className="h-full hover:border-primary transition-colors duration-300">
                   <CardHeader>
@@ -113,14 +75,6 @@ export function SearchDialog() {
               </Link>
             ))}
           </div>
-          {currentPage < totalPages && (
-            <div className="mt-4 flex justify-center">
-              <Button onClick={handleNextPage} variant="outline" size="sm">
-                Load More <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          )}
-        </>
       )
   }
 
@@ -157,10 +111,10 @@ export function SearchDialog() {
           <ScrollArea className="flex-1 mt-4">
             <div className="p-1">
                 <TabsContent value="tools" forceMount={true} hidden={activeTab !== 'tools'}>
-                  {renderResults(filteredTools, toolsPage, setToolsPage)}
+                  {renderResults(filteredTools)}
                 </TabsContent>
                 <TabsContent value="guides" forceMount={true} hidden={activeTab !== 'guides'}>
-                  {renderResults(filteredGuides, guidesPage, setGuidesPage)}
+                  {renderResults(filteredGuides)}
                 </TabsContent>
             </div>
           </ScrollArea>

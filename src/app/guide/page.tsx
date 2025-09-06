@@ -1,38 +1,12 @@
 
 "use client"
 
-import { useState } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides as allGuides } from "@/lib/search-data";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowUp } from "lucide-react";
-
-const ITEMS_PER_PAGE = 25;
 
 export default function GuidePage() {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(allGuides.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentGuides = allGuides.slice(startIndex, endIndex);
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="container mx-auto py-10">
       <div className="max-w-4xl mx-auto">
@@ -43,17 +17,10 @@ export default function GuidePage() {
           <p className="text-muted-foreground mt-2 text-lg">
             Your step-by-step instructions for using our powerful tools.
           </p>
-          {currentPage > 1 && (
-            <div className="mt-4">
-              <Button onClick={handlePrevPage} variant="outline">
-                <ArrowUp className="mr-2 h-5 w-5" /> Load Previous
-              </Button>
-            </div>
-          )}
         </div>
 
         <div className="space-y-8">
-          {currentGuides.map((guide, index) => (
+          {allGuides.map((guide, index) => (
              <Card key={guide.href} id={guide.href.replace('/guide#', '')}>
               <CardHeader>
                 <Link href={guide.href.replace('/guide#', '/')}>
@@ -84,19 +51,6 @@ export default function GuidePage() {
               </CardContent>
           </Card>
           ))}
-        </div>
-        
-        <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
-          {currentPage > 1 && (
-              <Button onClick={handlePrevPage} variant="outline">
-                  <ArrowUp className="mr-2 h-4 w-4" /> Previous Page
-              </Button>
-          )}
-          {currentPage < totalPages && (
-              <Button onClick={handleNextPage} variant="default">
-                  Next Page <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-          )}
         </div>
       </div>
     </div>
