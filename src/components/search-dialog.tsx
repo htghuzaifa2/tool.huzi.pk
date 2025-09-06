@@ -64,7 +64,7 @@ export function SearchDialog() {
       return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {results.map((result) => (
-              <Link href={result.href} key={result.href} className="group" onClick={handleResultClick} prefetch={false}>
+              <Link href={result.href} key={result.href} className="group" onClick={handleResultClick}>
                 <Card className="h-full hover:border-primary transition-colors duration-300">
                   <CardHeader>
                     <div className="mb-2 text-primary">{result.icon}</div>
@@ -86,7 +86,7 @@ export function SearchDialog() {
           <span className="sr-only">Search</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[640px] p-0 sm:p-4 sm:rounded-lg top-0 sm:top-[40%] translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border h-screen sm:h-[70vh] flex flex-col">
+      <DialogContent className="sm:max-w-[640px] p-0 sm:p-4 sm:rounded-lg top-0 sm:top-[40%] translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border h-screen sm:h-[70vh] flex flex-col overflow-hidden">
          <DialogHeader className="p-4 sm:p-0 border-b sm:border-0">
            <DialogTitle className="sr-only">Search</DialogTitle>
            <div className="relative">

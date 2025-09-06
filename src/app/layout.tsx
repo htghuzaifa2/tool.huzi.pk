@@ -6,8 +6,9 @@ import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ClickTracker } from '@/components/click-tracker';
+import { Preloader } from '@/components/preloader';
 
 export default function RootLayout({
   children,
@@ -15,6 +16,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const logoUrl = "https://i.postimg.cc/DwJRWXXr/tools-huzi-pk-logo.png";
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // This effect runs once on the client after the initial render.
+    // We use a timeout to simulate loading and ensure the animation is visible.
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust time as needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -79,15 +92,19 @@ export default function RootLayout({
           storageKey="toolbox-hub-theme"
           defaultTheme="dark"
         >
-          <div className="relative flex min-h-screen w-full flex-col">
-            <Header />
-            <div className="flex flex-1">
-              <main className="flex-1 w-full">{children}</main>
-            </div>
-            <Footer />
-          </div>
-          <Toaster />
-          <ClickTracker />
+          {loading ? <Preloader /> : (
+            <>
+              <div className="relative flex min-h-screen w-full flex-col">
+                <Header />
+                <div className="flex flex-1">
+                  <main className="flex-1 w-full">{children}</main>
+                </div>
+                <Footer />
+              </div>
+              <Toaster />
+              <ClickTracker />
+            </>
+          )}
         </ThemeProvider>
       </body>
     </html>
