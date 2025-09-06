@@ -12,8 +12,9 @@ import { CreativeTemplate } from './creative-template';
 import { TechnicalTemplate } from './technical-template';
 import { CorporateTemplate } from './corporate-template';
 import { AcademicTemplate } from './academic-template';
+import { InfographicTemplate } from './infographic-template';
 
-export type TemplateName = "professional" | "modern" | "minimalist" | "classic" | "creative" | "technical" | "corporate" | "academic";
+export type TemplateName = "professional" | "modern" | "minimalist" | "classic" | "creative" | "technical" | "corporate" | "academic" | "infographic";
 
 interface ResumeTemplateProps {
     template: TemplateName;
@@ -56,6 +57,8 @@ export function ResumeTemplate({ template, id, ...customization }: ResumeTemplat
                 return <CorporateTemplate {...commonProps} />;
             case 'academic':
                 return <AcademicTemplate {...commonProps} />;
+            case 'infographic':
+                return <InfographicTemplate {...commonProps} />;
             case 'professional':
             default:
                 return <ProfessionalTemplate {...commonProps} />;

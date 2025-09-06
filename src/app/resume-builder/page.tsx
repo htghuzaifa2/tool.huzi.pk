@@ -6,7 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Download, FileText, Palette, Type, AlignVerticalSpaceAround, Mail, Phone, MapPin, Settings, Maximize, Briefcase, Columns, Wand2, Code, FileSignature, BookCopy } from 'lucide-react';
+import { Download, FileText, Palette, Type, AlignVerticalSpaceAround, Mail, Phone, MapPin, Settings, Maximize, Briefcase, Columns, Wand2, Code, FileSignature, BookCopy, BarChart2 } from 'lucide-react';
 import { ResumeForm, resumeSchema, type ResumeData } from '@/components/resume/form';
 import { ResumeTemplate, type TemplateName } from '@/components/resume/template';
 import jsPDF from 'jspdf';
@@ -89,6 +89,7 @@ const templateOptions: { name: TemplateName, label: string, description: string,
     { name: "minimalist", label: "Minimalist", description: "Clean and focused on typography.", icon: <Type className="w-8 h-8 text-muted-foreground" /> },
     { name: "corporate", label: "Corporate", description: "A modern and professional layout.", icon: <Briefcase className="w-8 h-8 text-muted-foreground" /> },
     { name: "academic", label: "Academic", description: "A classic CV style for researchers.", icon: <BookCopy className="w-8 h-8 text-muted-foreground" /> },
+    { name: "infographic", label: "Infographic", description: "A skills-focused, visual resume.", icon: <BarChart2 className="w-8 h-8 text-muted-foreground" /> },
 ];
 
 export default function ResumeBuilderPage() {

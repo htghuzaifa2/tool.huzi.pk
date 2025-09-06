@@ -334,24 +334,6 @@ export const tools = [
     description: "Pick a color and get its HEX, RGB, and HSL codes for your projects.",
   },
   {
-    icon: <Youtube className="h-8 w-8" />,
-    href: "/youtube-thumbnail-downloader",
-    title: "YouTube Thumbnail Downloader",
-    description: "Download high-quality thumbnails from any YouTube video instantly.",
-  },
-   {
-    icon: <Video className="h-8 w-8" />,
-    href: "/vimeo-thumbnail-downloader",
-    title: "Vimeo Thumbnail Downloader",
-    description: "Download the thumbnail from any public Vimeo video.",
-  },
-  {
-    icon: <Video className="h-8 w-8" />,
-    href: "/dailymotion-thumbnail-downloader",
-    title: "Dailymotion Thumbnail Downloader",
-    description: "Download the thumbnail from any Dailymotion video.",
-  },
-  {
     icon: <Database className="h-8 w-8" />,
     href: "/local-storage-editor",
     title: "Local Storage Editor",
@@ -501,19 +483,6 @@ export const guides = [
         "Click 'Get Thumbnail'.",
         "The highest quality thumbnail will appear.",
         "Click the 'Download' button below the thumbnail to save it."
-    ]
-  },
-  {
-    icon: <Youtube className="h-8 w-8 text-primary" />,
-    href: "/guide#youtube-thumbnail-downloader",
-    title: "YouTube Thumbnail Downloader Guide",
-    description: "How to download thumbnails from YouTube videos.",
-    steps: [
-        "Navigate to the YouTube Thumbnail Downloader.",
-        "Paste the URL of the video into the input field.",
-        "Click 'Get Thumbnails'.",
-        "A gallery of available thumbnails will appear.",
-        "Click the 'Download' button below the thumbnail you want to save."
     ]
   },
   {
@@ -1006,3 +975,4 @@ export const guides = [
 ];
 
     
+
