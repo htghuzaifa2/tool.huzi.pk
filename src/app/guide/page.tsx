@@ -23,7 +23,7 @@ export default function GuidePage() {
           {allGuides.map((guide, index) => (
              <Card key={guide.href} id={guide.href.replace('/guide#', '')}>
               <CardHeader>
-                <Link href={guide.href.replace('/guide#', '/')}>
+                <Link href={guide.href.replace('/guide#', '/')} prefetch={false}>
                   <div className="flex items-center gap-4">
                       {guide.icon}
                       <div>

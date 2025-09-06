@@ -64,7 +64,7 @@ export function SearchDialog() {
       return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {results.map((result) => (
-              <Link href={result.href} key={result.href} className="group" onClick={handleResultClick}>
+              <Link href={result.href} key={result.href} className="group" onClick={handleResultClick} prefetch={false}>
                 <Card className="h-full hover:border-primary transition-colors duration-300">
                   <CardHeader>
                     <div className="mb-2 text-primary">{result.icon}</div>

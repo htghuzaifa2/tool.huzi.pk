@@ -29,7 +29,7 @@ export function AppSidebar() {
                 asChild
                 isActive={pathname === tool.href}
               >
-                <Link href={tool.href}>
+                <Link href={tool.href} prefetch={false}>
                   {tool.icon}
                   <span>{tool.title}</span>
                 </Link>
