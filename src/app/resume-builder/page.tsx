@@ -330,4 +330,3 @@ export default function ResumeBuilderPage() {
         </FormProvider>
     );
 }
-

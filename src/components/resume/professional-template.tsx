@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Mail, Phone, MapPin, LinkIcon } from 'lucide-react';
+import { Mail, Phone, MapPin, Link as LinkIcon } from 'lucide-react';
 import type { ResumeData } from './form';
 import type { FontFamily } from '@/app/resume-builder/page';
 
