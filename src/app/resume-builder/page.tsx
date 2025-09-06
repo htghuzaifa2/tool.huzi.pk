@@ -12,7 +12,7 @@ import { ResumeTemplate, type TemplateName } from '@/components/resume/template'
 import jsPDF from 'jspdf';
 import { guides } from "@/lib/search-data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogClose, DialogHeader, DialogTitle as DialogTitleComponent } from '@/components/ui/dialog';
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -260,6 +260,9 @@ export default function ResumeBuilderPage() {
                         </Button>
                     </DialogTrigger>
                     <DialogContent className="max-w-4xl h-[95vh] p-0">
+                         <DialogHeader>
+                            <DialogTitleComponent className="sr-only">Resume Preview</DialogTitleComponent>
+                         </DialogHeader>
                          <div className="w-full h-full overflow-y-auto">
                             <ResumeTemplate 
                                 id="fullscreen-content"
