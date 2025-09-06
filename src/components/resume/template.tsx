@@ -75,11 +75,11 @@ export function ResumeTemplate({ template, id, ...customization }: ResumeTemplat
         };
         
         // In this simple version, we are not reordering but this structure allows for it.
-        // For now, it just respects the default order. The reordering logic is handled in the form itself.
+        // The reordering logic is handled in the form itself.
         // A more advanced implementation would pass the sectionOrder from the form to here.
         return (
              <div
-                id={`resume-preview-content-${id || 'main'}`}
+                id={id}
                 className='h-full w-full'
              >
                 {renderTemplate()}
@@ -89,7 +89,6 @@ export function ResumeTemplate({ template, id, ...customization }: ResumeTemplat
 
     return (
         <div 
-            id={`resume-preview-${id || 'main'}`}
             className={`w-[816px] h-[1056px] bg-background text-foreground p-10 ${fontClasses[customization.fontFamily]}`}
             style={{ 
                 fontSize: `${customization.fontSize}pt`,

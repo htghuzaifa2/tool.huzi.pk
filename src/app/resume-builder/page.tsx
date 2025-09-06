@@ -20,6 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import html2canvas from 'html2canvas';
 
 const defaultValues: ResumeData = {
     fullName: 'John Doe',
@@ -123,27 +124,25 @@ export default function ResumeBuilderPage() {
         });
     };
 
-    const handleDownloadPdf = () => {
+    const handleDownloadPdf = async () => {
         const resumeElement = document.getElementById('resume-preview-fullscreen-content');
         if (!resumeElement) return;
 
-        const doc = new jsPDF({
+        const canvas = await html2canvas(resumeElement, {
+             useCORS: true,
+             scale: 2 // Higher scale for better quality
+        });
+        
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
             orientation: 'portrait',
             unit: 'pt',
             format: 'a4',
         });
-        
-        doc.html(resumeElement, {
-            callback: function (doc) {
-                doc.save('resume.pdf');
-            },
-            x: 0,
-            y: 0,
-            html2canvas: {
-                scale: 0.73,
-                useCORS: true,
-            },
-        });
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('resume.pdf');
     };
     
     const editorControls = (
@@ -239,8 +238,8 @@ export default function ResumeBuilderPage() {
 
     const resumePreview = (
          <Card className="overflow-hidden sticky top-4">
-             <div className="h-auto w-full bg-background shadow-lg overflow-hidden aspect-[1/1.294] relative group">
-                <div className="h-full w-full scale-[0.4] sm:scale-[0.55] md:scale-[0.7] lg:scale-[0.5] xl:scale-[0.65] origin-top-left">
+             <div className="h-auto w-full bg-background shadow-lg overflow-hidden aspect-[8.5/11] relative group">
+                <div className="absolute inset-0 scale-[0.25] sm:scale-[0.4] md:scale-[0.5] lg:scale-[0.35] xl:scale-[0.5] origin-top-left">
                     <ResumeTemplate 
                         template={template}
                         accentColor={accentColor}
@@ -263,7 +262,7 @@ export default function ResumeBuilderPage() {
                          <DialogHeader>
                             <DialogTitleComponent className="sr-only">Resume Preview</DialogTitleComponent>
                          </DialogHeader>
-                         <div className="w-full h-full overflow-y-auto">
+                         <div className="w-full h-full overflow-y-auto" id="resume-preview-fullscreen">
                             <ResumeTemplate 
                                 id="fullscreen-content"
                                 template={template}
