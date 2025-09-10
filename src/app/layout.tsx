@@ -6,10 +6,10 @@ import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { ClickTracker } from '@/components/click-tracker';
-import { Preloader } from '@/components/preloader';
 import { Inter, Source_Code_Pro } from 'next/font/google';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,23 +23,32 @@ const sourceCodePro = Source_Code_Pro({
   display: 'swap',
 });
 
+function RootLayoutSkeleton() {
+  return (
+    <div className="container py-10">
+      <div className="space-y-8">
+        <Skeleton className="h-32 w-full" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const logoUrl = "https://i.postimg.cc/DwJRWXXr/tools-huzi-pk-logo.png";
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); 
-
-    return () => clearTimeout(timer);
-  }, []);
-
-
+  
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
       <head>
@@ -68,19 +77,19 @@ export default function RootLayout({
           storageKey="toolbox-hub-theme"
           defaultTheme="dark"
         >
-          {loading ? <Preloader /> : (
-            <>
-              <div className="relative flex min-h-screen w-full flex-col">
-                <Header />
-                <div className="flex flex-1">
-                  <main className="flex-1 w-full">{children}</main>
-                </div>
-                <Footer />
-              </div>
-              <Toaster />
-              <ClickTracker />
-            </>
-          )}
+          <div className="relative flex min-h-screen w-full flex-col">
+            <Header />
+            <div className="flex flex-1">
+              <main className="flex-1 w-full">
+                <Suspense fallback={<RootLayoutSkeleton />}>
+                  {children}
+                </Suspense>
+              </main>
+            </div>
+            <Footer />
+          </div>
+          <Toaster />
+          <ClickTracker />
         </ThemeProvider>
       </body>
     </html>
