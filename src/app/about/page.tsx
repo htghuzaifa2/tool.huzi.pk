@@ -13,7 +13,8 @@ export default function AboutPage() {
 
   return (
     <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background bg-[length:200%_200%]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background dark:bg-transparent"></div>
+        <div className="dark:absolute dark:inset-0 dark:bg-gradient-to-br dark:from-background dark:via-secondary/5 dark:to-background dark:bg-[length:200%_200%] dark:animate-gradient"></div>
         <div className="relative container mx-auto py-12 md:py-20 px-4">
             <div className="max-w-4xl mx-auto space-y-16">
                 <div className="text-center space-y-4">
@@ -58,8 +59,9 @@ export default function AboutPage() {
                     <Button
                       onClick={openPortfolio}
                       size="lg"
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105"
+                      className="group relative font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg hover:shadow-primary/40 hover:shadow-2xl"
                     >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[shimmer_2s_infinite]"></div>
                       <Rocket className="mr-2 h-5 w-5" />
                       Visit My Portfolio
                     </Button>
