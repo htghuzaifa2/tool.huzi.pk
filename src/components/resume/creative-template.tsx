@@ -25,7 +25,7 @@ const SkillBar = ({ skill, level }: { skill: string; level: number }) => (
 
 export function CreativeTemplate({ data, accentColor, showEmail, showPhone, showAddress, showPhoto }: TemplateProps) {
     const [skillLevels, setSkillLevels] = useState<number[]>([]);
-    const skills = data.skills?.split(',').map(s => s.trim()) || [];
+    const skills = data.skills?.split(',').map(s => s.trim()).filter(Boolean) || [];
 
     useEffect(() => {
         // Generate random levels only on the client, after hydration.

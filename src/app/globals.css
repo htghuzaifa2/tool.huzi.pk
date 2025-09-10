@@ -139,21 +139,3 @@
     --tw-prose-td-borders: hsl(var(--border));
   }
 }
-
-.theme-blue body {
-  background: linear-gradient(-45deg, hsl(224, 71%, 4%), hsl(224, 71%, 9%), hsl(224, 71%, 4%));
-  background-size: 400% 400%;
-  animation: gradient-animation 15s ease infinite;
-}
-
-@keyframes gradient-animation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}

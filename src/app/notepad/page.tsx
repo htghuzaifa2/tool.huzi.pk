@@ -54,6 +54,8 @@ export default function NotepadPage() {
             const savedNotesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
             if (savedNotesJson) {
                 setSavedNotes(JSON.parse(savedNotesJson));
+            } else {
+                 setCurrentNote("Welcome to your local notepad! Start typing here. Your notes will be saved in your browser's local storage.");
             }
         } catch (error) {
             console.error("Could not read notes from local storage", error);
