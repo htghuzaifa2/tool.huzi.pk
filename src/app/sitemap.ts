@@ -44,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/table-to-csv-converter',
     '/html-table-generator',
     '/html-minifier',
-    '/html-escaper-unescaper',
+    '/html-entity-decoder',
     '/text-encryption',
     '/local-storage-editor',
     '/base-converter',

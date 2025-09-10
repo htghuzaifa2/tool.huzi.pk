@@ -53,8 +53,8 @@ export const tools = [
   },
   {
     icon: <CodeXml className="h-8 w-8" />,
-    href: "/html-escaper-unescaper",
-    title: "HTML Escaper / Unescaper",
+    href: "/html-entity-decoder",
+    title: "HTML Entity Decoder",
     description: "Encode and decode special HTML characters for safe web display.",
   },
   {
@@ -768,11 +768,11 @@ export const guides = [
   },
   {
     icon: <CodeXml className="h-8 w-8 text-primary" />,
-    href: "/guide#html-escaper-unescaper",
-    title: "HTML Escaper/Unescaper Guide",
+    href: "/guide#html-entity-decoder",
+    title: "HTML Entity Decoder Guide",
     description: "How to encode and decode HTML entities.",
     steps: [
-      "Navigate to the HTML Escaper / Unescaper page.",
+      "Navigate to the HTML Entity Decoder page.",
       "Paste your text into the input field.",
       "Click 'Encode' to convert special characters like '<' to '&lt;'.",
       "Click 'Decode' to convert entities like '&lt;' back to '<'.",
@@ -975,4 +975,5 @@ export const guides = [
 ];
 
     
+
 
