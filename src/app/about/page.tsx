@@ -13,7 +13,7 @@ export default function AboutPage() {
 
   return (
     <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background animate-gradient bg-[length:200%_200%]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background bg-[length:200%_200%]"></div>
         <div className="relative container mx-auto py-12 md:py-20 px-4">
             <div className="max-w-4xl mx-auto space-y-16">
                 <div className="text-center space-y-4">
