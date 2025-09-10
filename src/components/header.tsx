@@ -27,7 +27,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center">
-          <Link href="/" className="flex items-center space-x-2" prefetch={false}>
+          <Link href="/" className="flex items-center space-x-2">
             <Box className="h-6 w-6 text-primary" />
             <span className="font-bold inline-block">
               tool.huzi.pk
@@ -52,7 +52,6 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
-                prefetch={false}
               >
                 {link.label}
               </Link>
@@ -76,7 +75,7 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="pr-0">
-              <Link href="/" className="flex items-center space-x-2" onClick={handleLinkClick} prefetch={false}>
+              <Link href="/" className="flex items-center space-x-2" onClick={handleLinkClick}>
                   <Box className="h-6 w-6 text-primary" />
                   <span className="font-bold">tool.huzi.pk</span>
               </Link>
@@ -100,7 +99,6 @@ export function Header() {
                             href={link.href}
                             className="text-foreground"
                             onClick={handleLinkClick}
-                            prefetch={false}
                           >
                             {link.label}
                           </Link>

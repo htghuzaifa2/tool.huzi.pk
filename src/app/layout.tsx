@@ -9,7 +9,6 @@ import { Footer } from '@/components/footer';
 import React, { useState, useEffect } from 'react';
 import { ClickTracker } from '@/components/click-tracker';
 import { Preloader } from '@/components/preloader';
-import { useAllLinksPrefetcher } from '@/hooks/use-all-links-prefetcher';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 
 const inter = Inter({
@@ -31,14 +30,11 @@ export default function RootLayout({
 }>) {
   const logoUrl = "https://i.postimg.cc/DwJRWXXr/tools-huzi-pk-logo.png";
   const [loading, setLoading] = useState(true);
-  useAllLinksPrefetcher();
 
   useEffect(() => {
-    // This effect runs once on the client after the initial render.
-    // We use a timeout to simulate loading and ensure the animation is visible.
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // Adjust time as needed
+    }, 2000); 
 
     return () => clearTimeout(timer);
   }, []);
@@ -51,19 +47,16 @@ export default function RootLayout({
         <meta name="description" content="Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side." />
         <meta name="keywords" content="online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools" />
         
-        {/* Favicon and Apple Touch Icons */}
         <link rel="icon" href={logoUrl} type="image/png" />
         <link rel="shortcut icon" href={logoUrl} type="image/png" />
         <link rel="apple-touch-icon" href={logoUrl} />
 
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://tool.huzi.pk/" />
         <meta property="og:title" content="tool.huzi.pk – Free Online Tools & Utilities" />
         <meta property="og:description" content="A curated collection of client-side utilities and tools to streamline your everyday tasks." />
         <meta property="og:image" content={logoUrl} />
 
-        {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://tool.huzi.pk/" />
         <meta property="twitter:title" content="tool.huzi.pk – Free Online Tools & Utilities" />

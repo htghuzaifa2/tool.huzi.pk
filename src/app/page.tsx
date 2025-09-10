@@ -35,7 +35,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {tools.map((tool) => (
-              <Link href={tool.href} key={tool.href} className="group" prefetch={false}>
+              <Link href={tool.href} key={tool.href} className="group">
                 <Card className="h-full hover:border-primary transition-colors duration-300 transform hover:-translate-y-1">
                   <CardHeader>
                     <div className="mb-4 text-primary">{tool.icon}</div>
