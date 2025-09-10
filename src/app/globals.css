@@ -139,3 +139,12 @@
     --tw-prose-td-borders: hsl(var(--border));
   }
 }
+
+@layer utilities {
+    .animate-gradient {
+        animation: gradient-animation 15s ease infinite;
+    }
+    .animate-shimmer {
+        animation: shimmer 2s infinite linear;
+    }
+}

@@ -95,8 +95,8 @@ export default {
           '100%': { backgroundPosition: '0% 50%' },
         },
         'shimmer': {
-            '0%': { transform: 'translateX(-100%)' },
-            '100%': { transform: 'translateX(100%)' },
+            '0%': { transform: 'translateX(-150%) skewX(-15deg)' },
+            '100%': { transform: 'translateX(150%) skewX(-15deg)' },
         }
       },
       animation: {

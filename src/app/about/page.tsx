@@ -59,7 +59,7 @@ export default function AboutPage() {
                     <Button
                       onClick={openPortfolio}
                       size="lg"
-                      className="group relative font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg hover:shadow-primary/40 hover:shadow-2xl"
+                      className="group relative font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg hover:shadow-primary/40 hover:shadow-2xl overflow-hidden"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[shimmer_2s_infinite]"></div>
                       <Rocket className="mr-2 h-5 w-5" />
