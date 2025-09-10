@@ -72,7 +72,7 @@ export default function RootLayout({
         <meta property="twitter:description" content="A curated collection of client-side utilities and tools to streamline your everyday tasks." />
         <meta property="twitter:image" content={logoUrl} />
       </head>
-      <body className="font-body antialiased min-h-screen bg-background font-sans transition-colors duration-300">
+      <body className="font-body antialiased min-h-screen bg-background font-sans">
         <ThemeProvider
           storageKey="toolbox-hub-theme"
           defaultTheme="dark"
