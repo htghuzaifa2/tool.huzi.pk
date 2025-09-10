@@ -56,14 +56,14 @@ const Stopwatch = () => {
                 <p className="text-6xl md:text-8xl font-mono font-bold tabular-nums">
                     {formatTime(time)}
                 </p>
-                <div className="flex justify-center gap-4">
-                    <Button onClick={handleStartPause} size="lg" className="w-32">
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+                    <Button onClick={handleStartPause} size="lg" className="w-28 sm:w-32">
                         {isRunning ? <><Pause className="mr-2"/>Pause</> : <><Play className="mr-2"/>Start</>}
                     </Button>
-                    <Button onClick={handleReset} size="lg" variant="outline" className="w-32">
+                    <Button onClick={handleReset} size="lg" variant="outline" className="w-28 sm:w-32">
                         <RotateCcw className="mr-2"/>Reset
                     </Button>
-                     <Button onClick={handleLap} size="lg" variant="secondary" className="w-32" disabled={!isRunning}>
+                     <Button onClick={handleLap} size="lg" variant="secondary" className="w-28 sm:w-32" disabled={!isRunning}>
                         <Flag className="mr-2"/>Lap
                     </Button>
                 </div>
@@ -162,7 +162,7 @@ const CountdownTimer = () => {
                     <Progress value={duration > 0 ? (timeLeft / duration) * 100 : 0} className="absolute bottom-0 h-1"/>
                 </div>
 
-                <div className="flex justify-center gap-4">
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
                     <Button onClick={handleStartPause} size="lg" className="w-32" disabled={timeLeft === 0}>
                          {isRunning ? <><Pause className="mr-2"/>Pause</> : <><Play className="mr-2"/>Start</>}
                     </Button>
@@ -173,7 +173,7 @@ const CountdownTimer = () => {
                 
                  <div className="space-y-2">
                     <p className="text-sm text-muted-foreground">Set timer (minutes)</p>
-                     <div className="flex justify-center gap-2">
+                     <div className="flex flex-wrap justify-center gap-2">
                         <Button variant="secondary" onClick={() => handleSetDuration(1)}>1</Button>
                         <Button variant="secondary" onClick={() => handleSetDuration(5)}>5</Button>
                         <Button variant="secondary" onClick={() => handleSetDuration(10)}>10</Button>

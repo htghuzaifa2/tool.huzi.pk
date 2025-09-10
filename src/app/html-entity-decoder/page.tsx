@@ -103,7 +103,7 @@ export default function HtmlEscaperUnescaperPage() {
                             />
                         </div>
 
-                        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
                             <Button onClick={handleEncode}>Encode &rarr;</Button>
                             <Button variant="outline" size="icon" onClick={swapContent}>
                                 <ArrowRightLeft className="h-4 w-4" />

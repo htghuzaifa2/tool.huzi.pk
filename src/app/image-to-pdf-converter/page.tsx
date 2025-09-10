@@ -59,36 +59,33 @@ export default function ImageToPdfConverterPage() {
         toast({ title: 'Conversion Started', description: 'Your PDF is being generated...' });
 
         try {
-            // Initialize with default portrait orientation
+            const firstImage = await loadImage(await readFileAsDataURL(selectedFiles[0]));
+            const isFirstPageLandscape = firstImage.width > firstImage.height;
+            
             const pdf = new jsPDF({
-                orientation: 'p',
+                orientation: isFirstPageLandscape ? 'l' : 'p',
                 unit: 'mm',
                 format: 'a4'
             });
-            
+
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 const imgData = await readFileAsDataURL(file);
                 const img = await loadImage(imgData);
 
-                const isLandscape = img.width > img.height;
-                const orientation = isLandscape ? 'l' : 'p';
-                
-                // A4 dimensions in mm: Portrait (210x297), Landscape (297x210)
-                const pdfWidth = isLandscape ? 297 : 210;
-                const pdfHeight = isLandscape ? 210 : 297;
-
                 if (i > 0) {
+                    const isLandscape = img.width > img.height;
+                    const orientation = isLandscape ? 'l' : 'p';
+                    const pdfWidth = isLandscape ? 297 : 210;
+                    const pdfHeight = isLandscape ? 210 : 297;
                     pdf.addPage([pdfWidth, pdfHeight], orientation);
-                } else {
-                    // For the first page, set the orientation if it's not the default
-                    if(isLandscape) {
-                        pdf.addPage([pdfWidth, pdfHeight], orientation);
-                        pdf.deletePage(1); // delete the initial blank page
-                    }
                 }
 
-                const margin = 10; // 10mm margin on all sides
+                const currentPage = pdf.internal.pages[i + 1];
+                const pdfWidth = currentPage.width;
+                const pdfHeight = currentPage.height;
+                
+                const margin = 10;
                 const usableWidth = pdfWidth - (margin * 2);
                 const usableHeight = pdfHeight - (margin * 2);
 
