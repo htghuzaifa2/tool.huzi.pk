@@ -15,8 +15,7 @@ export default function AboutPage() {
     <div className="container mx-auto py-12 md:py-20 px-4">
       <div className="max-w-4xl mx-auto space-y-16">
         <div 
-          className="text-center space-y-4 animate-fade-in-up"
-          style={{ animationDelay: '0.2s', animationFillMode: 'forwards', opacity: 0 }}
+          className="text-center space-y-4"
         >
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Our Mission
@@ -27,10 +26,7 @@ export default function AboutPage() {
         </div>
         
         <div className="grid md:grid-cols-2 gap-8">
-            <Card 
-                className="animate-fade-in-up"
-                style={{ animationDelay: '0.4s', animationFillMode: 'forwards', opacity: 0 }}
-            >
+            <Card>
                 <CardHeader className="text-center">
                     <div className="mx-auto bg-primary/10 text-primary p-4 rounded-full mb-4">
                         <Heart className="w-10 h-10" />
@@ -41,10 +37,7 @@ export default function AboutPage() {
                     We believe that powerful utilities should not be complicated or expensive. Our mission is to provide a collection of free, intuitive tools for developers, writers, and anyone looking to simplify a task.
                 </CardContent>
             </Card>
-             <Card 
-                className="animate-fade-in-up"
-                style={{ animationDelay: '0.6s', animationFillMode: 'forwards', opacity: 0 }}
-            >
+             <Card>
                 <CardHeader className="text-center">
                     <div className="mx-auto bg-primary/10 text-primary p-4 rounded-full mb-4">
                         <ShieldCheck className="w-10 h-10" />
@@ -58,8 +51,7 @@ export default function AboutPage() {
         </div>
 
         <div 
-            className="text-center pt-8 animate-fade-in-up"
-            style={{ animationDelay: '0.8s', animationFillMode: 'forwards', opacity: 0 }}
+            className="text-center pt-8"
         >
             <h2 className="text-3xl font-bold font-headline mb-4">Meet the Creator</h2>
             <p className="text-muted-foreground max-w-xl mx-auto mb-8">
