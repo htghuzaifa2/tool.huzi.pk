@@ -8,7 +8,7 @@ import { Rocket, ShieldCheck, Heart } from "lucide-react";
 export default function AboutPage() {
   
   const openPortfolio = () => {
-    window.open("https://htghuzaifa.huzi.pk/", "_blank");
+    window.open("https://htg.huzi.pk/", "_blank");
   };
 
   return (
