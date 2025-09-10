@@ -130,7 +130,7 @@ export default function ResumeBuilderPage() {
 
         const canvas = await html2canvas(resumeElement, {
              useCORS: true,
-             scale: 2 // Higher scale for better quality
+             scale: 2
         });
         
         const imgData = canvas.toDataURL('image/png');
@@ -294,25 +294,25 @@ export default function ResumeBuilderPage() {
                 </div>
 
                  <div className="grid lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_550px] gap-8 items-start">
-                    {isMobile ? (
-                        <div className="space-y-6">
+                    <div className="space-y-6">
+                        {isMobile && resumePreview}
+                        {editorControls}
+                    </div>
+                    {!isMobile && (
+                        <div className="space-y-4">
+                            <Button onClick={handleDownloadPdf} className="w-full" size="lg">
+                                <Download className="mr-2" /> Download as PDF
+                            </Button>
                             {resumePreview}
-                            {editorControls}
                         </div>
-                    ) : (
-                        <>
-                            <div className="space-y-6">
-                                {editorControls}
-                            </div>
-                            <div className="space-y-4">
-                                <Button onClick={handleDownloadPdf} className="w-full" size="lg">
-                                    <Download className="mr-2" /> Download as PDF
-                                </Button>
-                                {resumePreview}
-                            </div>
-                        </>
                     )}
                 </div>
+                {isMobile && (
+                    <Button onClick={handleDownloadPdf} className="w-full mt-8" size="lg">
+                        <Download className="mr-2" /> Download as PDF
+                    </Button>
+                )}
+
 
                  {resumeBuilderGuide && (
                     <div className="mt-8">
@@ -344,4 +344,3 @@ export default function ResumeBuilderPage() {
         </FormProvider>
     );
 }
-

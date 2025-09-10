@@ -109,7 +109,7 @@ export default function BoxShadowGeneratorPage() {
                             </div>
                         </div>
                         <div className="flex flex-col space-y-6">
-                            <div className="h-64 flex-1 flex items-center justify-center bg-muted rounded-lg">
+                            <div className="h-64 flex-1 flex items-center justify-center bg-muted rounded-lg p-4">
                                 <div className="w-40 h-40 bg-card rounded-lg" style={{ boxShadow: boxShadowStyle }}></div>
                             </div>
                             <Card className="w-full bg-muted">

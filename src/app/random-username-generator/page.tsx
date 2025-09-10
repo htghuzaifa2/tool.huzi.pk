@@ -118,7 +118,7 @@ export default function RandomUsernameGeneratorPage() {
                             />
                         </div>
 
-                        <div className="flex flex-col sm:flex-row justify-around gap-4">
+                        <div className="flex flex-col sm:flex-row justify-around gap-4 p-4 bg-muted rounded-lg">
                             <div className="flex items-center space-x-2">
                                 <Switch id="include-numbers" checked={includeNumbers} onCheckedChange={setIncludeNumbers} />
                                 <Label htmlFor="include-numbers">Include Numbers</Label>

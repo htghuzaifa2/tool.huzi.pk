@@ -131,7 +131,7 @@ export default function TextEncryptionPage() {
                            </div>
                         </div>
 
-                        <div className="flex justify-center gap-4">
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
                             <Button onClick={() => processText('encrypt')} size="lg">
                                 <Lock className="mr-2" /> Encrypt
                             </Button>
