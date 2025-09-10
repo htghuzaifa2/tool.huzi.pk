@@ -63,7 +63,7 @@ export const GetStartedButton = () => {
           </svg>
         </div>
 
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 478 224" className="sparks">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 478 224" height="68" width="401" className="sparks">
           <path strokeLinecap="round" d="M172.675 130.318C176.079 94.8544 183.101 52.6838 262.101 32.6837" style={{'--i': 1} as React.CSSProperties}></path>
           <path strokeLinecap="round" d="M286.569 127.661C299.204 94.3501 317.096 55.5231 398.574 57.0604" style={{'--i': 4} as React.CSSProperties}></path>
           <path strokeLinecap="round" d="M335.954 194.26C370.153 182.301 412.468 170.335 474.474 222.038" style={{'--i': 6} as React.CSSProperties}></path>
