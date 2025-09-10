@@ -5,7 +5,6 @@ import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { tools } from "@/lib/search-data"
-import { GetStartedButton } from "@/components/ui/get-started-button"
 
 export default function Home() {
   return (
@@ -20,7 +19,7 @@ export default function Home() {
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Link href="#tools">
-              <GetStartedButton />
+              <Button size="lg">Explore Tools</Button>
             </Link>
           </div>
         </div>
