@@ -47,7 +47,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const logoUrl = "https://i.postimg.cc/DwJRWXXr/tools-huzi-pk-logo.png";
+  const logoUrl = "https://i.postimg.cc/c1QGBS44/tool-huzi-pk.png";
   
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
