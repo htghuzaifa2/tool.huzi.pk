@@ -55,16 +55,13 @@ export default function AboutPage() {
                     <p className="text-muted-foreground max-w-xl mx-auto mb-8">
                         This collection of tools is a passion project by a developer dedicated to building useful things for the web.
                     </p>
-                    <Button 
-                    onClick={openPortfolio}
-                    size="lg"
-                    className="group relative"
+                    <Button
+                      onClick={openPortfolio}
+                      size="lg"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105"
                     >
-                        <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-background rounded-full group-hover:w-32 group-hover:h-32 opacity-10"></span>
-                        <span className="relative flex items-center">
-                            <Rocket className="mr-2 h-5 w-5 transition-transform duration-500 ease-in-out transform group-hover:-translate-y-1 group-hover:rotate-12" />
-                            Visit My Portfolio
-                        </span>
+                      <Rocket className="mr-2 h-5 w-5" />
+                      Visit My Portfolio
                     </Button>
                 </div>
             </div>
