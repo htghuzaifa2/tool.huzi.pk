@@ -108,20 +108,16 @@ export function SearchDialog() {
             </TabsList>
           </div>
             <div className="flex-1 overflow-auto mt-4">
-              <TabsContent value="tools" className="mt-0">
-                <ScrollArea className="h-[45vh]">
-                  <div className="pr-4">
-                    {renderResults(filteredTools)}
-                  </div>
-                </ScrollArea>
-              </TabsContent>
-              <TabsContent value="guides" className="mt-0">
-                <ScrollArea className="h-[45vh]">
-                  <div className="pr-4">
-                    {renderResults(filteredGuides)}
-                  </div>
-                </ScrollArea>
-              </TabsContent>
+              <ScrollArea className="h-full">
+                <div className="pr-4">
+                  <TabsContent value="tools" className="mt-0">
+                      {renderResults(filteredTools)}
+                  </TabsContent>
+                  <TabsContent value="guides" className="mt-0">
+                      {renderResults(filteredGuides)}
+                  </TabsContent>
+                </div>
+              </ScrollArea>
             </div>
         </Tabs>
       </DialogContent>

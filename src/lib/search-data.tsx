@@ -21,12 +21,6 @@ export const tools = [
     title: "Resume Builder",
     description: "Create and customize professional resumes with a live preview.",
   },
-   {
-    icon: <FileCog className="h-8 w-8" />,
-    href: "/pdf-compressor",
-    title: "PDF Compressor",
-    description: "Reduce PDF file size by compressing the images within the document.",
-  },
   {
     icon: <Merge className="h-8 w-8" />,
     href: "/pdf-merger",
@@ -397,19 +391,6 @@ export const guides = [
       "Use the 'Add Experience' and 'Add Education' buttons to add multiple entries.",
       "As you type, the resume preview on the right will update in real-time.",
       "Once you are satisfied with your resume, click the 'Download as PDF' button."
-    ]
-  },
-  {
-    icon: <FileCog className="h-8 w-8 text-primary" />,
-    href: "/guide#pdf-compressor",
-    title: "PDF Compressor Guide",
-    description: "How to reduce the file size of your PDFs.",
-    steps: [
-      "Go to the PDF Compressor page.",
-      "Upload a PDF file.",
-      "Adjust the 'Image Quality' slider. A lower value will result in a smaller file size but may reduce image clarity.",
-      "Click 'Compress & Download'.",
-      "Your browser will automatically download the new, smaller PDF file."
     ]
   },
   {
@@ -994,6 +975,7 @@ export const guides = [
 ];
 
     
+
 
 
 

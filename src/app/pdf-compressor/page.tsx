@@ -1,272 +1,125 @@
-
 "use client"
 
-import { useState, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
-import { Upload, Download, RefreshCw, FileText, Loader2, FileCog } from 'lucide-react';
-import { useToast } from "@/hooks/use-toast";
-import { PDFDocument } from 'pdf-lib';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { guides } from "@/lib/search-data";
-import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { tools, guides } from "@/lib/search-data"
 
-const formatBytes = (bytes: number, decimals = 2) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
+type SearchResult = {
+    icon: React.ReactNode;
+    href: string;
+    title: string;
+    description: string;
+};
 
-export default function PdfCompressorPage() {
-    const [originalFile, setOriginalFile] = useState<File | null>(null);
-    const [originalSize, setOriginalSize] = useState(0);
-    const [compressedSize, setCompressedSize] = useState(0);
-    const [quality, setQuality] = useState(0.75);
-    const [isCompressing, setIsCompressing] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const { toast } = useToast();
-    const pdfCompressorGuide = guides.find(g => g.href.includes('pdf-compressor'));
+export function SearchDialog() {
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState("")
+  const [activeTab, setActiveTab] = useState("tools")
 
-    const handleGuideClick = () => {
-        requestAnimationFrame(() => {
-            const guideElement = document.getElementById('guide-section');
-            if (guideElement) {
-                const yOffset = -80;
-                const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({ top: y, behavior: 'smooth' });
-            }
-        });
-    };
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setOpen((open) => !open)
+      }
+    }
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [])
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>) => {
-        let selectedFile: File | null = null;
-        if ('dataTransfer' in e) {
-            e.preventDefault();
-            e.stopPropagation();
-            selectedFile = e.dataTransfer.files?.[0] || null;
-        } else {
-            selectedFile = e.target.files?.[0] || null;
-        }
+  const handleResultClick = () => {
+    setOpen(false)
+    setQuery("")
+  }
 
-        if (selectedFile && selectedFile.type === 'application/pdf') {
-            handleReset();
-            setOriginalFile(selectedFile);
-            setOriginalSize(selectedFile.size);
-        } else if(selectedFile) {
-            toast({
-                title: "Invalid File",
-                description: "Please select a valid PDF file.",
-                variant: "destructive",
-            });
-        }
-    };
-    
-    const handleCompress = async () => {
-        if (!originalFile) {
-            toast({
-                title: "No File",
-                description: "Please upload a PDF file first.",
-                variant: "destructive",
-            });
-            return;
-        }
+  const filteredTools = tools.filter(tool => 
+    tool.title.toLowerCase().includes(query.toLowerCase()) || 
+    tool.description.toLowerCase().includes(query.toLowerCase())
+  );
 
-        setIsCompressing(true);
-        setCompressedSize(0);
-        toast({ title: 'Compression Started', description: 'This may take a moment for large PDFs...' });
+  const filteredGuides = guides.filter(guide => 
+    guide.title.toLowerCase().includes(query.toLowerCase()) || 
+    guide.description.toLowerCase().includes(query.toLowerCase())
+  );
 
-        try {
-            const pdfBytes = await originalFile.arrayBuffer();
-            const pdfDoc = await PDFDocument.load(pdfBytes, {
-                // Some PDFs have objects that are not compliant with the spec, this can help
-                ignoreEncryption: true,
-            });
+  const renderResults = (results: SearchResult[]) => {
+      if(query.length > 0 && results.length === 0) {
+        return <div className="py-12 text-center text-muted-foreground">No results found.</div>
+      }
 
-            const pages = pdfDoc.getPages();
-            let imagesProcessed = 0;
-
-            for (const page of pages) {
-                const imageNames = page.node.Resources().get(pdfDoc.context.obj('XObject'))?.keys() ?? [];
-                
-                for (const imageName of imageNames) {
-                    const imageStream = page.node.Resources().get(pdfDoc.context.obj('XObject'))?.lookup(imageName);
-                    
-                    if (imageStream && imageStream.dict.get(pdfDoc.context.obj('Subtype')) === pdfDoc.context.obj('Image')) {
-                        try {
-                            const image = await pdfDoc.embedJpg(await (await fetch(URL.createObjectURL(new Blob([imageStream.getContents() as Uint8Array])))).arrayBuffer(), { quality: quality });
-                            page.drawImage(image, {
-                                x: page.getWidth() / 4,
-                                y: page.getHeight() / 4,
-                                width: page.getWidth() / 2,
-                                height: page.getHeight() / 2,
-                            });
-
-                            // This is a simplified replacement; a real-world scenario is more complex.
-                            // We are overlaying a compressed image, not perfectly replacing it.
-                            // For this tool, it serves the purpose of reducing file size.
-                            imagesProcessed++;
-                        } catch (e) {
-                             console.warn("Could not process an image, skipping it.", e);
-                             continue;
-                        }
-                    }
-                }
-            }
-            
-            if(imagesProcessed === 0) {
-                 toast({ title: "No Images Found", description: "This PDF contains no compatible images to compress. Structural compression will still be applied.", variant: "default" });
-            }
-
-            const compressedPdfBytes = await pdfDoc.save({ useObjectStreams: true });
-
-            setCompressedSize(compressedPdfBytes.length);
-
-            const blob = new Blob([compressedPdfBytes], { type: 'application/pdf' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `compressed-${originalFile.name}`;
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            URL.revokeObjectURL(link.href);
-            
-             toast({ title: 'Success!', description: 'Your compressed PDF has been downloaded.' });
-
-        } catch (error: any) {
-            console.error(error);
-            toast({
-                title: "Compression Failed",
-                description: error.message || "Could not compress the PDF. It may be corrupted or in an unsupported format.",
-                variant: "destructive",
-            });
-        } finally {
-            setIsCompressing(false);
-        }
-    };
-    
-    const handleReset = () => {
-        setOriginalFile(null);
-        setOriginalSize(0);
-        setCompressedSize(0);
-        if(fileInputRef.current) {
-            fileInputRef.current.value = "";
-        }
-    };
-
-    const sizeReduction = originalSize > 0 && compressedSize > 0
-        ? `-${Math.round(((originalSize - compressedSize) / originalSize) * 100)}%`
-        : '';
-    
-    return (
-        <div className="container mx-auto py-10">
-            <div className="max-w-2xl mx-auto space-y-8">
-                <Card>
-                    <CardHeader className="text-center">
-                        <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                            <FileCog className="w-8 h-8" />
-                        </div>
-                        <CardTitle className="text-4xl font-bold font-headline">PDF Compressor</CardTitle>
-                        <CardDescription>Reduce the file size of your PDFs by compressing images within them.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        {!originalFile ? (
-                            <Card 
-                                className="border-2 border-dashed border-muted-foreground/50 h-48 flex items-center justify-center text-center cursor-pointer hover:border-primary transition-colors"
-                                onClick={() => fileInputRef.current?.click()}
-                                onDrop={handleFileChange}
-                                onDragOver={(e) => e.preventDefault()}
-                            >
-                                <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    onChange={handleFileChange}
-                                    accept="application/pdf"
-                                    className="hidden"
-                                />
-                                <div className="space-y-2 text-muted-foreground">
-                                    <Upload className="h-10 w-10 mx-auto" />
-                                    <p>Click or drag & drop a PDF to compress</p>
-                                </div>
-                            </Card>
-                        ) : (
-                            <div className="space-y-6">
-                               <Card className="p-4 flex items-center justify-between bg-muted">
-                                    <div className="flex items-center gap-3">
-                                        <FileText className="h-6 w-6 text-primary"/>
-                                        <div>
-                                            <p className="font-semibold truncate">{originalFile.name}</p>
-                                            <p className="text-sm text-muted-foreground">{formatBytes(originalSize)}</p>
-                                        </div>
-                                    </div>
-                                    <Button variant="ghost" size="icon" onClick={handleReset}>
-                                        <RefreshCw className="h-5 w-5"/>
-                                    </Button>
-                                </Card>
-
-                                <Card className="p-6 bg-muted/50">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="quality">Image Quality: <span className="font-bold">{(quality * 100).toFixed(0)}%</span></Label>
-                                        <Slider
-                                            id="quality"
-                                            min={0.1}
-                                            max={1}
-                                            step={0.05}
-                                            value={[quality]}
-                                            onValueChange={(value) => setQuality(value[0])}
-                                            disabled={isCompressing}
-                                        />
-                                         <p className="text-xs text-muted-foreground">Lower quality means smaller file size. Affects only JPEG images inside the PDF.</p>
-                                    </div>
-                                </Card>
-
-                                {compressedSize > 0 && (
-                                     <Card className="text-center p-4">
-                                        <p className="text-lg text-muted-foreground">New Size</p>
-                                        <p className="text-3xl font-bold">{formatBytes(compressedSize)}</p>
-                                        <p className="text-xl font-semibold text-green-600">{sizeReduction}</p>
-                                    </Card>
-                                )}
-                               
-                               <div className="text-center">
-                                   <Button onClick={handleCompress} disabled={isCompressing} size="lg">
-                                       {isCompressing ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Compressing...</> : <><Download className="mr-2" /> Compress & Download</>}
-                                   </Button>
-                               </div>
-                           </div>
-                        )}
-                    </CardContent>
-                </Card>
-
-                {pdfCompressorGuide && (
-                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="guide" id="guide-section" className="border-none flex flex-col items-center">
-                            <AccordionTrigger onClick={handleGuideClick}>
-                                <FancyAccordionButton />
-                            </AccordionTrigger>
-                            <AccordionContent className="pt-6 w-full">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="font-headline">{pdfCompressorGuide.title}</CardTitle>
-                                        <CardDescription>{pdfCompressorGuide.description}</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                                            {pdfCompressorGuide.steps.map((step, stepIndex) => (
-                                                <li key={stepIndex}>{step}</li>
-                                            ))}
-                                        </ol>
-                                    </CardContent>
-                                </Card>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                )}
-            </div>
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-1">
+          {results.map((result) => (
+            <Link href={result.href} key={result.href} className="group" onClick={handleResultClick}>
+              <Card className="h-full hover:border-primary transition-colors duration-300">
+                <CardHeader>
+                  <div className="mb-2 text-primary">{result.icon}</div>
+                  <CardTitle className="font-headline text-base">{result.title}</CardTitle>
+                  <CardDescription className="text-xs line-clamp-2">{result.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
         </div>
-    );
+      )
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="icon" className="mr-2">
+          <Search className="h-5 w-5" />
+          <span className="sr-only">Search</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[640px] p-0 sm:p-4 sm:rounded-lg top-0 sm:top-[40%] translate-y-0 sm:-translate-y-1/2 rounded-none border-0 sm:border h-screen sm:h-auto sm:max-h-[70vh] flex flex-col overflow-hidden">
+         <DialogHeader className="p-4 sm:p-0 border-b sm:border-0">
+           <DialogTitle className="sr-only">Search</DialogTitle>
+           <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input
+              placeholder="Search for tools or guides..."
+              className="pl-10"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+        </DialogHeader>
+       
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex flex-col flex-1 overflow-hidden mt-2">
+          <div className="px-4 sm:px-0">
+             <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="tools">Tools ({filteredTools.length})</TabsTrigger>
+                <TabsTrigger value="guides">Guides ({filteredGuides.length})</TabsTrigger>
+            </TabsList>
+          </div>
+            <div className="flex-1 overflow-auto mt-4">
+              <ScrollArea className="h-full">
+                <div className="pr-4">
+                  <TabsContent value="tools" className="mt-0">
+                      {renderResults(filteredTools)}
+                  </TabsContent>
+                  <TabsContent value="guides" className="mt-0">
+                      {renderResults(filteredGuides)}
+                  </TabsContent>
+                </div>
+              </ScrollArea>
+            </div>
+        </Tabs>
+      </DialogContent>
+    </Dialog>
+  )
 }
