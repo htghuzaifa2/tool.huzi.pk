@@ -22,9 +22,9 @@ const hexToRgba = (hex: string, opacity: number): string => {
             c = [c[0], c[0], c[1], c[1], c[2], c[2]];
         }
         const numeric = c.map(i => parseInt(i, 16));
-        r = (numeric[0] * 16) + numeric[1];
-        g = (numeric[2] * 16) + numeric[3];
-        b = (numeric[4] * 16) + numeric[5];
+        r = numeric[0] * 16 + numeric[1];
+        g = numeric[2] * 16 + numeric[3];
+        b = numeric[4] * 16 + numeric[5];
     } else {
       return `rgba(0, 0, 0, ${opacity})`;
     }
@@ -44,11 +44,10 @@ export default function BoxShadowGeneratorPage() {
     const boxShadowGuide = guides.find(g => g.href.includes('css-box-shadow-generator'));
 
     const handleGuideClick = () => {
-        // The content is not immediately available, so we wait for the next render tick.
         requestAnimationFrame(() => {
             const guideElement = document.getElementById('guide-section');
             if (guideElement) {
-                const yOffset = -80; // a little space from the top
+                const yOffset = -80;
                 const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
             }
@@ -96,7 +95,7 @@ export default function BoxShadowGeneratorPage() {
                                 <Slider id="spread" min={-50} max={50} value={[spreadRadius]} onValueChange={(v) => setSpreadRadius(v[0])} />
                             </div>
                             <div className="space-y-4">
-                                <Label htmlFor="opacity">Shadow Opacity: <span className="font-bold">{shadowOpacity}</span></Label>
+                                <Label htmlFor="opacity">Shadow Opacity: <span className="font-bold">{shadowOpacity.toFixed(2)}</span></Label>
                                 <Slider id="opacity" min={0} max={1} step={0.01} value={[shadowOpacity]} onValueChange={(v) => setShadowOpacity(v[0])} />
                             </div>
                             <div className="flex items-center justify-between">

@@ -33,14 +33,12 @@ export default function MorseCodeTranslatorPage() {
     const [isPlaying, setIsPlaying] = useState(false);
     const { toast } = useToast();
     const morseCodeGuide = guides.find(g => g.href.includes('morse-code-translator'));
-    let audioContext: AudioContext | null = null;
     
     const handleGuideClick = () => {
-        // The content is not immediately available, so we wait for the next render tick.
         requestAnimationFrame(() => {
             const guideElement = document.getElementById('guide-section');
             if (guideElement) {
-                const yOffset = -80; // a little space from the top
+                const yOffset = -80;
                 const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
             }
@@ -64,14 +62,15 @@ export default function MorseCodeTranslatorPage() {
     const playMorseSound = async () => {
         if (!morseInput || isPlaying) return;
 
-        setIsPlaying(true);
+        let audioContext: AudioContext;
         try {
              audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
         } catch (e) {
             toast({ title: "Audio Error", description: "Your browser does not support the Web Audio API.", variant: "destructive"});
-            setIsPlaying(false);
             return;
         }
+
+        setIsPlaying(true);
 
         const dotDuration = 80;
         const dashDuration = dotDuration * 3;
@@ -117,7 +116,8 @@ export default function MorseCodeTranslatorPage() {
 
     const handleSwap = () => {
         const tempText = textInput;
-        setTextInput(morseInput);
+        const tempMorse = morseInput;
+        setTextInput(tempMorse);
         setMorseInput(tempText);
     };
     

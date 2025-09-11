@@ -27,6 +27,27 @@ const baseValidationRegex: Record<Base, RegExp> = {
     '16': /^[0-9a-fA-F]*$/,
 };
 
+function bigIntToString(value: bigint, base: number) {
+    if (base < 2 || base > 36) {
+        throw new Error("Base must be between 2 and 36");
+    }
+    if (value === 0n) return '0';
+
+    let result = '';
+    let isNegative = value < 0n;
+    if (isNegative) {
+        value = -value;
+    }
+
+    while (value > 0n) {
+        const remainder = value % BigInt(base);
+        result = '0123456789abcdefghijklmnopqrstuvwxyz'[Number(remainder)] + result;
+        value = value / BigInt(base);
+    }
+    
+    return isNegative ? '-' + result : result;
+}
+
 export default function BaseConverterPage() {
     const [inputValue, setInputValue] = useState("1010");
     const [fromBase, setFromBase] = useState<Base>('2');
@@ -36,11 +57,10 @@ export default function BaseConverterPage() {
     const baseConverterGuide = guides.find(g => g.href.includes('base-converter'));
 
     const handleGuideClick = () => {
-        // The content is not immediately available, so we wait for the next render tick.
         requestAnimationFrame(() => {
             const guideElement = document.getElementById('guide-section');
             if (guideElement) {
-                const yOffset = -80; // a little space from the top
+                const yOffset = -80;
                 const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
             }
@@ -59,15 +79,19 @@ export default function BaseConverterPage() {
         }
 
         try {
-            const decimalValue = BigInt((fromBase === '2' ? '0b' : fromBase === '8' ? '0o' : fromBase === '16' ? '0x' : '') + inputValue);
-            const convertedValue = decimalValue.toString(parseInt(toBase)).toUpperCase();
+            const decimalValue = BigInt(parseInt(inputValue, Number(fromBase)));
+             if (isNaN(Number(decimalValue))) {
+                setResult("Invalid input for conversion");
+                return;
+            }
+            const convertedValue = bigIntToString(decimalValue, parseInt(toBase)).toUpperCase();
             setResult(convertedValue);
         } catch (error) {
             console.error("Conversion error:", error);
             setResult("Conversion error");
             toast({
                 title: "Error",
-                description: "The number is too large to handle.",
+                description: "An error occurred during conversion. The number might be too large.",
                 variant: "destructive",
             });
         }
@@ -85,7 +109,7 @@ export default function BaseConverterPage() {
             const oldFrom = fromBase;
             setFromBase(toBase);
             setToBase(oldFrom);
-            setInputValue(result);
+            setInputValue(result.toLowerCase());
         } else {
             toast({
                 title: "Swap Failed",

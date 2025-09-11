@@ -26,11 +26,10 @@ export default function DailymotionThumbnailDownloaderPage() {
     const dailymotionGuide = guides.find(g => g.href.includes('dailymotion-thumbnail-downloader'));
 
     const handleGuideClick = () => {
-        // The content is not immediately available, so we wait for the next render tick.
         requestAnimationFrame(() => {
             const guideElement = document.getElementById('guide-section');
             if (guideElement) {
-                const yOffset = -80; // a little space from the top
+                const yOffset = -80;
                 const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
             }
@@ -58,12 +57,7 @@ export default function DailymotionThumbnailDownloaderPage() {
 
         try {
             const thumbnailUrl = `https://www.dailymotion.com/thumbnail/video/${videoId}`;
-            // Check if image exists
-            const response = await fetch(thumbnailUrl);
-            if (!response.ok) {
-                 throw new Error(`Thumbnail not found. The video may be private or deleted.`);
-            }
-
+            
             setThumbnail({
                 quality: 'High Quality',
                 url: thumbnailUrl,
@@ -82,14 +76,13 @@ export default function DailymotionThumbnailDownloaderPage() {
     
     const handleDownload = async (url: string) => {
         try {
-            // Using a proxy to bypass CORS issues for client-side fetch
             const response = await fetch(url);
             if (!response.ok) {
                  throw new Error('Could not fetch image for download. The thumbnail might not exist or the service may be down.');
             }
             
             const blob = await response.blob();
-            if (blob.type.includes('html')) { // Error check for some services that return HTML pages on error
+            if (blob.type.includes('html') || !blob.type.startsWith('image')) {
                 throw new Error('Received an invalid file instead of an image. The thumbnail may not exist.');
             }
 
@@ -108,6 +101,15 @@ export default function DailymotionThumbnailDownloaderPage() {
                 variant: "destructive",
             });
         }
+    }
+    
+    const handleImageError = () => {
+        toast({
+            title: "Thumbnail not found",
+            description: "Could not load the thumbnail. The video may be private, deleted, or the URL is incorrect.",
+            variant: "destructive"
+        });
+        setThumbnail(null);
     }
 
     return (
@@ -142,7 +144,7 @@ export default function DailymotionThumbnailDownloaderPage() {
                             <Card key={thumbnail.quality} className="overflow-hidden flex flex-col max-w-sm">
                                 <CardHeader className="p-0">
                                     <div className="aspect-video bg-muted overflow-hidden">
-                                        <img src={thumbnail.url} alt={`${thumbnail.quality} thumbnail`} className="w-full h-full object-cover" />
+                                        <img src={thumbnail.url} alt={`${thumbnail.quality} thumbnail`} className="w-full h-full object-cover" onError={handleImageError} />
                                     </div>
                                     <div className="p-4">
                                         <CardTitle className="text-lg">{thumbnail.quality}</CardTitle>

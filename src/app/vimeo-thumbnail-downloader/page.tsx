@@ -26,11 +26,10 @@ export default function VimeoThumbnailDownloaderPage() {
     const vimeoGuide = guides.find(g => g.href.includes('vimeo-thumbnail-downloader'));
 
     const handleGuideClick = () => {
-        // The content is not immediately available, so we wait for the next render tick.
         requestAnimationFrame(() => {
             const guideElement = document.getElementById('guide-section');
             if (guideElement) {
-                const yOffset = -80; // a little space from the top
+                const yOffset = -80;
                 const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
             }
@@ -91,7 +90,7 @@ export default function VimeoThumbnailDownloaderPage() {
             }
             
             const blob = await response.blob();
-            if (blob.type.includes('html')) {
+            if (blob.type.includes('html') || !blob.type.startsWith('image')) {
                 throw new Error('Received an invalid file instead of an image. The thumbnail may not exist.');
             }
 
@@ -110,6 +109,15 @@ export default function VimeoThumbnailDownloaderPage() {
                 variant: "destructive",
             });
         }
+    }
+    
+    const handleImageError = () => {
+        toast({
+            title: "Thumbnail not found",
+            description: "Could not load the thumbnail. This resolution may not exist for this video.",
+            variant: "destructive"
+        });
+        setThumbnail(null);
     }
 
     return (
@@ -144,7 +152,7 @@ export default function VimeoThumbnailDownloaderPage() {
                             <Card key={thumbnail.quality} className="overflow-hidden flex flex-col max-w-sm">
                                 <CardHeader className="p-0">
                                     <div className="aspect-video bg-muted overflow-hidden">
-                                        <img src={thumbnail.url} alt={`${thumbnail.quality} thumbnail`} className="w-full h-full object-cover" />
+                                        <img src={thumbnail.url} alt={`${thumbnail.quality} thumbnail`} className="w-full h-full object-cover" onError={handleImageError} />
                                     </div>
                                     <div className="p-4">
                                         <CardTitle className="text-lg">{thumbnail.quality}</CardTitle>

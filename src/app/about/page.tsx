@@ -13,7 +13,7 @@ export default function AboutPage() {
 
   return (
     <div className="relative overflow-hidden">
-        <div 
+      <div 
           aria-hidden="true" 
           className="absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl"
         >
@@ -24,7 +24,6 @@ export default function AboutPage() {
               className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-accent opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
       </div>
-
       <div className="relative container mx-auto py-12 md:py-20 px-4">
           <div className="max-w-4xl mx-auto space-y-16">
               <div className="text-center space-y-4">

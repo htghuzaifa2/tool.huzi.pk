@@ -4,7 +4,7 @@
 import { useState, useMemo, ReactNode } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { diffChars } from 'diff';
+import { diffWords } from 'diff';
 import { GitCompareArrows } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides } from "@/lib/search-data";
@@ -16,11 +16,10 @@ export default function TextDiffHighlighterPage() {
     const textDiffGuide = guides.find(g => g.href.includes('text-diff-highlighter'));
 
     const handleGuideClick = () => {
-        // The content is not immediately available, so we wait for the next render tick.
         requestAnimationFrame(() => {
             const guideElement = document.getElementById('guide-section');
             if (guideElement) {
-                const yOffset = -80; // a little space from the top
+                const yOffset = -80;
                 const y = guideElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
             }
@@ -28,10 +27,11 @@ export default function TextDiffHighlighterPage() {
     };
 
     const highlightedText = useMemo(() => {
-        const differences = diffChars(originalText, changedText);
+        const differences = diffWords(originalText, changedText, { ignoreCase: true });
         return differences.map((part, index) => {
-            const style = {
-                backgroundColor: part.added ? 'rgba(0, 255, 0, 0.2)' : part.removed ? 'rgba(255, 0, 0, 0.2)' : 'transparent'
+            const style: React.CSSProperties = {
+                backgroundColor: part.added ? 'rgba(0, 255, 0, 0.2)' : part.removed ? 'rgba(255, 0, 0, 0.2)' : 'transparent',
+                textDecoration: part.removed ? 'line-through' : 'none',
             };
             return <span key={index} style={style}>{part.value}</span>;
         });
