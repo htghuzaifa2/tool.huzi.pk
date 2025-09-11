@@ -76,6 +76,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preload" href={inter.style.fontFamily} as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href={sourceCodePro.style.fontFamily} as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="icon" href={logoUrl} type="image/png" />
         <link rel="shortcut icon" href={logoUrl} type="image/png" />
         <link rel="apple-touch-icon" href={logoUrl} />
