@@ -5,6 +5,12 @@ import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { tools } from "@/lib/search-data"
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks",
+  description: "Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side.",
+};
 
 export default function Home() {
   return (

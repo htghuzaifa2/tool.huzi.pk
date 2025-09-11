@@ -5,6 +5,12 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides as allGuides } from "@/lib/search-data";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Tool Guides – tool.huzi.pk",
+  description: "Your step-by-step instructions for using our powerful online tools. Find guides for the resume builder, PDF merger, image converter, and more.",
+};
 
 export default function GuidePage() {
   return (

@@ -10,6 +10,7 @@ import React, { Suspense } from 'react';
 import { ClickTracker } from '@/components/click-tracker';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Metadata } from 'next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -41,7 +42,28 @@ function RootLayoutSkeleton() {
   );
 }
 
-export const metadataBase = new URL('https://tool.huzi.pk');
+export const metadata: Metadata = {
+  metadataBase: new URL('https://tool.huzi.pk'),
+  title: 'tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks',
+  description: 'Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side.',
+  keywords: "online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools",
+  openGraph: {
+    type: "website",
+    url: "https://tool.huzi.pk/",
+    title: "tool.huzi.pk – Free Online Tools & Utilities",
+    description: "A curated collection of client-side utilities and tools to streamline your everyday tasks.",
+    images: [{
+      url: "https://i.postimg.cc/c1QGBS44/tool-huzi-pk.png",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    url: "https://tool.huzi.pk/",
+    title: "tool.huzi.pk – Free Online Tools & Utilities",
+    description: "A curated collection of client-side utilities and tools to streamline your everyday tasks.",
+    images: ["https://i.postimg.cc/c1QGBS44/tool-huzi-pk.png"],
+  },
+};
 
 export default function RootLayout({
   children,
@@ -53,26 +75,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
       <head>
-        <title>tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks</title>
-        <meta name="description" content="Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side." />
-        <meta name="keywords" content="online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
         <link rel="icon" href={logoUrl} type="image/png" />
         <link rel="shortcut icon" href={logoUrl} type="image/png" />
         <link rel="apple-touch-icon" href={logoUrl} />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tool.huzi.pk/" />
-        <meta property="og:title" content="tool.huzi.pk – Free Online Tools & Utilities" />
-        <meta property="og:description" content="A curated collection of client-side utilities and tools to streamline your everyday tasks." />
-        <meta property="og:image" content={logoUrl} />
-
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://tool.huzi.pk/" />
-        <meta property="twitter:title" content="tool.huzi.pk – Free Online Tools & Utilities" />
-        <meta property="twitter:description" content="A curated collection of client-side utilities and tools to streamline your everyday tasks." />
-        <meta property="twitter:image" content={logoUrl} />
       </head>
       <body className="font-body antialiased min-h-screen bg-background font-sans">
         <ThemeProvider
