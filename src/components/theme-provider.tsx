@@ -51,7 +51,7 @@ export function ThemeProvider({
     } else if (theme === "orange") {
       root.classList.add("theme-orange")
     } else {
-      root.classList.add(theme)
+      root.classList.add('dark')
     }
 
   }, [theme])

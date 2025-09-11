@@ -9,6 +9,7 @@ import { ClickTracker } from '@/components/click-tracker';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -71,9 +72,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const logoUrl = "https://i.postimg.cc/c1QGBS44/tool-huzi-pk.png";
+  const themeCookie = cookies().get('toolbox-hub-theme');
+  const theme = themeCookie ? themeCookie.value : 'dark';
+
+  const themeClasses: {[key: string]: string} = {
+    light: 'light',
+    dark: 'dark',
+    blue: 'theme-blue',
+    orange: 'theme-orange'
+  }
+
+  const htmlClassName = themeClasses[theme] || 'dark';
   
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable} ${htmlClassName}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preload" href={inter.style.fontFamily} as="font" type="font/woff2" crossOrigin="anonymous" />
