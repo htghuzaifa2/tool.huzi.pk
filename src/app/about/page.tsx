@@ -67,7 +67,7 @@ export default function AboutPage() {
                       This collection of tools is a passion project by a developer dedicated to building useful things for the web.
                   </p>
                   <div onClick={openPortfolio} className="flex justify-center">
-                    <GetStartedButton />
+                    <GetStartedButton>MEET THE CREATOR</GetStartedButton>
                   </div>
               </div>
           </div>
