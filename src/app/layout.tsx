@@ -72,7 +72,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const logoUrl = "https://i.postimg.cc/c1QGBS44/tool-huzi-pk.png";
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const themeCookie = cookieStore.get('toolbox-hub-theme');
   const theme = themeCookie ? themeCookie.value : 'dark';
 
