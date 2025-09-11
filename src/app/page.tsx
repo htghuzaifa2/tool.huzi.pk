@@ -12,6 +12,7 @@ const ITEMS_PER_PAGE = 24;
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const totalPages = Math.ceil(tools.length / ITEMS_PER_PAGE);
 
@@ -22,11 +23,32 @@ export default function Home() {
   }, [currentPage]);
   
   const goToPage = (page: number) => {
+    setIsAnimating(true);
     setCurrentPage(page);
     const toolsSection = document.getElementById('tools');
     if (toolsSection) {
       toolsSection.scrollIntoView({ behavior: 'smooth' });
     }
+    setTimeout(() => {
+        setIsAnimating(false);
+    }, 500); // must match animation duration
+  }
+
+  const renderPagination = () => {
+    if (totalPages <= 1) return null;
+    return (
+      <div className="flex items-center justify-center gap-4">
+        <Button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1 || isAnimating} variant="secondary">
+          Previous Page
+        </Button>
+        <span className="text-muted-foreground">
+          Page {currentPage} of {totalPages}
+        </span>
+        <Button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages || isAnimating} variant="secondary">
+          Next Page
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -54,7 +76,10 @@ export default function Home() {
               Explore Our Tools
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          {renderPagination()}
+          
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
             {currentTools.map((tool) => (
               <Link href={tool.href} key={tool.href} className="group">
                 <Card className="h-full hover:border-primary transition-colors duration-300 transform hover:-translate-y-1">
@@ -69,19 +94,10 @@ export default function Home() {
               </Link>
             ))}
           </div>
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-4 mt-12">
-              <Button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} variant="secondary">
-                Previous Page
-              </Button>
-              <span className="text-muted-foreground">
-                Page {currentPage} of {totalPages}
-              </span>
-              <Button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages} variant="secondary">
-                Next Page
-              </Button>
-            </div>
-          )}
+
+          <div className="mt-12">
+            {renderPagination()}
+          </div>
         </div>
       </section>
     </main>

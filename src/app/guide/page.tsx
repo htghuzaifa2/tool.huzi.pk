@@ -12,6 +12,7 @@ const ITEMS_PER_PAGE = 24;
 
 export default function GuidePage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const totalPages = Math.ceil(allGuides.length / ITEMS_PER_PAGE);
 
@@ -22,11 +23,32 @@ export default function GuidePage() {
   }, [currentPage]);
   
   const goToPage = (page: number) => {
+    setIsAnimating(true);
     setCurrentPage(page);
-     const guideSection = document.getElementById('guides-section');
+    const guideSection = document.getElementById('guides-section');
     if (guideSection) {
       guideSection.scrollIntoView({ behavior: 'smooth' });
     }
+    setTimeout(() => {
+        setIsAnimating(false);
+    }, 500); // must match animation duration
+  }
+  
+  const renderPagination = () => {
+    if (totalPages <= 1) return null;
+    return (
+      <div className="flex items-center justify-center gap-4">
+        <Button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1 || isAnimating} variant="secondary">
+          Previous Page
+        </Button>
+        <span className="text-muted-foreground">
+          Page {currentPage} of {totalPages}
+        </span>
+        <Button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages || isAnimating} variant="secondary">
+          Next Page
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -41,7 +63,9 @@ export default function GuidePage() {
           </p>
         </div>
 
-        <div className="space-y-8">
+        {renderPagination()}
+
+        <div className={`space-y-8 mt-8 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
           {currentGuides.map((guide, index) => (
              <Card key={guide.href} id={guide.href.replace('/guide#', '')}>
               <CardHeader>
@@ -74,19 +98,9 @@ export default function GuidePage() {
           </Card>
           ))}
         </div>
-         {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-4 mt-12">
-               <Button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} variant="secondary">
-                Previous Page
-              </Button>
-              <span className="text-muted-foreground">
-                Page {currentPage} of {totalPages}
-              </span>
-              <Button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages} variant="secondary">
-                Next Page
-              </Button>
-            </div>
-          )}
+         <div className="mt-12">
+           {renderPagination()}
+         </div>
       </div>
     </div>
   );

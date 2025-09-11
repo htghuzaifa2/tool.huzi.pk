@@ -62,7 +62,7 @@ export function SearchDialog() {
       }
 
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-1">
           {results.map((result) => (
             <Link href={result.href} key={result.href} className="group" onClick={handleResultClick}>
               <Card className="h-full hover:border-primary transition-colors duration-300">
@@ -100,22 +100,23 @@ export function SearchDialog() {
           </div>
         </DialogHeader>
        
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex flex-col flex-1 overflow-hidden mt-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex flex-col flex-1 overflow-hidden mt-2">
           <div className="px-4 sm:px-0">
              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="tools">Tools ({filteredTools.length})</TabsTrigger>
                 <TabsTrigger value="guides">Guides ({filteredGuides.length})</TabsTrigger>
             </TabsList>
           </div>
-
-            <ScrollArea className="flex-1 mt-4">
-              <TabsContent value="tools">
-                {renderResults(filteredTools)}
-              </TabsContent>
-              <TabsContent value="guides">
-                {renderResults(filteredGuides)}
-              </TabsContent>
-            </ScrollArea>
+            <div className="flex-1 overflow-hidden mt-4">
+              <ScrollArea className="h-full pr-4">
+                  <TabsContent value="tools" className="mt-0">
+                    {renderResults(filteredTools)}
+                  </TabsContent>
+                  <TabsContent value="guides" className="mt-0">
+                    {renderResults(filteredGuides)}
+                  </TabsContent>
+              </ScrollArea>
+            </div>
         </Tabs>
       </DialogContent>
     </Dialog>
