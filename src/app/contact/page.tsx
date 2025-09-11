@@ -10,11 +10,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { User, Mail, MessageSquare, PenSquare, AtSign } from "lucide-react";
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Contact Us – tool.huzi.pk",
-  description: "Have a question, feedback, or suggestion? We'd love to hear from you. Get in touch with us via WhatsApp or email.",
-};
-
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

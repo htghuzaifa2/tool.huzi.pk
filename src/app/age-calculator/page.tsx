@@ -12,11 +12,6 @@ import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Age Calculator – tool.huzi.pk",
-  description: "Find out your exact age in years, months, and days by entering your date of birth. A free and simple online age calculation tool.",
-};
-
 export default function AgeCalculatorPage() {
     const [birthDate, setBirthDate] = useState('');
     const [age, setAge] = useState<{ years?: number; months?: number; days?: number } | null>(null);

@@ -7,11 +7,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides as allGuides } from "@/lib/search-data";
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Tool Guides – tool.huzi.pk",
-  description: "Your step-by-step instructions for using our powerful online tools. Find guides for the resume builder, PDF merger, image converter, and more.",
-};
-
 export default function GuidePage() {
   return (
     <div className="container mx-auto py-10">

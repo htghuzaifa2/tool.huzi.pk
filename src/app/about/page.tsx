@@ -6,11 +6,6 @@ import { ShieldCheck, Heart } from "lucide-react";
 import { GetStartedButton } from "@/components/ui/get-started-button";
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "About Our Mission – tool.huzi.pk",
-  description: "Learn about our commitment to providing simple, powerful, and privacy-focused online tools for everyone. All tools run directly in your browser.",
-};
-
 export default function AboutPage() {
   
   const openPortfolio = () => {
