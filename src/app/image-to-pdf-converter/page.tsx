@@ -81,9 +81,8 @@ export default function ImageToPdfConverterPage() {
                     pdf.addPage([pdfWidth, pdfHeight], orientation);
                 }
 
-                const currentPage = pdf.internal.pages[i + 1];
-                const pdfWidth = currentPage.width;
-                const pdfHeight = currentPage.height;
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
                 
                 const margin = 10;
                 const usableWidth = pdfWidth - (margin * 2);
