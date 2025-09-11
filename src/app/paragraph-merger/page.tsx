@@ -11,6 +11,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function ParagraphMergerPage() {
     const [inputText, setInputText] = useState('This is the first paragraph.\n\nThis is the second paragraph.');
     const [outputText, setOutputText] = useState('');

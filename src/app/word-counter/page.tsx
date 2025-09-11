@@ -9,6 +9,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function WordCounterPage() {
   const [text, setText] = useState("")
   const wordCounterGuide = guides.find(g => g.href.includes('word-counter'));

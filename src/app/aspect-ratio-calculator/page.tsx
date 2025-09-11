@@ -10,6 +10,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 // Function to remove trailing zeros and the decimal point if not needed
 const formatNumber = (num: number) => {
     if (num % 1 === 0) {

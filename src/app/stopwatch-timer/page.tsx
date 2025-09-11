@@ -10,6 +10,8 @@ import { Timer, Play, Pause, RotateCcw, Flag, Trash2 } from 'lucide-react';
 import { Progress } from "@/components/ui/progress";
 import { useToast } from '@/hooks/use-toast';
 
+export const runtime = 'edge';
+
 const formatTime = (time: number) => {
     const milliseconds = `0${Math.floor((time % 1000) / 10)}`.slice(-2);
     const seconds = `0${Math.floor(time / 1000) % 60}`.slice(-2);

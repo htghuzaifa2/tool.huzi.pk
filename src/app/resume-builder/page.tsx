@@ -22,6 +22,8 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import html2canvas from 'html2canvas';
 
+export const runtime = 'edge';
+
 const defaultValues: ResumeData = {
     fullName: 'John Doe',
     jobTitle: 'Software Engineer',

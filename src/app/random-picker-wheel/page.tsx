@@ -14,6 +14,8 @@ import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import confetti from 'canvas-confetti';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+export const runtime = 'edge';
+
 // Final, Modern, High-Contrast Color Palettes
 const themeColors = {
     // Synthwave/Neon palette for dark backgrounds

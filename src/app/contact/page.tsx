@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { User, Mail, MessageSquare, PenSquare, AtSign } from "lucide-react";
 import type { Metadata } from 'next';
 
+export const runtime = 'edge';
+
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

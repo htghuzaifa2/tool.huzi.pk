@@ -15,6 +15,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function PasswordGeneratorPage() {
     const [password, setPassword] = useState('');
     const [length, setLength] = useState(16);

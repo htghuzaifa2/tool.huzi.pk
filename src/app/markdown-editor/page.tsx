@@ -11,6 +11,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 const placeholder = `# Welcome to your Markdown Editor!
 
 ## Start typing to see the magic happen.

@@ -8,6 +8,8 @@ import { tools } from "@/lib/search-data"
 import { useState, useMemo } from "react"
 import { GetStartedButton } from "@/components/ui/get-started-button"
 
+export const runtime = 'edge';
+
 const ITEMS_PER_PAGE = 24;
 
 export default function Home() {

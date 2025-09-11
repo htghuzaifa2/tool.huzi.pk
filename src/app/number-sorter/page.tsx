@@ -13,6 +13,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function NumberSorterPage() {
     const [inputText, setInputText] = useState('10, 5, 8, 2, 100, 1');
     const [outputText, setOutputText] = useState('');

@@ -14,6 +14,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 const formSchema = z.object({
   text: z.string().min(1, "Text to process cannot be empty."),
   shift: z.coerce.number().int().min(1, "Shift key must be at least 1.").max(25, "Shift key must be at most 25."),

@@ -12,6 +12,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function SentenceShufflerPage() {
     const [inputText, setInputText] = useState('This is the first sentence. This is the second one! And here comes the third?');
     const [shuffledText, setShuffledText] = useState('');

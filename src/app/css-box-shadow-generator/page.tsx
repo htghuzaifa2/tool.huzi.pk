@@ -14,6 +14,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 const hexToRgba = (hex: string, opacity: number): string => {
     let r = 0, g = 0, b = 0;
     if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {

@@ -12,6 +12,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 type Base = '2' | '8' | '10' | '16';
 const baseOptions: { value: Base; label: string }[] = [
     { value: '2', label: 'Binary' },

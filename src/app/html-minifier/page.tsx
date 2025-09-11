@@ -11,6 +11,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function HtmlMinifierPage() {
     const [htmlInput, setHtmlInput] = useState('<!-- This is a comment -->\n<div class="   extra-space   ">\n    <p>Hello World</p>\n</div>');
     const [minifiedHtml, setMinifiedHtml] = useState('');

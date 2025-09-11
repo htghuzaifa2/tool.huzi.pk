@@ -12,6 +12,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 const currencyData = {
     "USD": { "name": "United States Dollar", "rate": 1 },
     "EUR": { "name": "Euro", "rate": 0.93 },

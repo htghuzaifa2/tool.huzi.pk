@@ -8,6 +8,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides as allGuides } from "@/lib/search-data";
 import { Button } from "@/components/ui/button";
 
+export const runtime = 'edge';
+
 const ITEMS_PER_PAGE = 24;
 
 export default function GuidePage() {

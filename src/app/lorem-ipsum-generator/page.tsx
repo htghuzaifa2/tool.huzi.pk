@@ -13,6 +13,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 const loremIpsumWords = [
     'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'curabitur', 'vitae', 'diam', 'non', 'erat', 'mattis', 'placerat', 'sed', 'vel', 'urna', 'nullam', 'quis', 'ante', 'etiam', 'sit', 'amet', 'orci', 'eget', 'eros', 'faucibus', 'scelerisque', 'vivamus', 'eget', 'arcu', 'vel', 'quam', 'egestas', 'semper', 'aenean', 'posuere', 'quam', 'vel', 'leo', 'ultricies', 'nec', 'lacinia', 'risus', 'fermentum', 'donec', 'et', 'dui', 'purus', 'cras', 'eu', 'lorem', 'ac', 'risus', 'aliquam', 'euismod', 'quis', 'ac', 'nibh', 'fusce', 'ac', 'urna', 'vel', 'odio', 'tristique', 'tincidunt', 'quis', 'eu', 'enim', 'in', 'hac', 'habitasse', 'platea', 'dictumst', 'maecenas', 'ut', 'lorem', 'quis', 'ligula', 'imperdiet', 'auctor', 'sed', 'eu', 'arcu', 'morbi', 'et', 'erat', 'et', 'nibh', 'condimentum', 'interdum', 'eu', 'ac', 'ligula', 'integer', 'eu', 'lacus', 'sit', 'amet', 'augue', 'congue', 'hendrerit', 'in', 'vel', 'elit', 'phasellus', 'non', 'enim', 'quis', 'orci', 'consequat', 'consequat', 'ac', 'sit', 'amet', 'nisi', 'praesent', 'in', 'nisi', 'id', 'ante', 'molestie', 'ultrices', 'sed', 'non', 'nisi', 'quisque', 'porttitor', 'eros', 'in', 'tellus', 'semper', 'accumsan'
 ];

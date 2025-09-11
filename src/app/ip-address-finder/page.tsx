@@ -10,6 +10,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function IpAddressFinderPage() {
     const [ipData, setIpData] = useState<{ ip: string; } | null>(null);
     const [isLoading, setIsLoading] = useState(true);

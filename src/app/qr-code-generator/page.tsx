@@ -15,6 +15,8 @@ import { useToast } from "@/hooks/use-toast";
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 type QrType = 'text' | 'wifi' | 'vcard';
 type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
 

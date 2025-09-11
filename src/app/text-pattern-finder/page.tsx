@@ -12,6 +12,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function TextPatternFinderPage() {
     const [pattern, setPattern] = useState('\\b\\w{4}\\b'); // Default to find 4-letter words
     const [flags, setFlags] = useState('gi'); // Default to global, case-insensitive

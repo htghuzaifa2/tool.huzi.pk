@@ -12,6 +12,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 // Using a div element's textContent to decode entities
 const decodeHtml = (html: string): string => {
     if (typeof window === 'undefined') return '';

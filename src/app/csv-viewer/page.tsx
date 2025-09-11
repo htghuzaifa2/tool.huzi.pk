@@ -23,6 +23,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function CsvViewerPage() {
     const [data, setData] = useState<Record<string, any>[]>([]);
     const [columns, setColumns] = useState<ColumnDef<any>[]>([]);

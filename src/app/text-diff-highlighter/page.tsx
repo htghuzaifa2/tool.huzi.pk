@@ -10,6 +10,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function TextDiffHighlighterPage() {
     const [originalText, setOriginalText] = useState('This is the original text.\nIt has two lines.');
     const [changedText, setChangedText] = useState('This is the updated text.\nIt has two lines and some changes.');

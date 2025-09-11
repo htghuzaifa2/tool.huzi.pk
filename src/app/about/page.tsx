@@ -6,6 +6,8 @@ import { ShieldCheck, Heart } from "lucide-react";
 import { GetStartedButton } from "@/components/ui/get-started-button";
 import type { Metadata } from 'next';
 
+export const runtime = 'edge';
+
 export default function AboutPage() {
   
   const openPortfolio = () => {

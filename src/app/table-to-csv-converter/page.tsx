@@ -11,6 +11,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function TableToCsvConverterPage() {
     const [htmlInput, setHtmlInput] = useState('');
     const { toast } = useToast();
@@ -139,8 +141,8 @@ export default function TableToCsvConverterPage() {
                                 </Card>
                             </AccordionContent>
                         </AccordionItem>
-                    </Accordion>
-                 )}
+                 </Accordion>
+                )}
             </div>
         </div>
     );

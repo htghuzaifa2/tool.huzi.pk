@@ -11,6 +11,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function ImageToPdfConverterPage() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [isConverting, setIsConverting] = useState(false);

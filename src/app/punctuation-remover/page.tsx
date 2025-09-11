@@ -11,6 +11,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function PunctuationRemoverPage() {
     const [inputText, setInputText] = useState('Hello, world! This is a test. Isn\'t it great?');
     const [outputText, setOutputText] = useState('');

@@ -22,6 +22,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 const LOCAL_STORAGE_KEY = 'huzi-pk-notepad-notes';
 
 type Note = {

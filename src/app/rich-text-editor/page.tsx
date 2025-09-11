@@ -8,6 +8,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 export default function RichTextEditorPage() {
   const richTextEditorGuide = guides.find(g => g.href.includes('rich-text-editor'));
   const handleGuideClick = () => {

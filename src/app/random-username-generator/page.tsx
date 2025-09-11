@@ -13,6 +13,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 
+export const runtime = 'edge';
+
 const adjectives = ['Cool', 'Super', 'Epic', 'Awesome', 'Happy', 'Silent', 'Swift', 'Red', 'Cosmic', 'Digital', 'Future', 'Cyber', 'Iron', 'Golden'];
 const nouns = ['Panda', 'Coder', 'Hacker', 'Ninja', 'Rider', 'Pilot', 'Gamer', 'Jester', 'Wizard', 'King', 'Queen', 'Ghost', 'Lion', 'Tiger'];
 
