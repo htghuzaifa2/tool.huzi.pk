@@ -1,6 +1,3 @@
-
-"use client"
-
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -10,7 +7,7 @@ import React, { Suspense } from 'react';
 import { ClickTracker } from '@/components/click-tracker';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,27 +21,12 @@ const sourceCodePro = Source_Code_Pro({
   display: 'swap',
 });
 
-function RootLayoutSkeleton() {
-  return (
-    <div className="container py-10">
-      <div className="space-y-8">
-        <Skeleton className="h-32 w-full" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://tool.huzi.pk'),
-  title: 'tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks',
+  title: {
+    default: 'tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks',
+    template: '%s – tool.huzi.pk',
+  },
   description: 'Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side.',
   keywords: "online tools, free web utilities, text tools, code tools, image converter, QR code generator, password generator, regex tester, base converter, lorem ipsum generator, json formatter, css minifier, javascript minifier, online calculator, client side tools, browser based tools, free online generators, web developer tools",
   openGraph: {
@@ -65,6 +47,24 @@ export const metadata: Metadata = {
   },
 };
 
+function RootLayoutSkeleton() {
+  return (
+    <div className="container py-10">
+      <div className="space-y-8">
+        <Skeleton className="h-32 w-full" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -75,6 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href={logoUrl} type="image/png" />
         <link rel="shortcut icon" href={logoUrl} type="image/png" />
         <link rel="apple-touch-icon" href={logoUrl} />
