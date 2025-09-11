@@ -1,3 +1,4 @@
+
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -40,7 +41,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    url: "https://tool.huzi.pk/",
     title: "tool.huzi.pk – Free Online Tools & Utilities",
     description: "A curated collection of client-side utilities and tools to streamline your everyday tasks.",
     images: ["https://i.postimg.cc/c1QGBS44/tool-huzi-pk.png"],
