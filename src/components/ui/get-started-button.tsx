@@ -21,11 +21,11 @@ export const GetStartedButton = () => {
               <span style={{'--i': 2} as React.CSSProperties} data-label="E">E</span>
               <span style={{'--i': 3} as React.CSSProperties} data-label="E">E</span>
               <span style={{'--i': 4} as React.CSSProperties} data-label="T">T</span>
-              <span style={{'--i': 5} as React.CSSProperties} data-label=" "> </span>
+              <span style={{'--i': 5} as React.CSSProperties} data-label=" "> </span>
               <span style={{'--i': 6} as React.CSSProperties} data-label="T">T</span>
               <span style={{'--i': 7} as React.CSSProperties} data-label="H">H</span>
               <span style={{'--i': 8} as React.CSSProperties} data-label="E">E</span>
-              <span style={{'--i': 9} as React.CSSProperties} data-label=" "> </span>
+              <span style={{'--i': 9} as React.CSSProperties} data-label=" "> </span>
               <span style={{'--i': 10} as React.CSSProperties} data-label="C">C</span>
               <span style={{'--i': 11} as React.CSSProperties} data-label="R">R</span>
               <span style={{'--i': 12} as React.CSSProperties} data-label="E">E</span>
