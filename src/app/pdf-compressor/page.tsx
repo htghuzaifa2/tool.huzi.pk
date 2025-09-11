@@ -82,8 +82,15 @@ export default function PdfCompressorPage() {
 
         try {
             const pdfBytes = await originalFile.arrayBuffer();
-            const pdfDoc = await PDFDocument.load(pdfBytes);
-            const imageObjects = Array.from(pdfDoc.context.indirectObjects.values()).filter(obj => obj && obj.dict && obj.dict.get(pdfDoc.context.obj('Subtype')) === pdfDoc.context.obj('Image'));
+            const pdfDoc = await PDFDocument.load(pdfBytes, {
+                // Some PDFs have objects that are not compliant with the spec, this can help
+                ignoreEncryption: true,
+            });
+
+            const imageObjects = Array.from(pdfDoc.context.indirectObjects.values()).filter(
+                (obj): obj is any =>
+                obj && obj.dict && obj.dict.get(pdfDoc.context.obj('Subtype')) === pdfDoc.context.obj('Image')
+            );
 
             if(imageObjects.length === 0) {
                  toast({ title: "No Images Found", description: "This PDF contains no images to compress.", variant: "destructive" });
@@ -92,15 +99,48 @@ export default function PdfCompressorPage() {
             }
 
             for (const image of imageObjects) {
-                const stream = image as any; // pdf-lib types can be complex here
+                const stream = image;
                 const imageBytes = stream.getContents();
+                const filter = stream.dict.get(pdfDoc.context.obj('Filter'));
+
+                let compressedImage;
                 
-                // Only compress JPEG images for now
-                if(stream.dict.get(pdfDoc.context.obj('Filter')) === pdfDoc.context.obj('DCTDecode')) {
-                    const compressedImage = await pdfDoc.embedJpg(imageBytes);
+                try {
+                    // Handle JPEGs
+                    if (filter === pdfDoc.context.obj('DCTDecode')) {
+                         compressedImage = await pdfDoc.embedJpg(imageBytes);
+                    } 
+                    // Handle PNGs (and other FlateDecoded images)
+                    else if (filter === pdfDoc.context.obj('FlateDecode')) {
+                        // We attempt to re-embed as PNG. This might not reduce size for all PNGs.
+                         compressedImage = await pdfDoc.embedPng(imageBytes);
+                    }
+                    else {
+                        // Skip unsupported image formats
+                        continue;
+                    }
+
+                    const newImageRef = pdfDoc.context.register(pdfDoc.context.obj(compressedImage));
+                    // Replace the old image object with the new compressed one
+                    stream.dict.delete(pdfDoc.context.obj('Filter'));
                     stream.dict.set(pdfDoc.context.obj('Width'), pdfDoc.context.obj(compressedImage.width));
                     stream.dict.set(pdfDoc.context.obj('Height'), pdfDoc.context.obj(compressedImage.height));
-                    (stream as any).contents = (compressedImage as any).data;
+                    
+                    // Directly replace the image reference. This is a more robust way.
+                    const pages = pdfDoc.getPages();
+                    for (const page of pages) {
+                        const { XObject } = page.node.Resources();
+                        if (XObject) {
+                            XObject.entries().forEach(([key, value]) => {
+                                if (value === image.ref) {
+                                    page.node.set(key, newImageRef);
+                                }
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Could not compress an image, skipping it.", e);
+                    continue; // Skip image if it fails to process
                 }
             }
             
