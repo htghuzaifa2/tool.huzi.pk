@@ -43,7 +43,7 @@ export default function SentenceShufflerPage() {
         try {
             // Regex to split text into sentences, keeping delimiters and trailing whitespace.
             // This handles multiple spaces after a delimiter.
-            const sentences = inputText.match(/[^.!?]+[.!?]+[ \t\r\n]*/g) || [];
+            let sentences: string[] = inputText.match(/[^.!?]+[.!?]+[ \t\r\n]*/g) || [];
             
             // Handle case where there might be text without a closing delimiter
             const lastMatchEnd = sentences.length > 0 ? inputText.lastIndexOf(sentences[sentences.length - 1]) + sentences[sentences.length - 1].length : 0;
