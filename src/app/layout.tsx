@@ -72,7 +72,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const logoUrl = "https://i.postimg.cc/c1QGBS44/tool-huzi-pk.png";
-  const themeCookie = cookies().get('toolbox-hub-theme');
+  const cookieStore = cookies()
+  const themeCookie = cookieStore.get('toolbox-hub-theme');
   const theme = themeCookie ? themeCookie.value : 'dark';
 
   const themeClasses: {[key: string]: string} = {
