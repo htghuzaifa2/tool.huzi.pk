@@ -37,7 +37,7 @@ export default function AboutPage() {
               </div>
               
               <div className="grid md:grid-cols-2 gap-8">
-                  <Card className="bg-background/60 backdrop-blur-sm">
+                  <Card className="bg-background/60 backdrop-blur-sm hover:border-primary transition-all duration-300 transform hover:-translate-y-1">
                       <CardHeader className="text-center">
                           <div className="mx-auto bg-primary/10 text-primary p-4 rounded-full mb-4">
                               <Heart className="w-10 h-10" />
@@ -48,7 +48,7 @@ export default function AboutPage() {
                           We believe that powerful utilities should not be complicated or expensive. Our mission is to provide a collection of free, intuitive tools for developers, writers, and anyone looking to simplify a task.
                       </CardContent>
                   </Card>
-                  <Card className="bg-background/60 backdrop-blur-sm">
+                  <Card className="bg-background/60 backdrop-blur-sm hover:border-primary transition-all duration-300 transform hover:-translate-y-1">
                       <CardHeader className="text-center">
                           <div className="mx-auto bg-primary/10 text-primary p-4 rounded-full mb-4">
                               <ShieldCheck className="w-10 h-10" />
