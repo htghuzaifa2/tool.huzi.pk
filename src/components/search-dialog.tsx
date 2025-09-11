@@ -62,21 +62,19 @@ export function SearchDialog() {
       }
 
       return (
-        <ScrollArea className="h-[400px]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-4">
-            {results.map((result) => (
-              <Link href={result.href} key={result.href} className="group" onClick={handleResultClick}>
-                <Card className="h-full hover:border-primary transition-colors duration-300">
-                  <CardHeader>
-                    <div className="mb-2 text-primary">{result.icon}</div>
-                    <CardTitle className="font-headline text-base">{result.title}</CardTitle>
-                    <CardDescription className="text-xs line-clamp-2">{result.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </ScrollArea>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-4">
+          {results.map((result) => (
+            <Link href={result.href} key={result.href} className="group" onClick={handleResultClick}>
+              <Card className="h-full hover:border-primary transition-colors duration-300">
+                <CardHeader>
+                  <div className="mb-2 text-primary">{result.icon}</div>
+                  <CardTitle className="font-headline text-base">{result.title}</CardTitle>
+                  <CardDescription className="text-xs line-clamp-2">{result.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
       )
   }
 
@@ -110,14 +108,14 @@ export function SearchDialog() {
             </TabsList>
           </div>
 
-          <div className="flex-1 overflow-y-auto mt-4">
-              <TabsContent value="tools" forceMount={true} hidden={activeTab !== 'tools'}>
+            <ScrollArea className="flex-1 mt-4">
+              <TabsContent value="tools">
                 {renderResults(filteredTools)}
               </TabsContent>
-              <TabsContent value="guides" forceMount={true} hidden={activeTab !== 'guides'}>
+              <TabsContent value="guides">
                 {renderResults(filteredGuides)}
               </TabsContent>
-          </div>
+            </ScrollArea>
         </Tabs>
       </DialogContent>
     </Dialog>

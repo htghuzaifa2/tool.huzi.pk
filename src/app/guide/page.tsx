@@ -1,24 +1,36 @@
 
 "use client"
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides as allGuides } from "@/lib/search-data";
 import { Button } from "@/components/ui/button";
 
-const INITIAL_GUIDE_COUNT = 10;
+const ITEMS_PER_PAGE = 24;
 
 export default function GuidePage() {
-  const [visibleGuides, setVisibleGuides] = useState(INITIAL_GUIDE_COUNT);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const showMoreGuides = () => {
-    setVisibleGuides(allGuides.length);
-  };
+  const totalPages = Math.ceil(allGuides.length / ITEMS_PER_PAGE);
+
+  const currentGuides = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return allGuides.slice(startIndex, endIndex);
+  }, [currentPage]);
+  
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+     const guideSection = document.getElementById('guides-section');
+    if (guideSection) {
+      guideSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10" id="guides-section">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold font-headline">
@@ -30,7 +42,7 @@ export default function GuidePage() {
         </div>
 
         <div className="space-y-8">
-          {allGuides.slice(0, visibleGuides).map((guide, index) => (
+          {currentGuides.map((guide, index) => (
              <Card key={guide.href} id={guide.href.replace('/guide#', '')}>
               <CardHeader>
                 <Link href={guide.href.replace('/guide#', '/')}>
@@ -62,10 +74,16 @@ export default function GuidePage() {
           </Card>
           ))}
         </div>
-         {visibleGuides < allGuides.length && (
-            <div className="text-center mt-12">
-              <Button onClick={showMoreGuides} size="lg" variant="secondary">
-                Load More Guides
+         {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-4 mt-12">
+               <Button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} variant="secondary">
+                Previous Page
+              </Button>
+              <span className="text-muted-foreground">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages} variant="secondary">
+                Next Page
               </Button>
             </div>
           )}

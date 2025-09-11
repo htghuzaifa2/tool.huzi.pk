@@ -5,17 +5,29 @@ import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { tools } from "@/lib/search-data"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { GetStartedButton } from "@/components/ui/get-started-button"
 
-const INITIAL_TOOL_COUNT = 12;
+const ITEMS_PER_PAGE = 24;
 
 export default function Home() {
-  const [visibleTools, setVisibleTools] = useState(INITIAL_TOOL_COUNT);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const showMoreTools = () => {
-    setVisibleTools(tools.length);
-  };
+  const totalPages = Math.ceil(tools.length / ITEMS_PER_PAGE);
+
+  const currentTools = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return tools.slice(startIndex, endIndex);
+  }, [currentPage]);
+  
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    const toolsSection = document.getElementById('tools');
+    if (toolsSection) {
+      toolsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   return (
     <main>
@@ -43,7 +55,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {tools.slice(0, visibleTools).map((tool) => (
+            {currentTools.map((tool) => (
               <Link href={tool.href} key={tool.href} className="group">
                 <Card className="h-full hover:border-primary transition-colors duration-300 transform hover:-translate-y-1">
                   <CardHeader>
@@ -57,10 +69,16 @@ export default function Home() {
               </Link>
             ))}
           </div>
-          {visibleTools < tools.length && (
-            <div className="text-center mt-12">
-              <Button onClick={showMoreTools} size="lg" variant="secondary">
-                Load More Tools
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-4 mt-12">
+              <Button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} variant="secondary">
+                Previous Page
+              </Button>
+              <span className="text-muted-foreground">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages} variant="secondary">
+                Next Page
               </Button>
             </div>
           )}
