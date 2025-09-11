@@ -109,7 +109,7 @@ export function SearchDialog() {
           </div>
 
           <ScrollArea className="flex-1 mt-4">
-            <div className="p-1">
+            <div className="pr-4">
                 <TabsContent value="tools" forceMount={true} hidden={activeTab !== 'tools'}>
                   {renderResults(filteredTools)}
                 </TabsContent>

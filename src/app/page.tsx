@@ -1,16 +1,22 @@
 
+"use client"
+
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { tools } from "@/lib/search-data"
-import type { Metadata } from 'next';
+import { useState } from "react"
+import { GetStartedButton } from "@/components/ui/get-started-button"
 
-export const metadata: Metadata = {
-  title: "tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks",
-  description: "Discover free online tools at tool.huzi.pk – from text, image & code converters to generators, all in one place. Fast, secure & 100% client-side.",
-};
+const INITIAL_TOOL_COUNT = 12;
 
 export default function Home() {
+  const [visibleTools, setVisibleTools] = useState(INITIAL_TOOL_COUNT);
+
+  const showMoreTools = () => {
+    setVisibleTools(tools.length);
+  };
+
   return (
     <main>
       <section className="py-20 md:py-32">
@@ -21,10 +27,10 @@ export default function Home() {
           <p className="mt-4 max-w-2xl mx-auto text-lg text-foreground/80">
             A curated collection of client-side utilities and tools to streamline your everyday tasks.
           </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <Link href="#tools">
-              <Button size="lg">Explore Tools</Button>
-            </Link>
+          <div className="mt-8 flex justify-center">
+             <a href="#tools" className="block">
+                <GetStartedButton>EXPLORE TOOLS</GetStartedButton>
+             </a>
           </div>
         </div>
       </section>
@@ -37,7 +43,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {tools.map((tool) => (
+            {tools.slice(0, visibleTools).map((tool) => (
               <Link href={tool.href} key={tool.href} className="group">
                 <Card className="h-full hover:border-primary transition-colors duration-300 transform hover:-translate-y-1">
                   <CardHeader>
@@ -51,8 +57,16 @@ export default function Home() {
               </Link>
             ))}
           </div>
+          {visibleTools < tools.length && (
+            <div className="text-center mt-12">
+              <Button onClick={showMoreTools} size="lg" variant="secondary">
+                Load More Tools
+              </Button>
+            </div>
+          )}
         </div>
       </section>
     </main>
   );
 }
+
