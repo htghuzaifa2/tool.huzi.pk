@@ -17,16 +17,20 @@ export const GetStartedButton = () => {
           <div className="reflex"></div>
           <div className="content">
             <span className="text state-1">
-              <span style={{'--i': 1} as React.CSSProperties} data-label="G">G</span>
+              <span style={{'--i': 1} as React.CSSProperties} data-label="M">M</span>
               <span style={{'--i': 2} as React.CSSProperties} data-label="E">E</span>
-              <span style={{'--i': 3} as React.CSSProperties} data-label="T">T</span>
-              <span style={{'--i': 5} as React.CSSProperties} data-label="S">S</span>
+              <span style={{'--i': 3} as React.CSSProperties} data-label="E">E</span>
+              <span style={{'--i': 4} as React.CSSProperties} data-label="T">T</span>
               <span style={{'--i': 6} as React.CSSProperties} data-label="T">T</span>
-              <span style={{'--i': 7} as React.CSSProperties} data-label="A">A</span>
-              <span style={{'--i': 8} as React.CSSProperties} data-label="R">R</span>
-              <span style={{'--i': 9} as React.CSSProperties} data-label="T">T</span>
-              <span style={{'--i': 10} as React.CSSProperties} data-label="E">E</span>
-              <span style={{'--i': 11} as React.CSSProperties} data-label="D">D</span>
+              <span style={{'--i': 7} as React.CSSProperties} data-label="H">H</span>
+              <span style={{'--i': 8} as React.CSSProperties} data-label="E">E</span>
+              <span style={{'--i': 10} as React.CSSProperties} data-label="C">C</span>
+              <span style={{'--i': 11} as React.CSSProperties} data-label="R">R</span>
+              <span style={{'--i': 12} as React.CSSProperties} data-label="E">E</span>
+              <span style={{'--i': 13} as React.CSSProperties} data-label="A">A</span>
+              <span style={{'--i': 14} as React.CSSProperties} data-label="T">T</span>
+              <span style={{'--i': 15} as React.CSSProperties} data-label="O">O</span>
+              <span style={{'--i': 16} as React.CSSProperties} data-label="R">R</span>
             </span>
             <span className="text state-2">
               <span style={{'--i': 1} as React.CSSProperties} data-label="⎯">⎯</span>
@@ -39,6 +43,10 @@ export const GetStartedButton = () => {
               <span style={{'--i': 8} as React.CSSProperties} data-label="⎯">⎯</span>
               <span style={{'--i': 9} as React.CSSProperties} data-label="⎯">⎯</span>
               <span style={{'--i': 10} as React.CSSProperties} data-label="⎯">⎯</span>
+              <span style={{'--i': 11} as React.CSSProperties} data-label="⎯">⎯</span>
+              <span style={{'--i': 12} as React.CSSProperties} data-label="⎯">⎯</span>
+              <span style={{'--i': 13} as React.CSSProperties} data-label="⎯">⎯</span>
+              <span style={{'--i': 14} as React.CSSProperties} data-label="⎯">⎯</span>
             </span>
           </div>
         </div>
