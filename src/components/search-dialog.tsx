@@ -107,15 +107,21 @@ export function SearchDialog() {
                 <TabsTrigger value="guides">Guides ({filteredGuides.length})</TabsTrigger>
             </TabsList>
           </div>
-            <div className="flex-1 overflow-hidden mt-4">
-              <ScrollArea className="h-full pr-4">
-                  <TabsContent value="tools" className="mt-0">
+            <div className="flex-1 overflow-auto mt-4">
+              <TabsContent value="tools" className="mt-0">
+                <ScrollArea className="h-[45vh]">
+                  <div className="pr-4">
                     {renderResults(filteredTools)}
-                  </TabsContent>
-                  <TabsContent value="guides" className="mt-0">
+                  </div>
+                </ScrollArea>
+              </TabsContent>
+              <TabsContent value="guides" className="mt-0">
+                <ScrollArea className="h-[45vh]">
+                  <div className="pr-4">
                     {renderResults(filteredGuides)}
-                  </TabsContent>
-              </ScrollArea>
+                  </div>
+                </ScrollArea>
+              </TabsContent>
             </div>
         </Tabs>
       </DialogContent>
