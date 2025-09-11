@@ -83,7 +83,7 @@ export default function PdfCompressorPage() {
         try {
             const pdfBytes = await originalFile.arrayBuffer();
             const pdfDoc = await PDFDocument.load(pdfBytes);
-            const imageObjects = pdfDoc.context.indirectObjects.filter(obj => obj.dict.get(pdfDoc.context.obj('Subtype')) === pdfDoc.context.obj('Image'));
+            const imageObjects = Array.from(pdfDoc.context.indirectObjects.values()).filter(obj => obj.dict.get(pdfDoc.context.obj('Subtype')) === pdfDoc.context.obj('Image'));
 
             if(imageObjects.length === 0) {
                  toast({ title: "No Images Found", description: "This PDF contains no images to compress.", variant: "destructive" });
