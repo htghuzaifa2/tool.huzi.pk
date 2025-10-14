@@ -1,10 +1,11 @@
 
+"use client";
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { ClickTracker } from '@/components/click-tracker';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -24,7 +25,10 @@ const sourceCodePro = Source_Code_Pro({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
+// This can't be in the layout itself because metadata can't be exported from a client component.
+// We are making the layout a client component to handle theme loading without flicker.
+// We can define it here and use it in specific page files if needed.
+export const sharedMetadata: Metadata = {
   metadataBase: new URL('https://tool.huzi.pk'),
   title: {
     default: 'tool.huzi.pk – Free Online Tools & Utilities for Everyday Tasks',
@@ -49,6 +53,14 @@ export const metadata: Metadata = {
   },
 };
 
+const getCookie = (name: string): string | undefined => {
+    if (typeof document === 'undefined') return undefined;
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+};
+
+
 function RootLayoutSkeleton() {
   return (
     <div className="container py-10">
@@ -67,16 +79,29 @@ function RootLayoutSkeleton() {
   );
 }
 
-export default async function RootLayout({
+function Prefetcher() {
+  useEffect(() => {
+    // This effect runs only once on the client, importing the prefetcher logic.
+    import('@/lib/prefetch.js');
+  }, []);
+  return null;
+}
+
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const logoUrl = "https://i.postimg.cc/c1QGBS44/tool-huzi-pk.png";
-  const cookieStore = await cookies()
-  const themeCookie = cookieStore.get('toolbox-hub-theme');
-  const theme = themeCookie ? themeCookie.value : 'dark';
+  
+  // Use a client-side effect to set the initial theme, avoiding server/client mismatch
+  const [initialTheme, setInitialTheme] = React.useState('dark');
 
+  useEffect(() => {
+      const savedTheme = getCookie('toolbox-hub-theme') || 'dark';
+      setInitialTheme(savedTheme);
+  }, []);
+  
   const themeClasses: {[key: string]: string} = {
     light: 'light',
     dark: 'dark',
@@ -84,7 +109,7 @@ export default async function RootLayout({
     orange: 'theme-orange'
   }
 
-  const htmlClassName = themeClasses[theme] || 'dark';
+  const htmlClassName = themeClasses[initialTheme] || 'dark';
   
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable} ${htmlClassName}`}>
@@ -125,6 +150,7 @@ export default async function RootLayout({
           <Toaster />
           <ClickTracker />
           <ScrollToTop />
+          <Prefetcher />
         </ThemeProvider>
       </body>
     </html>
