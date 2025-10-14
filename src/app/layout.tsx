@@ -10,6 +10,7 @@ import { Inter, Source_Code_Pro } from 'next/font/google';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers'
+import { ScrollToTop } from '@/components/ui/scroll-to-top';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -123,6 +124,7 @@ export default async function RootLayout({
           </div>
           <Toaster />
           <ClickTracker />
+          <ScrollToTop />
         </ThemeProvider>
       </body>
     </html>
