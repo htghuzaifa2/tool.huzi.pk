@@ -9,7 +9,7 @@ let lastUrl = location.href;
 
 const conn = navigator.connection;
 const saveData = conn && (conn.saveData || (conn.effectiveType || '').includes('2g'));
-const prefetchLimit = conn && conn.effectiveType && /2g/.test(conn.effectiveType) ? 2 : conn && conn.effectiveType && /3g/.test(conn.effectiveType) ? 4 : 6;
+const prefetchLimit = conn && conn.effectiveType ? (/2g/.test(conn.effectiveType) ? 2 : /3g/.test(conn.effectiveType) ? 4 : 6) : 6;
 const PREFETCH_DELAY = 1000;
 
 let inflight = 0;
@@ -62,10 +62,10 @@ const prefetcher = url => {
 const intersectionCallback = (entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      if (prefetchObserver) prefetchObserver.unobserve(entry.target);
-      const url = entry.target.href;
-      if (canPrefetch({ href: url })) {
-        prefetcher(url);
+      const link = entry.target;
+      if (prefetchObserver) prefetchObserver.unobserve(link);
+      if (canPrefetch(link)) {
+        prefetcher(link.href);
       }
     }
   });
