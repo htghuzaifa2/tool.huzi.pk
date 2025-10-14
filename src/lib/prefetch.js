@@ -9,7 +9,7 @@ let lastUrl = location.href;
 
 const conn = navigator.connection;
 const saveData = conn && (conn.saveData || (conn.effectiveType || '').includes('2g'));
-const prefetchLimit = conn && /2g/.test(conn.effectiveType) ? 2 : /3g/.test(conn.effectiveType) ? 4 : 6;
+const prefetchLimit = conn && conn.effectiveType && /2g/.test(conn.effectiveType) ? 2 : conn && conn.effectiveType && /3g/.test(conn.effectiveType) ? 4 : 6;
 const PREFETCH_DELAY = 1000;
 
 let inflight = 0;
