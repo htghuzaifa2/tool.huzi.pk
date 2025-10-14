@@ -85,6 +85,7 @@ function RootLayoutSkeleton() {
 function Prefetcher() {
   useEffect(() => {
     // This effect runs only once on the client, importing the prefetcher logic.
+    // @ts-ignore
     import('@/lib/prefetch.js');
   }, []);
   return null;
