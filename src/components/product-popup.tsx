@@ -17,7 +17,7 @@ interface Product {
   imageUrl: string;
 }
 
-const DISMISS_COOLDOWN = 60 * 1000; // 60 seconds in milliseconds
+const DISMISS_COOLDOWN = 60 * 1000; // 60 seconds
 const INITIAL_APPEAR_DELAY = 10 * 1000; // 10 seconds
 const PRODUCT_ROTATION_INTERVAL = 30 * 1000; // 30 seconds
 
@@ -25,45 +25,65 @@ export function ProductPopup() {
   const [product, setProduct] = useState<Product | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isFading, setIsFading] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(true);
 
   const getRandomProduct = () => {
     return products[Math.floor(Math.random() * products.length)];
   };
 
   useEffect(() => {
+    // Check dismissal status from localStorage on initial load
     const dismissedUntil = localStorage.getItem('product-popup-dismissed-until');
     if (dismissedUntil && Date.now() < parseInt(dismissedUntil, 10)) {
-      const timeout = setTimeout(() => {
-        setProduct(getRandomProduct());
-        setIsVisible(true);
-      }, parseInt(dismissedUntil, 10) - Date.now());
-      return () => clearTimeout(timeout);
+        setIsDismissed(true);
+    } else {
+        setIsDismissed(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    let mainTimer: NodeJS.Timeout;
+
+    if (!isDismissed) {
+        // If not dismissed, show popup after initial delay
+        mainTimer = setTimeout(() => {
+            if (!product) { // Only set initial product if one isn't already there
+              setProduct(getRandomProduct());
+            }
+            setIsVisible(true);
+        }, INITIAL_APPEAR_DELAY);
+    } else {
+        // If dismissed, check periodically if the cooldown has expired
+        mainTimer = setInterval(() => {
+            const dismissedUntil = localStorage.getItem('product-popup-dismissed-until');
+            if (!dismissedUntil || Date.now() > parseInt(dismissedUntil, 10)) {
+                setIsDismissed(false);
+            }
+        }, 1000);
     }
 
-    const initialTimer = setTimeout(() => {
-      setProduct(getRandomProduct());
-      setIsVisible(true);
-    }, INITIAL_APPEAR_DELAY);
+    return () => clearTimeout(mainTimer);
+  }, [isDismissed, product]);
 
-    const rotationInterval = setInterval(() => {
-      if (!isVisible) return;
-      setIsFading(true);
-      setTimeout(() => {
-        setProduct(prevProduct => {
-          let newProduct = getRandomProduct();
-          while (newProduct.slug === prevProduct?.slug) {
-            newProduct = getRandomProduct();
-          }
-          return newProduct;
-        });
-        setIsFading(false);
-      }, 500);
-    }, PRODUCT_ROTATION_INTERVAL);
+  useEffect(() => {
+    // This effect handles the product rotation when the popup is visible.
+    if (isVisible) {
+      const rotationInterval = setInterval(() => {
+        setIsFading(true);
+        setTimeout(() => {
+          setProduct(prevProduct => {
+            let newProduct = getRandomProduct();
+            while (newProduct.slug === prevProduct?.slug) {
+              newProduct = getRandomProduct();
+            }
+            return newProduct;
+          });
+          setIsFading(false);
+        }, 500);
+      }, PRODUCT_ROTATION_INTERVAL);
 
-    return () => {
-      clearTimeout(initialTimer);
-      clearInterval(rotationInterval);
-    };
+      return () => clearInterval(rotationInterval);
+    }
   }, [isVisible]);
 
   const handleDismiss = () => {
@@ -73,6 +93,7 @@ export function ProductPopup() {
       setIsFading(false);
       const dismissedUntil = Date.now() + DISMISS_COOLDOWN;
       localStorage.setItem('product-popup-dismissed-until', dismissedUntil.toString());
+      setIsDismissed(true);
     }, 500);
   };
 
