@@ -12,6 +12,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers'
 import { ScrollToTop } from '@/components/ui/scroll-to-top';
+import dynamic from 'next/dynamic';
+
+const ProductPopup = dynamic(() => import('@/components/product-popup').then(m => m.ProductPopup), { ssr: false });
 
 const inter = Inter({
   subsets: ['latin'],
@@ -151,6 +154,7 @@ export default function RootLayout({
           <ClickTracker />
           <ScrollToTop />
           <Prefetcher />
+          <ProductPopup />
         </ThemeProvider>
       </body>
     </html>
