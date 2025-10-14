@@ -206,7 +206,7 @@ export default function ResumeBuilderPage() {
                             </div>
                             <div className="space-y-4 pt-4">
                                  <h3 className="text-lg font-semibold">Visibility</h3>
-                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                 <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                                     <div className="flex items-center space-x-2">
                                         <Switch id="showEmail" checked={showEmail} onCheckedChange={setShowEmail} />
                                         <Label htmlFor="showEmail" className="flex items-center gap-1"><Mail className="w-4 h-4" /> Email</Label>
@@ -297,7 +297,12 @@ export default function ResumeBuilderPage() {
 
                  <div className="grid lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_550px] gap-8 items-start">
                     <div className="space-y-6">
-                        {isMobile && resumePreview}
+                        {isMobile && <div className="space-y-4">
+                            <Button onClick={handleDownloadPdf} className="w-full" size="lg">
+                                <Download className="mr-2" /> Download as PDF
+                            </Button>
+                            {resumePreview}
+                        </div>}
                         {editorControls}
                     </div>
                     {!isMobile && (
@@ -309,11 +314,6 @@ export default function ResumeBuilderPage() {
                         </div>
                     )}
                 </div>
-                {isMobile && (
-                    <Button onClick={handleDownloadPdf} className="w-full mt-8" size="lg">
-                        <Download className="mr-2" /> Download as PDF
-                    </Button>
-                )}
 
 
                  {resumeBuilderGuide && (
