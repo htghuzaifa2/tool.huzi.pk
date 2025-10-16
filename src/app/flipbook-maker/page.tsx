@@ -47,6 +47,7 @@ export default function FlipbookMakerPage() {
     const { toast } = useToast();
     const flipbookGuide = guides.find(g => g.href.includes('flipbook-maker'));
     const [bookDimensions, setBookDimensions] = useState({ width: 500, height: 700 }); 
+    const isMobile = useIsMobile();
 
     const handleGuideClick = () => {
         requestAnimationFrame(() => {
@@ -186,7 +187,10 @@ export default function FlipbookMakerPage() {
         pdf.save('flipbook.pdf');
     };
 
-    const renderFlipbook = () => {
+    const renderFlipbook = (isFullScreen = false) => {
+        // Force single page view on mobile, otherwise let the component decide.
+        const usePortraitMode = isMobile ? true : false;
+        
         return (
             <HTMLFlipBook
                 width={bookDimensions.width}
@@ -197,7 +201,7 @@ export default function FlipbookMakerPage() {
                 minHeight={400}
                 maxHeight={1500}
                 maxShadowOpacity={0.5}
-                usePortrait={false}
+                usePortrait={usePortraitMode}
                 showCover={true}
                 mobileScrollSupport={true}
                 ref={flipBook}
@@ -282,7 +286,7 @@ export default function FlipbookMakerPage() {
                                     <DialogContent className="max-w-[95vw] h-[95vh] p-4 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
                                         <DialogHeader><DialogTitleComponent className="sr-only">Full-screen Preview</DialogTitleComponent></DialogHeader>
                                         <div className="w-full h-full flex items-center justify-center" id="fullscreen-content">
-                                            {renderFlipbook()}
+                                            {renderFlipbook(true)}
                                         </div>
                                     </DialogContent>
                                 </Dialog>
@@ -292,7 +296,7 @@ export default function FlipbookMakerPage() {
                          <CardContent>
                              <div className={cn("w-full bg-muted rounded-md flex items-center justify-center relative group p-4 min-h-[70vh]")}>
                                 <div className="w-full h-full flex items-center justify-center overflow-hidden">
-                                    {renderFlipbook()}
+                                    {renderFlipbook(false)}
                                 </div>
                              </div>
                              <div className="flex items-center justify-center gap-2 mt-4">
@@ -345,5 +349,6 @@ export default function FlipbookMakerPage() {
         </div>
     );
 }
+
 
     
