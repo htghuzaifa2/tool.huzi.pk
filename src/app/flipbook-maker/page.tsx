@@ -188,14 +188,14 @@ export default function FlipbookMakerPage() {
     };
 
     const renderFlipbook = (isFullScreen = false) => {
-        const usePortraitMode = isMobile;
+        const usePortraitMode = isMobile || (isFullScreen && window.innerWidth < 768);
         
         return (
             <HTMLFlipBook
                 width={bookDimensions.width}
                 height={bookDimensions.height}
                 size="stretch"
-                minWidth={315}
+                minWidth={300}
                 maxWidth={1000}
                 minHeight={400}
                 maxHeight={1500}
@@ -282,7 +282,7 @@ export default function FlipbookMakerPage() {
                                             <Maximize className="mr-2 w-4 h-4"/> Fullscreen
                                         </Button>
                                     </DialogTrigger>
-                                    <DialogContent className="max-w-[95vw] h-[95vh] p-4 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
+                                     <DialogContent className={cn("max-w-[95vw] h-[95vh] flex flex-col items-center justify-center p-0", isMobile ? "bg-background" : "bg-background/80 backdrop-blur-sm")}>
                                         <DialogHeader>
                                             <DialogTitleComponent className="sr-only">Full-screen Preview</DialogTitleComponent>
                                         </DialogHeader>
@@ -354,3 +354,4 @@ export default function FlipbookMakerPage() {
         </div>
     );
 }
+
