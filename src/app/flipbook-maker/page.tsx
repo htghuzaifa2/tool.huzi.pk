@@ -45,7 +45,7 @@ export default function FlipbookMakerPage() {
     const { toast } = useToast();
     const flipbookGuide = guides.find(g => g.href.includes('flipbook-maker'));
     const isMobile = useIsMobile();
-    const [bookDimensions, setBookDimensions] = useState({ width: 500, height: 700 });
+    const [bookDimensions, setBookDimensions] = useState({ width: 595, height: 842 }); // Default A4 aspect ratio
 
     const handleGuideClick = () => {
         requestAnimationFrame(() => {
@@ -153,14 +153,15 @@ export default function FlipbookMakerPage() {
                 zip.file(`page_${index + 1}.jpg`, base64Data, { base64: true });
             });
 
-            const zipBlob = await zip.generateAsync({ type: "blob" });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(zipBlob);
-            link.download = 'flipbook-pages.zip';
-            document.body.appendChild(link);
-            link.click();
-            URL.revokeObjectURL(link.href);
-            document.body.removeChild(link);
+            zip.generateAsync({ type: "blob" }).then(zipBlob => {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(zipBlob);
+                link.download = 'flipbook-pages.zip';
+                document.body.appendChild(link);
+                link.click();
+                URL.revokeObjectURL(link.href);
+                document.body.removeChild(link);
+            });
         }
     };
 
@@ -170,10 +171,10 @@ export default function FlipbookMakerPage() {
                 width={bookDimensions.width}
                 height={bookDimensions.height}
                 size="stretch"
-                minWidth={300}
-                maxWidth={isFullScreen ? 1000 : 500}
+                minWidth={315}
+                maxWidth={1000}
                 minHeight={420}
-                maxHeight={isFullScreen ? 1500 : 700}
+                maxHeight={1414}
                 showCover={true}
                 ref={flipBook}
                 className="mx-auto"
@@ -199,7 +200,7 @@ export default function FlipbookMakerPage() {
                 </CardDescription>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="grid md:grid-cols-[1fr_500px] gap-8 items-start">
                  <Card className="p-6">
                     {!pdfFile && (
                         <div 
@@ -246,9 +247,9 @@ export default function FlipbookMakerPage() {
                     )}
                 </Card>
                 <div className="flex flex-col items-center">
-                    <div className={cn("w-full bg-muted rounded-md flex items-center justify-center relative group", isMobile ? "h-[50vh]" : "h-[70vh]")}>
+                    <div className={cn("w-full bg-muted rounded-md flex items-center justify-center relative group aspect-[4/3] md:aspect-auto", isMobile ? "h-[50vh]" : "md:h-[70vh]")}>
                         {pages.length > 0 ? (
-                             <div className="w-full h-full flex items-center justify-center overflow-hidden">
+                             <div className="w-full h-full flex items-center justify-center overflow-hidden p-4">
                                 {renderFlipbook()}
                              </div>
                         ) : (
