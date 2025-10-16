@@ -1,8 +1,14 @@
 
 
-import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge, Split, ListChecks, BarChart2, FileCog } from "lucide-react";
+import { Calculator, CaseSensitive, Ruler, QrCode, KeyRound, HeartPulse, Cake, Image, FileText, Info, MessageSquare, Pencil, Pilcrow, Type, Banknote, Globe, FileImage, Palette, Youtube, ShieldCheck, Tags, TerminalSquare, Layers, Video, Pipette, Sheet, Table, Timer, Lock, Database, Binary, Code, Share2, Ratio, Scaling, CodeXml, Keyboard, Calendar, Smile, Search, GitCompareArrows, Users, Languages, Shuffle, Scroll, Braces, Voicemail, Eraser, ArrowDownUp, BarChart, Gift, FileSearch, Combine, Minimize, Merge, Split, ListChecks, BookOpen, BarChart2, FileCog } from "lucide-react";
 
 export const tools = [
+  {
+    icon: <BookOpen className="h-8 w-8" />,
+    href: "/flipbook-maker",
+    title: "Flipbook Maker",
+    description: "Convert a PDF into an interactive flipbook with page-turning effects.",
+  },
   {
     icon: <Gift className="h-8 w-8" />,
     href: "/random-picker-wheel",
@@ -354,6 +360,20 @@ export const tools = [
 ];
 
 export const guides = [
+  {
+    icon: <BookOpen className="h-8 w-8 text-primary" />,
+    href: "/guide#flipbook-maker",
+    title: "Flipbook Maker Guide",
+    description: "How to convert a PDF into an interactive flipbook.",
+    steps: [
+      "Navigate to the Flipbook Maker page.",
+      "Drag and drop a PDF file onto the upload area, or click to select a file.",
+      "The tool will begin converting the PDF pages into images. You can monitor the progress bar.",
+      "Once complete, the flipbook will appear in the preview area.",
+      "Use the arrow buttons to turn the pages, or click and drag the corners.",
+      "Click 'Download Pages' to save all the converted pages as individual JPG images."
+    ]
+  },
   {
     icon: <Gift className="h-8 w-8 text-primary" />,
     href: "/guide#random-picker-wheel",
@@ -768,11 +788,11 @@ export const guides = [
   },
   {
     icon: <CodeXml className="h-8 w-8 text-primary" />,
-    href: "/guide#html-entity-decoder",
-    title: "HTML Entity Decoder Guide",
+    href: "/guide#html-escaper-unescaper",
+    title: "HTML Escaper/Unescaper Guide",
     description: "How to encode and decode HTML entities.",
     steps: [
-      "Navigate to the HTML Entity Decoder page.",
+      "Navigate to the HTML Escaper/Unescaper page.",
       "Paste your text into the input field.",
       "Click 'Encode' to convert special characters like '<' to '&lt;'.",
       "Click 'Decode' to convert entities like '&lt;' back to '<'.",
@@ -972,11 +992,169 @@ export const guides = [
       "You can also switch between searching for 'Tools' and 'Guides' using the tabs.",
     ],
   },
+  {
+    icon: <GitCompareArrows className="h-8 w-8 text-primary" />,
+    href: "/guide#text-diff-highlighter",
+    title: "Text Diff Highlighter Guide",
+    description: "How to compare two blocks of text.",
+    steps: [
+      "Go to the Text Difference Highlighter page.",
+      "Paste the original text into the 'Original Text' box.",
+      "Paste the modified text into the 'Changed Text' box.",
+      "The differences will be highlighted automatically in the 'Highlighted Differences' area below.",
+      "Green highlighting indicates added text, while red with a strikethrough indicates removed text."
+    ]
+  },
+  {
+    icon: <Scroll className="h-8 w-8 text-primary" />,
+    href: "/guide#roman-numeral-converter",
+    title: "Roman Numeral Converter Guide",
+    description: "How to convert numbers to Roman numerals and back.",
+    steps: [
+      "Navigate to the Roman Numeral Converter page.",
+      "Enter a number in the 'Number' field to see its Roman numeral equivalent.",
+      "Alternatively, type a Roman numeral in the 'Roman Numeral' field to see the number.",
+      "The conversion happens instantly as you type."
+    ]
+  },
+   {
+    icon: <Youtube className="h-8 w-8 text-primary" />,
+    href: "/guide#youtube-thumbnail-downloader",
+    title: "YouTube Thumbnail Downloader Guide",
+    description: "Learn how to download thumbnails from YouTube videos.",
+    steps: [
+      "Go to the YouTube Thumbnail Downloader page.",
+      "Paste the full URL of the YouTube video into the input field.",
+      "Click the 'Get Thumbnails' button.",
+      "A gallery of available thumbnail qualities will appear.",
+      "Click the 'Download' button below the thumbnail you want to save."
+    ]
+  },
+  {
+    icon: <Languages className="h-8 w-8 text-primary" />,
+    href: "/guide#morse-code-translator",
+    title: "Morse Code Translator Guide",
+    description: "How to translate text to Morse code.",
+    steps: [
+      "Open the Morse Code Translator tool.",
+      "Type regular text in the left box to see it converted to Morse code on the right.",
+      "Alternatively, type Morse code (using '.' for dots and '-' for dashes) in the right box to see it converted to text.",
+      "Use a space to separate letters and a '/' to separate words in Morse code.",
+      "Click the speaker icon to hear the audio playback of the Morse code."
+    ]
+  },
+  {
+    icon: <Shuffle className="h-8 w-8 text-primary" />,
+    href: "/guide#anagram-finder",
+    title: "Anagram Finder Guide",
+    description: "How to find all anagrams of a word.",
+    steps: [
+      "Go to the Anagram Finder page.",
+      "Enter a single word (up to 8 characters) into the input field.",
+      "Click the 'Find Anagrams' button.",
+      "The tool will generate and display all possible unique letter combinations (permutations) of that word."
+    ]
+  },
+  {
+    icon: <Voicemail className="h-8 w-8 text-primary" />,
+    href: "/guide#vowel-consonant-counter",
+    title: "Vowel & Consonant Counter Guide",
+    description: "How to count vowels and consonants in text.",
+    steps: [
+        "Go to the Vowel & Consonant Counter page.",
+        "Type or paste your text into the text area.",
+        "The counters for vowels, consonants, and total characters will update automatically as you type.",
+    ]
+  },
+  {
+    icon: <Eraser className="h-8 w-8 text-primary" />,
+    href: "/guide#punctuation-remover",
+    title: "Punctuation Remover Guide",
+    description: "How to remove punctuation from text.",
+    steps: [
+        "Go to the Punctuation Remover page.",
+        "Type or paste your text into the 'Original Text' area.",
+        "Click the 'Remove Punctuation' button.",
+        "The text with all punctuation marks removed will appear in the 'Cleaned Text' area.",
+        "Click the copy icon to copy the cleaned text."
+    ]
+  },
+  {
+    icon: <ArrowDownUp className="h-8 w-8 text-primary" />,
+    href: "/guide#number-sorter",
+    title: "Number Sorter Guide",
+    description: "How to sort a list of numbers.",
+    steps: [
+        "Go to the Number Sorter page.",
+        "Enter your numbers in the input area, separated by spaces, commas, or new lines.",
+        "Select whether you want to sort in 'Ascending' or 'Descending' order.",
+        "Click the 'Sort Numbers' button.",
+        "The sorted list will appear in the output area, ready to be copied."
+    ]
+  },
+  {
+    icon: <BarChart className="h-8 w-8 text-primary" />,
+    href: "/guide#word-density-analyzer",
+    title: "Word Density Analyzer Guide",
+    description: "How to analyze word frequency in text.",
+    steps: [
+        "Go to the Word Density Analyzer page.",
+        "Paste your text into the text area on the left.",
+        "The tool will automatically analyze the text and display a table on the right.",
+        "The table shows each unique word, its count, and its density (percentage) in the text.",
+        "Click on the table headers ('Word' or 'Count') to sort the results."
+    ]
+  },
+  {
+    icon: <FileSearch className="h-8 w-8 text-primary" />,
+    href: "/guide#text-pattern-finder",
+    title: "Text Pattern Finder (Regex) Guide",
+    description: "How to use regular expressions to find patterns.",
+    steps: [
+        "Go to the Text Pattern Finder page.",
+        "In the 'Regular Expression Pattern' field, enter your regex pattern (e.g., `\\d+` to find numbers).",
+        "In the 'Flags' field, enter any regex flags you need (e.g., `g` for global search, `i` for case-insensitive).",
+        "Type or paste the text you want to search into the 'Your Text' area.",
+        "Any parts of the text that match your pattern will be highlighted instantly in the 'Result' area."
+    ]
+  },
+  {
+    icon: <Combine className="h-8 w-8 text-primary" />,
+    href: "/guide#paragraph-merger",
+    title: "Paragraph Merger Guide",
+    description: "How to merge multiple paragraphs into one.",
+    steps: [
+        "Go to the Paragraph Merger page.",
+        "Paste your text, with its line breaks and paragraphs, into the 'Original Text' box.",
+        "Click the 'Merge Paragraphs' button.",
+        "The text will be combined into a single paragraph in the 'Merged Text' box, with line breaks replaced by spaces.",
+        "Click the copy icon to copy the merged text."
+    ]
+  },
+  {
+    icon: <Shuffle className="h-8 w-8 text-primary" />,
+    href: "/guide#sentence-shuffler",
+    title: "Sentence Shuffler Guide",
+    description: "How to randomly reorder sentences in a paragraph.",
+    steps: [
+        "Go to the Sentence Shuffler page.",
+        "Paste your paragraph(s) into the 'Original Text' area.",
+        "Click the 'Shuffle Sentences' button.",
+        "The sentences from your original text will be randomly rearranged in the 'Shuffled Text' area.",
+        "Click the copy icon to copy the shuffled result."
+    ]
+  },
+   {
+    icon: <Braces className="h-8 w-8 text-primary" />,
+    href: "/guide#json-validator",
+    title: "JSON Validator Guide",
+    description: "How to validate your JSON data.",
+    steps: [
+        "Go to the JSON Validator page.",
+        "Paste your JSON code into the text area.",
+        "The tool will instantly check if the JSON is valid.",
+        "If it is valid, a green 'Valid JSON' message will appear.",
+        "If there are errors, a red 'Invalid JSON' message will appear, describing the error and its location."
+    ]
+  },
 ];
-
-    
-
-
-
-
-

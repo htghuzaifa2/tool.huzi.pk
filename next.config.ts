@@ -1,6 +1,11 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config, { isServer }) => {
+    // This is to help pdfjs-dist work with Next.js
+    config.resolve.alias['pdfjs-dist'] = 'pdfjs-dist/build/pdf';
+    return config;
+  },
   images: {
     remotePatterns: [
       {
@@ -18,7 +23,7 @@ const nextConfig = {
         hostname: 'yt3.ggpht.com',
       },
        {
-        protocol: 'https',
+        protocol: 'https' ,
         hostname: 'yt3.googleusercontent.com',
       },
       {
