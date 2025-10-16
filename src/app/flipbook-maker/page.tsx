@@ -188,8 +188,7 @@ export default function FlipbookMakerPage() {
     };
 
     const renderFlipbook = (isFullScreen = false) => {
-        // Force single page view on mobile/tablet, otherwise let the component decide (two-page view).
-        const usePortraitMode = isMobile ? true : false;
+        const usePortraitMode = isMobile;
         
         return (
             <HTMLFlipBook
