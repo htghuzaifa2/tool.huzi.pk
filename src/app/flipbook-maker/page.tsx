@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Upload, Loader2, BookOpen, ChevronLeft, ChevronRight, Download, Maximize, FileText } from 'lucide-react';
+import { Upload, Loader2, BookOpen, ChevronLeft, ChevronRight, Download, Maximize, FileText, X } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import * as pdfjsLib from 'pdfjs-dist';
 import HTMLFlipBook from 'react-pageflip';
@@ -13,7 +13,7 @@ import { guides } from "@/lib/search-data";
 import { FancyAccordionButton } from '@/components/ui/fancy-accordion-button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Progress } from '@/components/ui/progress';
-import { Dialog, DialogContent, DialogHeader, DialogTitle as DialogTitleComponent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle as DialogTitleComponent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import JSZip from 'jszip';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -188,7 +188,7 @@ export default function FlipbookMakerPage() {
     };
 
     const renderFlipbook = (isFullScreen = false) => {
-        // Force single page view on mobile, otherwise let the component decide.
+        // Force single page view on mobile/tablet, otherwise let the component decide (two-page view).
         const usePortraitMode = isMobile ? true : false;
         
         return (
@@ -284,10 +284,16 @@ export default function FlipbookMakerPage() {
                                         </Button>
                                     </DialogTrigger>
                                     <DialogContent className="max-w-[95vw] h-[95vh] p-4 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
-                                        <DialogHeader><DialogTitleComponent className="sr-only">Full-screen Preview</DialogTitleComponent></DialogHeader>
+                                        <DialogHeader>
+                                            <DialogTitleComponent className="sr-only">Full-screen Preview</DialogTitleComponent>
+                                        </DialogHeader>
                                         <div className="w-full h-full flex items-center justify-center" id="fullscreen-content">
                                             {renderFlipbook(true)}
                                         </div>
+                                         <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                                            <X className="h-4 w-4" />
+                                            <span className="sr-only">Close</span>
+                                        </DialogClose>
                                     </DialogContent>
                                 </Dialog>
                                 <Button onClick={handleDownload} variant="secondary" size="sm"><Download className="mr-2 w-4 h-4"/> Download Pages</Button>
@@ -349,6 +355,3 @@ export default function FlipbookMakerPage() {
         </div>
     );
 }
-
-
-    
