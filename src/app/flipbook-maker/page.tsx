@@ -16,6 +16,7 @@ import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle as DialogTitleComponent, DialogTrigger } from '@/components/ui/dialog';
 import JSZip from 'jszip';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 // Set up the worker source for pdfjs-dist
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
@@ -44,6 +45,7 @@ export default function FlipbookMakerPage() {
     const { toast } = useToast();
     const flipbookGuide = guides.find(g => g.href.includes('flipbook-maker'));
     const isMobile = useIsMobile();
+    const [bookDimensions, setBookDimensions] = useState({ width: 500, height: 700 });
 
     const handleGuideClick = () => {
         requestAnimationFrame(() => {
@@ -95,6 +97,10 @@ export default function FlipbookMakerPage() {
             const numPages = pdf.numPages;
             const newPages: string[] = [];
 
+            const firstPage = await pdf.getPage(1);
+            const firstViewport = firstPage.getViewport({ scale: 1 });
+            setBookDimensions({width: firstViewport.width, height: firstViewport.height});
+
             for (let i = 1; i <= numPages; i++) {
                 const page = await pdf.getPage(i);
                 const viewport = page.getViewport({ scale: 1.5 });
@@ -134,13 +140,13 @@ export default function FlipbookMakerPage() {
         toast({ title: "Download Started", description: `Preparing your file(s)...` });
 
         if (pages.length === 1) {
-            // Download single image
             const link = document.createElement('a');
             link.href = pages[0];
             link.download = 'page_1.jpg';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         } else {
-            // Download as ZIP
             const zip = new JSZip();
             pages.forEach((pageData, index) => {
                 const base64Data = pageData.split(',')[1];
@@ -151,31 +157,30 @@ export default function FlipbookMakerPage() {
             const link = document.createElement('a');
             link.href = URL.createObjectURL(zipBlob);
             link.download = 'flipbook-pages.zip';
+            document.body.appendChild(link);
             link.click();
             URL.revokeObjectURL(link.href);
+            document.body.removeChild(link);
         }
     };
 
     const renderFlipbook = (isFullScreen = false) => {
-        const sizeProps = isMobile
-            ? { width: 300, height: 420 }
-            : { width: 500, height: 700 };
-
         return (
             <HTMLFlipBook
-                {...sizeProps}
+                width={bookDimensions.width}
+                height={bookDimensions.height}
                 size="stretch"
                 minWidth={300}
-                maxWidth={1000}
+                maxWidth={isFullScreen ? 1000 : 500}
                 minHeight={420}
-                maxHeight={1500}
+                maxHeight={isFullScreen ? 1500 : 700}
                 showCover={true}
                 ref={flipBook}
                 className="mx-auto"
             >
                 {pages.map((page, index) => (
                     <Page key={index} pageNumber={index}>
-                        <img src={page} alt={`Page ${index + 1}`} className="max-w-full max-h-full object-contain" />
+                        <img src={page} alt={`Page ${index + 1}`} className="w-full h-full object-contain" />
                     </Page>
                 ))}
             </HTMLFlipBook>
@@ -241,7 +246,7 @@ export default function FlipbookMakerPage() {
                     )}
                 </Card>
                 <div className="flex flex-col items-center">
-                    <div className="w-full max-w-lg aspect-[4/3] bg-muted rounded-md flex items-center justify-center relative group">
+                    <div className={cn("w-full bg-muted rounded-md flex items-center justify-center relative group", isMobile ? "h-[50vh]" : "h-[70vh]")}>
                         {pages.length > 0 ? (
                              <div className="w-full h-full flex items-center justify-center overflow-hidden">
                                 {renderFlipbook()}
@@ -258,7 +263,7 @@ export default function FlipbookMakerPage() {
                                         <Maximize className="w-5 h-5"/>
                                     </Button>
                                 </DialogTrigger>
-                                <DialogContent className="max-w-4xl h-[95vh] p-4 flex flex-col items-center justify-center">
+                                <DialogContent className="max-w-[95vw] h-[95vh] p-4 flex flex-col items-center justify-center">
                                      <DialogHeader><DialogTitleComponent className="sr-only">Full-screen Preview</DialogTitleComponent></DialogHeader>
                                      <div className="w-full h-full flex items-center justify-center">
                                          {renderFlipbook(true)}
