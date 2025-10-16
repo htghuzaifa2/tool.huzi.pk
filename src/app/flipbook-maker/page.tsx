@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Upload, Loader2, BookOpen, ChevronLeft, ChevronRight, Download, Maximize } from 'lucide-react';
+import { Upload, Loader2, BookOpen, ChevronLeft, ChevronRight, Download, Maximize, FileText } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import * as pdfjsLib from 'pdfjs-dist';
 import HTMLFlipBook from 'react-pageflip';
@@ -18,6 +18,7 @@ import JSZip from 'jszip';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 // Set up the worker source for pdfjs-dist
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
@@ -45,7 +46,6 @@ export default function FlipbookMakerPage() {
     const flipBook = useRef<any>(null);
     const { toast } = useToast();
     const flipbookGuide = guides.find(g => g.href.includes('flipbook-maker'));
-    const isMobile = useIsMobile();
     const [bookDimensions, setBookDimensions] = useState({ width: 500, height: 700 }); 
 
     const handleGuideClick = () => {
@@ -167,7 +167,7 @@ export default function FlipbookMakerPage() {
     };
     
     const handleDownloadPdf = async () => {
-        const resumeElement = document.getElementById('resume-preview-fullscreen-content');
+        const resumeElement = document.getElementById('fullscreen-content');
         if (!resumeElement) return;
 
         const canvas = await html2canvas(resumeElement, {
@@ -179,24 +179,23 @@ export default function FlipbookMakerPage() {
         const pdf = new jsPDF({
             orientation: 'portrait',
             unit: 'pt',
-            format: 'a4',
+            format: [canvas.width, canvas.height],
         });
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save('resume.pdf');
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save('flipbook.pdf');
     };
 
-    const renderFlipbook = (isFullScreen = false) => {
+    const renderFlipbook = () => {
         return (
             <HTMLFlipBook
-                width={500}
-                height={700}
+                width={bookDimensions.width}
+                height={bookDimensions.height}
                 size="stretch"
                 minWidth={315}
                 maxWidth={1000}
-                minHeight={420}
-                maxHeight={1414}
+                minHeight={400}
+                maxHeight={1500}
                 maxShadowOpacity={0.5}
                 usePortrait={false}
                 showCover={true}
@@ -215,101 +214,106 @@ export default function FlipbookMakerPage() {
 
     return (
         <div className="container mx-auto py-10">
-            <div className="text-center mb-10">
-                <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <BookOpen className="w-8 h-8" />
-                </div>
-                <CardTitle className="text-4xl font-bold font-headline">Flipbook Maker</CardTitle>
-                <CardDescription className="max-w-2xl mx-auto mt-2">
-                    PDF to flipbook free, no ads and highly customizable with different page flip effects. Share, download or embed them creating outstanding magazines, catalogs, brochures, reports, restaurant menus and more.
-                </CardDescription>
-            </div>
-
-            <div className="grid md:grid-cols-[1fr_500px] gap-8 items-start">
-                 <Card className="p-6">
-                    {!pdfFile && (
-                        <div 
-                            className="border-2 border-dashed border-muted-foreground/50 h-64 flex items-center justify-center text-center cursor-pointer hover:border-primary transition-colors flex-col"
-                            onClick={() => fileInputRef.current?.click()}
-                            onDrop={handleFileChange}
-                            onDragOver={(e) => e.preventDefault()}
-                        >
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleFileChange}
-                                accept="application/pdf"
-                                className="hidden"
-                            />
-                            <Upload className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
-                            <p className="text-muted-foreground">Drag and drop the PDF to convert</p>
-                            <Button className="mt-4" variant="secondary">
-                                Upload
-                            </Button>
-                        </div>
-                    )}
-                    {pdfFile && (
-                         <div className="space-y-4">
-                             <div className="flex items-center gap-3">
-                                <BookOpen className="h-8 w-8 text-primary" />
-                                <div className='flex-1'>
-                                    <p className="font-semibold truncate">{pdfFile.name}</p>
-                                    <p className="text-sm text-muted-foreground">{pages.length > 0 ? `${pages.length} pages` : ''}</p>
-                                </div>
-                            </div>
-                            {isConverting && (
-                                <div className="space-y-2">
-                                    <p className="text-sm text-muted-foreground">Converting... {Math.round(progress)}%</p>
-                                    <Progress value={progress} />
-                                </div>
-                            )}
-                            {pages.length > 0 && (
-                                <div className='flex gap-2'>
-                                    <Button onClick={handleDownload} variant="outline"><Download className="mr-2"/> Download Pages</Button>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </Card>
-                <div className="flex flex-col items-center">
-                    <div className={cn("w-full bg-muted rounded-md flex items-center justify-center relative group p-4", isMobile ? "h-[60vh]" : "h-[70vh]")}>
-                        {pages.length > 0 ? (
-                             <div className="w-full h-full flex items-center justify-center overflow-hidden">
-                                {renderFlipbook()}
-                             </div>
-                        ) : (
-                            isConverting ? 
-                            <Loader2 className="h-12 w-12 text-muted-foreground animate-spin"/> :
-                            <p className="text-muted-foreground">Preview will appear here</p>
-                        )}
-                        {pages.length > 0 && (
-                             <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button variant="outline" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Maximize className="w-5 h-5"/>
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-[95vw] h-[95vh] p-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
-                                     <DialogHeader><DialogTitleComponent className="sr-only">Full-screen Preview</DialogTitleComponent></DialogHeader>
-                                     <div className="w-full h-full flex items-center justify-center p-4">
-                                         {renderFlipbook(true)}
-                                     </div>
-                                </DialogContent>
-                            </Dialog>
-                        )}
+            <div className="max-w-4xl mx-auto space-y-8">
+                 <div className="text-center">
+                    <div className="mx-auto bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                        <BookOpen className="w-8 h-8" />
                     </div>
-                     {pages.length > 0 && (
-                        <div className="flex items-center gap-2 mt-4">
-                            <Button variant="outline" size="icon" onClick={() => flipBook.current?.pageFlip().flipPrev()}>
-                                <ChevronLeft />
-                            </Button>
-                            <p className="text-sm text-muted-foreground">Page Turn</p>
-                             <Button variant="outline" size="icon" onClick={() => flipBook.current?.pageFlip().flipNext()}>
-                                <ChevronRight />
-                            </Button>
-                        </div>
-                    )}
+                    <CardTitle className="text-4xl font-bold font-headline">Flipbook Maker</CardTitle>
+                    <CardDescription className="max-w-2xl mx-auto mt-2">
+                        Convert a PDF into an interactive flipbook. Share, download, or embed to create outstanding magazines, catalogs, brochures, and more.
+                    </CardDescription>
                 </div>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-xl">Upload Your PDF</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        {!pdfFile ? (
+                            <div 
+                                className="border-2 border-dashed border-muted-foreground/50 h-48 flex items-center justify-center text-center cursor-pointer hover:border-primary transition-colors flex-col"
+                                onClick={() => fileInputRef.current?.click()}
+                                onDrop={handleFileChange}
+                                onDragOver={(e) => e.preventDefault()}
+                            >
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    onChange={handleFileChange}
+                                    accept="application/pdf"
+                                    className="hidden"
+                                />
+                                <Upload className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
+                                <p className="font-semibold">Drag & drop or click to upload PDF</p>
+                                <p className="text-sm text-muted-foreground">Your file stays on your device.</p>
+                            </div>
+                        ) : (
+                             <div className="space-y-4">
+                                <div className="flex items-center gap-3 p-3 border rounded-lg">
+                                    <FileText className="h-8 w-8 text-primary" />
+                                    <div className='flex-1'>
+                                        <p className="font-semibold truncate">{pdfFile.name}</p>
+                                        <p className="text-sm text-muted-foreground">{pages.length > 0 ? `${pages.length} pages` : 'Analyzing...'}</p>
+                                    </div>
+                                </div>
+                                {isConverting && (
+                                    <div className="space-y-2">
+                                        <p className="text-sm text-muted-foreground text-center">Converting... {Math.round(progress)}%</p>
+                                        <Progress value={progress} />
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+
+                {pages.length > 0 && (
+                    <Card>
+                         <CardHeader className="flex flex-row items-center justify-between">
+                            <CardTitle className="text-xl">Your Flipbook</CardTitle>
+                            <div className="flex items-center gap-2">
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button variant="outline" size="sm">
+                                            <Maximize className="mr-2 w-4 h-4"/> Fullscreen
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="max-w-[95vw] h-[95vh] p-4 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
+                                        <DialogHeader><DialogTitleComponent className="sr-only">Full-screen Preview</DialogTitleComponent></DialogHeader>
+                                        <div className="w-full h-full flex items-center justify-center" id="fullscreen-content">
+                                            {renderFlipbook()}
+                                        </div>
+                                    </DialogContent>
+                                </Dialog>
+                                <Button onClick={handleDownload} variant="secondary" size="sm"><Download className="mr-2 w-4 h-4"/> Download Pages</Button>
+                            </div>
+                         </CardHeader>
+                         <CardContent>
+                             <div className={cn("w-full bg-muted rounded-md flex items-center justify-center relative group p-4 min-h-[70vh]")}>
+                                <div className="w-full h-full flex items-center justify-center overflow-hidden">
+                                    {renderFlipbook()}
+                                </div>
+                             </div>
+                             <div className="flex items-center justify-center gap-2 mt-4">
+                                <Button variant="outline" size="icon" onClick={() => flipBook.current?.pageFlip().flipPrev()}>
+                                    <ChevronLeft />
+                                </Button>
+                                <p className="text-sm text-muted-foreground">Page Turn</p>
+                                <Button variant="outline" size="icon" onClick={() => flipBook.current?.pageFlip().flipNext()}>
+                                    <ChevronRight />
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
+
+                 {isConverting && !pages.length && (
+                    <div className="text-center py-10">
+                        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto"/>
+                        <p className="mt-4 text-muted-foreground">Processing your PDF...</p>
+                    </div>
+                )}
             </div>
 
             {flipbookGuide && (
@@ -341,3 +345,5 @@ export default function FlipbookMakerPage() {
         </div>
     );
 }
+
+    
