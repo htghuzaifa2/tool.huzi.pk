@@ -17,6 +17,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle as DialogTitleComponen
 import JSZip from 'jszip';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
+import html2canvas from 'html2canvas';
 
 // Set up the worker source for pdfjs-dist
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
@@ -45,7 +46,7 @@ export default function FlipbookMakerPage() {
     const { toast } = useToast();
     const flipbookGuide = guides.find(g => g.href.includes('flipbook-maker'));
     const isMobile = useIsMobile();
-    const [bookDimensions, setBookDimensions] = useState({ width: 595, height: 842 }); // Default A4 aspect ratio
+    const [bookDimensions, setBookDimensions] = useState({ width: 500, height: 700 }); 
 
     const handleGuideClick = () => {
         requestAnimationFrame(() => {
@@ -164,18 +165,42 @@ export default function FlipbookMakerPage() {
             });
         }
     };
+    
+    const handleDownloadPdf = async () => {
+        const resumeElement = document.getElementById('resume-preview-fullscreen-content');
+        if (!resumeElement) return;
+
+        const canvas = await html2canvas(resumeElement, {
+             useCORS: true,
+             scale: 2
+        });
+        
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'pt',
+            format: 'a4',
+        });
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('resume.pdf');
+    };
 
     const renderFlipbook = (isFullScreen = false) => {
         return (
             <HTMLFlipBook
-                width={bookDimensions.width}
-                height={bookDimensions.height}
+                width={500}
+                height={700}
                 size="stretch"
                 minWidth={315}
                 maxWidth={1000}
                 minHeight={420}
                 maxHeight={1414}
+                maxShadowOpacity={0.5}
+                usePortrait={false}
                 showCover={true}
+                mobileScrollSupport={true}
                 ref={flipBook}
                 className="mx-auto"
             >
@@ -247,9 +272,9 @@ export default function FlipbookMakerPage() {
                     )}
                 </Card>
                 <div className="flex flex-col items-center">
-                    <div className={cn("w-full bg-muted rounded-md flex items-center justify-center relative group aspect-[4/3] md:aspect-auto", isMobile ? "h-[50vh]" : "md:h-[70vh]")}>
+                    <div className={cn("w-full bg-muted rounded-md flex items-center justify-center relative group p-4", isMobile ? "h-[60vh]" : "h-[70vh]")}>
                         {pages.length > 0 ? (
-                             <div className="w-full h-full flex items-center justify-center overflow-hidden p-4">
+                             <div className="w-full h-full flex items-center justify-center overflow-hidden">
                                 {renderFlipbook()}
                              </div>
                         ) : (
@@ -264,9 +289,9 @@ export default function FlipbookMakerPage() {
                                         <Maximize className="w-5 h-5"/>
                                     </Button>
                                 </DialogTrigger>
-                                <DialogContent className="max-w-[95vw] h-[95vh] p-4 flex flex-col items-center justify-center">
+                                <DialogContent className="max-w-[95vw] h-[95vh] p-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
                                      <DialogHeader><DialogTitleComponent className="sr-only">Full-screen Preview</DialogTitleComponent></DialogHeader>
-                                     <div className="w-full h-full flex items-center justify-center">
+                                     <div className="w-full h-full flex items-center justify-center p-4">
                                          {renderFlipbook(true)}
                                      </div>
                                 </DialogContent>
@@ -316,4 +341,3 @@ export default function FlipbookMakerPage() {
         </div>
     );
 }
-
