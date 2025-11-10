@@ -148,7 +148,7 @@ export default function HtmlTableGeneratorPage() {
                 {tableGeneratorGuide && (
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="guide" id="guide-section" className="border-none flex flex-col items-center">
-                            <AccordionTrigger onClick={handleGuideClick}>
+                            <AccordionTrigger onClick={handleGuideClick} className="w-full justify-center">
                                 <FancyAccordionButton />
                             </AccordionTrigger>
                             <AccordionContent className="pt-6 w-full">
