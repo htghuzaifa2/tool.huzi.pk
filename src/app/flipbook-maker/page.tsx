@@ -2,7 +2,7 @@
 "use client"
 
 import * as React from 'react';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Upload, Loader2, BookOpen, ChevronLeft, ChevronRight, Download, Maximize, FileText, X } from 'lucide-react';
@@ -19,6 +19,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 // Set up the worker source for pdfjs-dist
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
@@ -48,6 +49,10 @@ export default function FlipbookMakerPage() {
     const flipbookGuide = guides.find(g => g.href.includes('flipbook-maker'));
     const [bookDimensions, setBookDimensions] = useState({ width: 500, height: 700 }); 
     const isMobile = useIsMobile();
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const [currentPage, setCurrentPage] = useState(0);
 
     const handleGuideClick = () => {
         requestAnimationFrame(() => {
@@ -60,6 +65,17 @@ export default function FlipbookMakerPage() {
         });
     };
     
+    useEffect(() => {
+      const page = searchParams.get('page');
+      const pageNumber = page ? parseInt(page, 10) - 1 : 0;
+      if (!isNaN(pageNumber) && pageNumber >= 0) {
+        setCurrentPage(pageNumber);
+        if (flipBook.current && flipBook.current.pageFlip()) {
+          flipBook.current.pageFlip().turnToPage(pageNumber);
+        }
+      }
+    }, [searchParams]);
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>) => {
         let file: File | null = null;
         if ('dataTransfer' in e) {
@@ -187,6 +203,16 @@ export default function FlipbookMakerPage() {
         pdf.save('flipbook.pdf');
     };
 
+    const handleFlip = (e: { data: number }) => {
+        const newPage = e.data + 1;
+        setCurrentPage(e.data);
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
+        current.set('page', String(newPage));
+        const search = current.toString();
+        const query = search ? `?${search}` : '';
+        router.push(`${pathname}${query}`);
+    };
+
     const renderFlipbook = (isFullScreen = false) => {
         const usePortraitMode = isMobile || (isFullScreen && window.innerWidth < 768);
         
@@ -205,6 +231,8 @@ export default function FlipbookMakerPage() {
                 mobileScrollSupport={true}
                 ref={flipBook}
                 className="mx-auto"
+                onFlip={handleFlip}
+                startPage={currentPage}
             >
                 {pages.map((page, index) => (
                     <Page key={index} pageNumber={index}>
@@ -354,3 +382,4 @@ export default function FlipbookMakerPage() {
         </div>
     );
 }
+
