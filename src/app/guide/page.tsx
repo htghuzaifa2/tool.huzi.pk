@@ -1,20 +1,36 @@
 
 "use client"
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { guides as allGuides } from "@/lib/search-data";
 import { Button } from "@/components/ui/button";
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 export const runtime = 'edge';
 
 const ITEMS_PER_PAGE = 24;
 
 export default function GuidePage() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const getPageFromParams = () => {
+    const page = searchParams.get('page');
+    const pageNumber = page ? parseInt(page, 10) : 1;
+    return isNaN(pageNumber) || pageNumber < 1 ? 1 : pageNumber;
+  }
+
+  const [currentPage, setCurrentPage] = useState(getPageFromParams);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    setCurrentPage(getPageFromParams());
+  }, [searchParams]);
+
 
   const totalPages = Math.ceil(allGuides.length / ITEMS_PER_PAGE);
 
@@ -26,7 +42,12 @@ export default function GuidePage() {
   
   const goToPage = (page: number) => {
     setIsAnimating(true);
-    setCurrentPage(page);
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    current.set('page', String(page));
+    const search = current.toString();
+    const query = search ? `?${search}` : '';
+    router.push(`${pathname}${query}`);
+
     const guideSection = document.getElementById('guides-section');
     if (guideSection) {
       guideSection.scrollIntoView({ behavior: 'smooth' });

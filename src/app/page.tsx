@@ -5,16 +5,32 @@ import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { tools } from "@/lib/search-data"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { GetStartedButton } from "@/components/ui/get-started-button"
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+
 
 export const runtime = 'edge';
 
 const ITEMS_PER_PAGE = 24;
 
 export default function Home() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const getPageFromParams = () => {
+    const page = searchParams.get('page');
+    const pageNumber = page ? parseInt(page, 10) : 1;
+    return isNaN(pageNumber) || pageNumber < 1 ? 1 : pageNumber;
+  }
+
+  const [currentPage, setCurrentPage] = useState(getPageFromParams);
   const [isAnimating, setIsAnimating] = useState(false);
+  
+  useEffect(() => {
+    setCurrentPage(getPageFromParams());
+  }, [searchParams]);
 
   const totalPages = Math.ceil(tools.length / ITEMS_PER_PAGE);
 
@@ -26,7 +42,13 @@ export default function Home() {
   
   const goToPage = (page: number) => {
     setIsAnimating(true);
-    setCurrentPage(page);
+    
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    current.set('page', String(page));
+    const search = current.toString();
+    const query = search ? `?${search}` : '';
+    router.push(`${pathname}${query}`);
+    
     const toolsSection = document.getElementById('tools');
     if (toolsSection) {
       toolsSection.scrollIntoView({ behavior: 'smooth' });
